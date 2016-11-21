@@ -8,6 +8,9 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     
+    this.state = {
+      uid: '5826fdc1680d800d2064d1da'
+    }
   }
   
   render() {
