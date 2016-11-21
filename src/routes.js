@@ -8,6 +8,7 @@ import {Router, Route, browserHistory, IndexRoute} from 'react-router';
 import App from './components/App';
 import Homepage from './components/homepage/Homepage';
 import Restaurants from './components/restaurants/RestaurantsManager';
+// import Dishes
 
 export default class Routes extends Component {
   render() {
