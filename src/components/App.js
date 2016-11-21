@@ -15,7 +15,7 @@ class App extends React.Component {
   
   render() {
     return (
-      <div>
+      <div className="container">
         <div>Header - Logo + Menu</div>
         {this.props.children}
         <div>Footer - links, & other shit</div>
