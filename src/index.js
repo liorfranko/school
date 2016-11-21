@@ -1,7 +1,14 @@
 /* eslint-disable no-console */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Wrapper from './components/Wrapper/wrapper';
 
-ReactDOM.render(<Wrapper/>, document.getElementById('wrapper') );
+import ReactDOM from 'react-dom';
+import { Router, Route, Link } from 'react-router'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import App from './components/Wrapper/wrapper';
+import Routes from './routes';
+
+
+ReactDOM.render(<Routes/>, document.getElementById('wrapper') );
+
+
