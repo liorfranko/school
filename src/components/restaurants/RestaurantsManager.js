@@ -6,29 +6,45 @@ import React from 'react';
 import ListOfRestaurants from './ListOfRestaurants';
 import * as $ from 'jquery';
 import './rests.styl';
-// import Popup
+import Popup from '../Popup/popup'
+import EditRestaurant from './EditRestaurant.js'
+import DeleteRestaurant from './DeleteRestaurant.js'
+import AddRestaurant from './AddRestaurant.js'
 // import EditRest
+
 class RestaurantsManager extends React.Component {
   constructor(props) {
     super(props);
-    
     this.state = {
-      rests: props.appData.rests || []
+      rests: props.appData.rests || [],
+      mode: 'main',
+      selectedRes: null
     };
-    
     this.editRest = this.editRest.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.exitPopup = this.exitPopup.bind(this);
+    this.getRests = this.getRests.bind(this);
+    this.deleteRest = this.deleteRest.bind(this);
+    this.addRest = this.addRest.bind(this);
   }
-  
+
   componentDidMount() {
     // TODO: Ajax to load rests
     const uid = '5826fdc1680d800d2064d1da';
-  
+
     if (!this.props.appData.rests) {
       this.getRests(uid);
     }
   }
-  
+
+  exitPopup() {
+    this.setState({
+      mode: 'main'
+    });
+  };
+
   getRests(uid) {
+    // console.log("RestaurantsManager | getRests");
     // TODO: Ajax to fetch
     const options = {
       url: 'http://35.156.80.173/WebService1.asmx/getRestaurants',
@@ -36,71 +52,94 @@ class RestaurantsManager extends React.Component {
         user_Id: uid
       }
     };
-    
+
     $.post(options, (data) => {
       const items = JSON.parse(data).items || [];
-      console.log('getRests data', data);
-      console.log('data.items', items);
-      
+      // console.log('EditRestaurant | getRests data', data);
+      // console.log('EditRestaurant | getRests items ', items);
       this.setState({
         rests: items
       });
       this.props.updateState({rests: items});
-      
+
     });
   }
-  deleteRest() {
+
+  deleteRest(data) {
     // TODO: Ajax to delete
+    console.log('RestaurantsManager | deleteRest', data);
+    this.setState({
+      mode: 'delete',
+      selectedRes: data
+    });
   }
-  
-  editRest() {
+
+  handleClick() {
+    const uid = '5826fdc1680d800d2064d1da';
+    // console.log('EditRestaurant | handleClick');
+    this.setState({mode: 'main'});
+    this.getRests(uid);
+  }
+
+
+  editRest(data) {
     // TODO: Ajax to edit
-    alert('editRest');
+    // console.log('RestaurantsManager | editRest', data);
+    this.setState({
+      mode: 'edit',
+      selectedRes: data
+    });
   }
-  
+
   addRest() {
-    // TODO: Ajax to add
+    console.log('RestaurantsManager | addRest');
+    this.setState({
+      mode: 'add'
+    });
   }
-  
+
   render() {
-    console.log('Restaurants Manager | this.props', this.props);
-    
-    return (
-      <div id="rests">
-        <span>
-          Restaurants Manager
-        </span>
-        <ListOfRestaurants rests={this.state.rests} editRest={this.editRest}/>
-      </div>
-    )
+    // console.log('Restaurants Manager | this.props', this.props);
+    // console.log('Restaurants Manager | this.state', this.state);
+    switch (this.state.mode) {
+      case 'edit':
+        return (
+          <Popup exitPopup={this.exitPopup.bind(this)}>
+            <EditRestaurant resId={this.state.rests[this.state.selectedRes]._id}
+                            resName={this.state.rests[this.state.selectedRes].name}
+                            resAddress={this.state.rests[this.state.selectedRes].address}
+                            handleClick={this.handleClick.bind(this)}
+            />
+          </Popup>
+        );
+      case 'delete':
+        return (
+          <Popup exitPopup={this.exitPopup.bind(this)}>
+            <DeleteRestaurant resId={this.state.rests[this.state.selectedRes]._id}
+                              resName={this.state.rests[this.state.selectedRes].name}
+                              resAddress={this.state.rests[this.state.selectedRes].address}
+                              handleClick={this.handleClick.bind(this)}
+            />
+          </Popup>
+        );
+      case 'add':
+        return (
+          <Popup exitPopup={this.exitPopup.bind(this)}>
+            <AddRestaurant handleClick={this.handleClick.bind(this)}/>
+          </Popup>
+        );
+      default:
+        return (
+          <div id="rests">
+            <span>
+              Restaurants Manager
+            </span>
+            <ListOfRestaurants rests={this.state.rests} editRest={this.editRest} deleteRest={this.deleteRest}/>
+            <div onClick={this.addRest}>Add restaurant </div>
+          </div>
+        );
+    }
   }
-} ;
+}
 
 export default RestaurantsManager;
-/*
-
-componentDidMount() {
-  var json = {
-    userId: '5826fdc1680d800d2064d1da',
-  };
-  this.postDataToServer('getRestaurants', 'user_Id=' + json.userId)
-}
-
-postDataToServer(url, data) {
-  var $ = require('jquery');
-  $.post({
-    url: 'http://35.156.80.173/WebService1.asmx/getRestaurants' + url,
-    dataType: 'json',
-    cache: false,
-    data: data,
-    success: function (data) {
-      this.setState({resList: data});
-      this.setState({loading: false});
-    }.bind(this),
-    error: function (xhr, status, err) {
-      console.error(url, status, err.toString());
-      alert('there is some problems loading data, please check the logs')
-    }.bind(this)
-  });
-}
-*/
