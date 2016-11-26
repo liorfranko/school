@@ -10,7 +10,6 @@ import Popup from '../Popup/popup'
 import EditRestaurant from './EditRestaurant.js'
 import DeleteRestaurant from './DeleteRestaurant.js'
 import AddRestaurant from './AddRestaurant.js'
-// import EditRest
 
 class RestaurantsManager extends React.Component {
   constructor(props) {
@@ -29,11 +28,10 @@ class RestaurantsManager extends React.Component {
   }
 
   componentDidMount() {
+    console.log('RestaurantsManager | componentDidMount', this.props);
     // TODO: Ajax to load rests
-    const uid = '5826fdc1680d800d2064d1da';
-
     if (!this.props.appData.rests) {
-      this.getRests(uid);
+      this.getRests(this.props.uid);
     }
   }
 
@@ -43,13 +41,13 @@ class RestaurantsManager extends React.Component {
     });
   };
 
-  getRests(uid) {
+  getRests() {
     // console.log("RestaurantsManager | getRests");
     // TODO: Ajax to fetch
     const options = {
       url: 'http://35.156.80.173/WebService1.asmx/getRestaurants',
       data: {
-        user_Id: uid
+        user_Id: this.props.uid
       }
     };
 
@@ -75,12 +73,10 @@ class RestaurantsManager extends React.Component {
   }
 
   handleClick() {
-    const uid = '5826fdc1680d800d2064d1da';
     // console.log('EditRestaurant | handleClick');
     this.setState({mode: 'main'});
-    this.getRests(uid);
+    this.getRests();
   }
-
 
   editRest(data) {
     // TODO: Ajax to edit

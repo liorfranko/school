@@ -8,8 +8,8 @@ import {Router, Route, browserHistory, IndexRoute} from 'react-router';
 import App from './components/App';
 import Homepage from './components/homepage/Homepage';
 import Restaurants from './components/restaurants/RestaurantsManager';
-import Dishes from './components/Dishes/Dishes';
-// import Dishes
+import Dishes from './components/Dishes/DishesManager';
+// import DishesManager
 
 export default class Routes extends Component {
   render() {
@@ -24,5 +24,3 @@ export default class Routes extends Component {
     );
   }
 }
-
-// /collections/new/products/product-287

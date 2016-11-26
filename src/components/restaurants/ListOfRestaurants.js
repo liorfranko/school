@@ -22,6 +22,3 @@ const ListOfRestaurants = (props) => {
 };
 
 export default ListOfRestaurants;
-
-
-/*<RestaurantListItem key={i} item={rest} />*/

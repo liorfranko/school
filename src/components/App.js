@@ -11,7 +11,7 @@ class App extends React.Component {
 
     this.state = {
       uid: '5826fdc1680d800d2064d1da',
-      data: {}
+      data: {},
     };
 
     this.updateState = this.updateState.bind(this);
@@ -31,7 +31,7 @@ class App extends React.Component {
         <Menu menu={[
           {name: 'homepage', path: '/'}, {name: 'rests', path: 'rests'}, {name: 'dishes', path: 'dishes'}
           ]}/>
-        {React.Children.map(this.props.children, (child) => React.cloneElement(child, {appData: this.state.data, updateState: this.updateState}))}
+        {React.Children.map(this.props.children, (child) => React.cloneElement(child, {appData: this.state.data, uid: this.state.uid, updateState: this.updateState}))}
         <div>Footer - links, & other shit</div>
       </div>
     )
