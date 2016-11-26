@@ -4,12 +4,13 @@
 
 import React from 'react';
 import ListOfRestaurants from './ListOfRestaurants';
-import * as $ from 'jquery';
 import './rests.styl';
-import Popup from '../Popup/popup'
-import EditRestaurant from './EditRestaurant.js'
-import DeleteRestaurant from './DeleteRestaurant.js'
-import AddRestaurant from './AddRestaurant.js'
+import Popup from '../Popup/popup';
+import EditRestaurant from './EditRestaurant.js';
+import DeleteRestaurant from './DeleteRestaurant.js';
+import AddRestaurant from './AddRestaurant.js';
+import MorningMenu from '../restMenu/morningMenu';
+
 
 class RestaurantsManager extends React.Component {
   constructor(props) {
@@ -19,15 +20,14 @@ class RestaurantsManager extends React.Component {
       selectedRes: null
     };
     this.editRest = this.editRest.bind(this);
-    // this.handleClick = this.handleClick.bind(this);
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
     this.handleAddClick = this.handleAddClick.bind(this);
     this.handleEditClick = this.handleEditClick.bind(this);
+    this.handleMorningClick = this.handleMorningClick.bind(this);
     this.exitPopup = this.exitPopup.bind(this);
-    // this.getRests = this.getRests.bind(this);
     this.deleteRest = this.deleteRest.bind(this);
     this.addRest = this.addRest.bind(this);
-    // this.updateState = this.updateState.bind(this);
+    this.editMorningMenu = this.editMorningMenu.bind(this);
   }
 
   componentDidMount() {
@@ -39,39 +39,11 @@ class RestaurantsManager extends React.Component {
     }
   }
 
-  // updateState(rests) {
-  //   this.setState(
-  //     {rests: rests}
-  //   )
-  // }
-
   exitPopup() {
     this.setState({
       mode: 'main'
     });
   };
-
-  // getRests() {
-  //   // console.log("RestaurantsManager | getRests");
-  //   // TODO: Ajax to fetch
-  //   const options = {
-  //     url: 'http://35.156.80.173/WebService1.asmx/getRestaurants',
-  //     data: {
-  //       user_Id: this.props.uid
-  //     }
-  //   };
-  //
-  //   $.post(options, (data) => {
-  //     const items = JSON.parse(data).items || [];
-  //     // console.log('EditRestaurant | getRests data', data);
-  //     // console.log('EditRestaurant | getRests items ', items);
-  //     this.setState({
-  //       rests: items
-  //     });
-  //     this.props.updateState({rests: items});
-  //
-  //   });
-  // }
 
   deleteRest(data) {
     // TODO: Ajax to delete
@@ -101,11 +73,11 @@ class RestaurantsManager extends React.Component {
     this.setState({mode: 'main'});
   }
 
-  // handleClick() {
-  //   // console.log('EditRestaurant | handleClick');
-  //   this.setState({mode: 'main'});
-  //   this.getRests();
-  // }
+  handleMorningClick(data) {
+    console.log('RestaurantsManager | handleMorningClick', this.state);
+    // this.props.editRest(data);
+    // this.setState({mode: 'main'});
+  }
 
   editRest(data) {
     // TODO: Ajax to edit
@@ -115,7 +87,7 @@ class RestaurantsManager extends React.Component {
       selectedRes: data
     });
   }
-  //
+
   addRest() {
     // console.log('RestaurantsManager | addRest');
     this.setState({
@@ -123,9 +95,17 @@ class RestaurantsManager extends React.Component {
     });
   }
 
+  editMorningMenu() {
+    console.log('RestaurantsManager | editMorningMenu');
+    this.setState({
+      mode: 'editMorningMenu'
+    });
+  }
+
   render() {
-    // console.log('Restaurants Manager | this.props', this.props);
+    console.log('Restaurants Manager | this.props', this.props);
     // console.log('Restaurants Manager | this.state', this.state);
+
     if (!this.props.appData.data.rests) {
       console.log('RestaurantsManager | loading');
       return (
@@ -159,6 +139,12 @@ class RestaurantsManager extends React.Component {
               <AddRestaurant handleClick={this.handleAddClick.bind(this)}/>
             </Popup>
           );
+        case 'editMorningMenu':
+          return (
+            <Popup exitPopup={this.exitPopup.bind(this)}>
+              <MorningMenu handleClick={this.handleMorningClick.bind(this)} restManagerData={this.props}/>
+            </Popup>
+          );
         default:
           return (
             <div id="rests">
@@ -166,7 +152,7 @@ class RestaurantsManager extends React.Component {
               Restaurants Manager
             </span>
               <ListOfRestaurants rests={this.props.appData.data.rests} editRest={this.editRest}
-                                 deleteRest={this.deleteRest}/>
+                                 deleteRest={this.deleteRest} editMorningMenu={this.editMorningMenu}/>
               <div onClick={this.addRest}>Add restaurant</div>
             </div>
           );

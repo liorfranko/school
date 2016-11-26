@@ -17,6 +17,10 @@ const RestaurantListItem = (props) => {
     props.deleteRest(props.resNum)
   }
 
+  function editMorningMenu() {
+    console.log('RestaurantListItem | editMorningMenu')
+    props.editMorningMenu();
+  }
   return (
     <li className="restItem list-group-item">
       <div className="innerItem name">
@@ -30,6 +34,9 @@ const RestaurantListItem = (props) => {
       </div>
       <div className="innerItem edit" onClick={onEditClick.bind(this)}>
         edit
+      </div>
+      <div className="innerItem editMorningMenu" onClick={editMorningMenu.bind(this)}>
+        Morning Menu
       </div>
     </li>
   );

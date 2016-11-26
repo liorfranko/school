@@ -30,11 +30,12 @@ class App extends React.Component {
   }
 
   updateRest(data) {
-    // console.log('App | updateRest data', data);
+    console.log('App | updateRest data', data);
     const items = JSON.parse(data).items || [];
-    // console.log('App | updateRest', items);
+    console.log('App | updateRest', items);
     this.setState({
-      data: {rests: items},
+      // data: {rests: items},
+      data: Object.assign({}, this.state.data, {rests: items}),
       loading: false
     });
 
@@ -43,8 +44,12 @@ class App extends React.Component {
     // console.log('App | updateDishes data', data);
     const items = JSON.parse(data).items || [];
     // console.log('App | updateDishes', items);
+    //data: Object.assign({}, this.state.data, data)
+
     this.setState({
-      data: {dishes: items},
+      // data: Object.assign({}, this.state.data, items),
+      data: Object.assign({}, this.state.data, {dishes: items}),
+      // data: {dishes: items},
       loading: false
     });
 
@@ -61,7 +66,7 @@ class App extends React.Component {
   }
 
   getDishes() {
-    // console.log("App | getDishes");
+    console.log("App | getDishes");
     this.setState({loading: true});
     var data = {
       user_Id: this.state.uid
