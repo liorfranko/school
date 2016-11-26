@@ -37,9 +37,9 @@ class EditDish extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.setState({loading: true});
+    this.props.handleClick(this.state);
     // console.log('EditDish | handleSubmit', this.state);
-    this.postDataToServer('editDish', '&dish_Id=' + this.state['dishId'] + '&name=' + this.state['dishName'] + '&description='+this.state['dishDescription'] + '&default_Price='+this.state['defaultPrice'])
+    // this.postDataToServer('editDish', '&dish_Id=' + this.state['dishId'] + '&name=' + this.state['dishName'] + '&description='+this.state['dishDescription'] + '&default_Price='+this.state['defaultPrice'])
   }
 
   postDataToServer(url, data) {

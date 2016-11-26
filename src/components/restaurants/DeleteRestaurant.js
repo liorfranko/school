@@ -36,7 +36,7 @@ class DeleteRestaurant extends React.Component {
 
 
   render() {
-    console.log('DeleteRestaurant | render', this.props);
+    // console.log('DeleteRestaurant | render', this.props);
     return (
       <div>
         {this.props.exit}

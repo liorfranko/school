@@ -8,7 +8,7 @@ const servicName = 'WebService1.asmx';
 
 class Api {
   static postRequest (url, data, callBack) {
-    console.log("Api | postRequest");
+    // console.log("Api | postRequest");
     $.post({
       url: 'http://'+host +'/' + servicName + '/' + url,
       cache: false,

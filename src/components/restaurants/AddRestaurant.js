@@ -14,7 +14,6 @@ class AddRestaurant extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.postDataToServer = this.postDataToServer.bind(this);
   }
 
   handleChange(event) {
@@ -25,24 +24,6 @@ class AddRestaurant extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     this.props.handleClick(this.state);
-    // this.postDataToServer('addRestaurant', '&user_Id=5826fdc1680d800d2064d1da&name=' + this.state['resName'] + '&address='+this.state['resAddress'])
-  }
-
-  postDataToServer(url, data) {
-    var $ = require ('jquery');
-    $.post({
-      url: 'http://35.156.80.173/WebService1.asmx/'+url,
-      cache: false,
-      data: data,
-      success: function(recData) {
-        // console.log('AddRestaurant | postDataToServer done', recData);
-        this.setState({loading: false});
-        this.props.handleClick();
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(url, status, err.toString());
-      }.bind(this)
-    });
   }
 
   render() {

@@ -11,13 +11,15 @@ class DishesManager extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dishes: props.appData.dishes || [],
       mode: 'main',
       selectedDish: null
     };
     this.componentDidMount = this.componentDidMount.bind(this);
     this.exitPopup = this.exitPopup.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleAddClick = this.handleAddClick.bind(this);
+    this.handleDeleteClick = this.handleDeleteClick.bind(this);
+    this.handleEditClick = this.handleEditClick.bind(this);
     this.getDishes = this.getDishes.bind(this);
     this.editDish = this.editDish.bind(this);
     this.deleteDish = this.deleteDish.bind(this);
@@ -28,7 +30,8 @@ class DishesManager extends React.Component {
     // console.log('DishesManager | componentDidMount', this.props);
     // TODO: Ajax to load dishes
     if (!this.props.appData.dishes) {
-      this.getDishes(this.props.uid);
+      this.props.getDishes();
+      // this.getDishes(this.props.uid);
     }
   }
 
@@ -44,6 +47,22 @@ class DishesManager extends React.Component {
     this.getDishes();
   }
 
+  handleAddClick (data) {
+    // console.log('DishesManager | handleAddClick', this.state);
+    this.props.addDish(data);
+    this.setState({mode: 'main'});
+  }
+
+  handleEditClick (data) {
+    // console.log('DishesManager | handleEditClick', this.state);
+    this.props.editDish(data);
+    this.setState({mode: 'main'});
+  }
+  handleDeleteClick () {
+    // console.log('DishesManager | handleDeleteClick', this.state.selectedDish);
+    this.props.deleteDish(this.state.selectedDish);
+    this.setState({mode: 'main'});
+  }
   getDishes() {
     // console.log("DishesManager | getDishes");
     // TODO: Ajax to fetch
@@ -90,47 +109,55 @@ class DishesManager extends React.Component {
   }
 
   render() {
-    // console.log('DishesManager | render', this.state);
-    switch (this.state.mode) {
-      case 'add':
-        return (
-          <Popup exitPopup={this.exitPopup.bind(this)}>
-            <AddDish handleClick={this.handleClick.bind(this)}/>
-          </Popup>
-        );
-      case 'edit':
-        return (
-          <Popup exitPopup={this.exitPopup.bind(this)}>
-            <EditDish dishId={this.state.dishes[this.state.selectedDish]._id}
-                      dishName={this.state.dishes[this.state.selectedDish].name}
-                      dishDescription={this.state.dishes[this.state.selectedDish].description}
-                      defaultPrice={this.state.dishes[this.state.selectedDish].defaultPrice}
-                      handleClick={this.handleClick.bind(this)}
-            />
-          </Popup>
-        );
-      case 'delete':
-        return (
-          <Popup exitPopup={this.exitPopup.bind(this)}>
-            <DeleteDish dishId={this.state.dishes[this.state.selectedDish]._id}
-                        dishName={this.state.dishes[this.state.selectedDish].name}
-                        dishDescription={this.state.dishes[this.state.selectedDish].description}
-                        defaultPrice={this.state.dishes[this.state.selectedDish].defaultPrice}
-                        handleClick={this.handleClick.bind(this)}
-            />
-          </Popup>
-        );
-      default:
-        return (
-          <div id="dishes">
+    console.log('DishesManager | render', this.state);
+    if (!this.props.appData.data.dishes) {
+      console.log('DishesManager | loading');
+      return (
+        <div>Loading</div>
+      )
+    } else {
+      switch (this.state.mode) {
+        case 'add':
+          return (
+            <Popup exitPopup={this.exitPopup.bind(this)}>
+              <AddDish handleClick={this.handleAddClick.bind(this)}/>
+            </Popup>
+          );
+        case 'edit':
+          return (
+            <Popup exitPopup={this.exitPopup.bind(this)}>
+              <EditDish dishId={this.props.appData.data.dishes[this.state.selectedDish]._id}
+                        dishName={this.props.appData.data.dishes[this.state.selectedDish].name}
+                        dishDescription={this.props.appData.data.dishes[this.state.selectedDish].description}
+                        defaultPrice={this.props.appData.data.dishes[this.state.selectedDish].defaultPrice}
+                        handleClick={this.handleEditClick.bind(this)}
+              />
+            </Popup>
+          );
+        case 'delete':
+          return (
+            <Popup exitPopup={this.exitPopup.bind(this)}>
+              <DeleteDish dishId={this.props.appData.data.dishes[this.state.selectedDish]._id}
+                          dishName={this.props.appData.data.dishes[this.state.selectedDish].name}
+                          dishDescription={this.props.appData.data.dishes[this.state.selectedDish].description}
+                          defaultPrice={this.props.appData.data.dishes[this.state.selectedDish].defaultPrice}
+                          handleClick={this.handleDeleteClick.bind(this)}
+              />
+            </Popup>
+          );
+        default:
+          return (
+            <div id="dishes">
             <span>
               Dishes Manager
             </span>
-            <ListOfDishes dishes={this.state.dishes} editDish={this.editDish} deleteDish={this.deleteDish}/>
-            <div onClick={this.addDish}>Add Dish</div>
-          </div>
-        )
+              <ListOfDishes dishes={this.props.appData.data.dishes} editDish={this.editDish} deleteDish={this.deleteDish}/>
+              <div onClick={this.addDish}>Add Dish</div>
+            </div>
+          )
+      }
     }
+
 
   }
 }

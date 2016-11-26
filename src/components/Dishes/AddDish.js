@@ -25,7 +25,8 @@ class AddDish extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.postDataToServer('addDish', '&user_Id=5826fdc1680d800d2064d1da&name=' + this.state['dishName'] + '&description='+this.state['dishDescription'] + '&defaultPrice='+this.state['defaultPrice'])
+    this.props.handleClick(this.state);
+    // this.postDataToServer('addDish', '&user_Id=5826fdc1680d800d2064d1da&name=' + this.state['dishName'] + '&description='+this.state['dishDescription'] + '&defaultPrice='+this.state['defaultPrice'])
   }
 
   postDataToServer(url, data) {

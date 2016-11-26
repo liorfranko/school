@@ -29,7 +29,8 @@ class DeleteDish extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.postDataToServer('removeDish', '&dish_Id=' + this.props['dishId'] + '&user_Id=5826fdc1680d800d2064d1da');
+    this.props.handleClick();
+    // this.postDataToServer('removeDish', '&dish_Id=' + this.props['dishId'] + '&user_Id=5826fdc1680d800d2064d1da');
   }
 
 
