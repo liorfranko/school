@@ -11,7 +11,7 @@ class DeleteDish extends React.Component {
     this.postDataToServer = this.postDataToServer.bind(this);
   }
 
-  postDataToServer(url, data, cb) {
+  postDataToServer(url, data) {
     var $ = require('jquery');
     $.post({
       url: 'http://35.156.80.173/WebService1.asmx/' + url,
@@ -20,7 +20,6 @@ class DeleteDish extends React.Component {
       success: function (recData) {
         console.log('DeleteDish | postDataToServer done', recData);
         this.props.handleClick();
-
       }.bind(this),
       error: function (xhr, status, err) {
         console.error(url, status, err.toString());

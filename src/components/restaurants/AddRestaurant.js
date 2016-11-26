@@ -24,10 +24,10 @@ class AddRestaurant extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.postDataToServer('addRestaurant', '&user_Id=5826fdc1680d800d2064d1da&name=' + this.state['resName'] + '&address='+this.state['resAddress'], this.props['handleClick'])
+    this.postDataToServer('addRestaurant', '&user_Id=5826fdc1680d800d2064d1da&name=' + this.state['resName'] + '&address='+this.state['resAddress'])
   }
 
-  postDataToServer(url, data, cb) {
+  postDataToServer(url, data) {
     var $ = require ('jquery');
     $.post({
       url: 'http://35.156.80.173/WebService1.asmx/'+url,
@@ -37,7 +37,7 @@ class AddRestaurant extends React.Component {
         console.log('done');
         this.setState({loading: false});
         console.log(recData);
-        cb();
+        this.props.handleClick();
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(url, status, err.toString());
