@@ -9,14 +9,14 @@
 import React from 'react';
 
 const DishesListItem = (props) => {
-  console.log("DishesListItem | ", props);
+  // console.log("DishesListItem | ", props);
   function onEditClick() {
-    console.log('DishesListItem | onEditClick');
+    // console.log('DishesListItem | onEditClick');
     props.editDish(props.dishNum)
   }
 
   function onDeleteClick() {
-    console.log('DishesListItem | onDeleteClick');
+    // console.log('DishesListItem | onDeleteClick');
     props.deleteDish(props.dishNum)
   }
 

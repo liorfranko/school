@@ -24,9 +24,10 @@ class EditRestaurant extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.setState({loading: true});
+    this.props.handleClick(this.state);
+    // this.setState({loading: true});
     // console.log('EditRestaurant | handleSubmit', this.state);
-    this.postDataToServer('editRestaurant', '&restaurant_Id=' + this.props['resId'] + '&name=' + this.state['resName'] + '&address='+this.state['resAddress'])
+    // this.postDataToServer('editRestaurant', '&restaurant_Id=' + this.props['resId'] + '&name=' + this.state['resName'] + '&address='+this.state['resAddress'])
   }
 
   postDataToServer(url, data) {

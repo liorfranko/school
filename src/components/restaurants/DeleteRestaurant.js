@@ -30,12 +30,13 @@ class DeleteRestaurant extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.postDataToServer('removeRestaurant', '&restaurant_Id=' + this.props['resId'] + '&user_Id=5826fdc1680d800d2064d1da');
+    this.props.handleClick();
+    // this.postDataToServer('removeRestaurant', '&restaurant_Id=' + this.props['resId'] + '&user_Id=5826fdc1680d800d2064d1da');
   }
 
 
   render() {
-    // console.log('DeleteRestaurant | render', this.props);
+    console.log('DeleteRestaurant | render', this.props);
     return (
       <div>
         {this.props.exit}

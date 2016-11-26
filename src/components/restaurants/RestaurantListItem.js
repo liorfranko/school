@@ -8,12 +8,12 @@ import React from 'react';
 const RestaurantListItem = (props) => {
   // console.log("RestaurantListItem | ", props);
   function onEditClick() {
-    console.log('RestaurantListItem | onEditClick');
+    // console.log('RestaurantListItem | onEditClick');
     props.editRest(props.resNum)
   }
 
   function onDeleteClick() {
-    console.log('RestaurantListItem | onDeleteClick');
+    // console.log('RestaurantListItem | onDeleteClick');
     props.deleteRest(props.resNum)
   }
 

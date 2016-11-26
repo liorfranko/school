@@ -5,7 +5,7 @@ import React from 'react';
 
 class AddDish extends React.Component {
   constructor(props) {
-    console.log('AddDish | constructor');
+    // console.log('AddDish | constructor');
     super(props);
     this.state = {
       dishName: '',
@@ -35,9 +35,8 @@ class AddDish extends React.Component {
       cache: false,
       data: data,
       success: function(recData) {
-        console.log('done');
+        // console.log('AddDish | postDataToServer done', recData);
         this.setState({loading: false});
-        console.log(recData);
         this.props.handleClick();
       }.bind(this),
       error: function(xhr, status, err) {
@@ -47,8 +46,6 @@ class AddDish extends React.Component {
   }
 
   render() {
-    // console.log('here');
-    // console.log(this.state);
     return (
       <div>
         {this.props.exit}

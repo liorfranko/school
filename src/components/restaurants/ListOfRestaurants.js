@@ -8,6 +8,7 @@ import React from 'react';
 import RestaurantListItem from './RestaurantListItem';
 
 const ListOfRestaurants = (props) => {
+  console.log('ListOfRestaurants |', props);
   return (
     <ul className="restList list-group">
       {

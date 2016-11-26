@@ -5,7 +5,7 @@ import React from 'react';
 
 class DeleteDish extends React.Component {
   constructor(props) {
-    console.log('DeleteDish | constructor');
+    // console.log('DeleteDish | constructor');
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.postDataToServer = this.postDataToServer.bind(this);
@@ -18,7 +18,7 @@ class DeleteDish extends React.Component {
       cache: false,
       data: data,
       success: function (recData) {
-        console.log('DeleteDish | postDataToServer done', recData);
+        // console.log('DeleteDish | postDataToServer done', recData);
         this.props.handleClick();
       }.bind(this),
       error: function (xhr, status, err) {
@@ -34,7 +34,7 @@ class DeleteDish extends React.Component {
 
 
   render() {
-    console.log('DeleteDish | render', this.props);
+    // console.log('DeleteDish | render', this.props);
     return (
       <div>
         {this.props.exit}

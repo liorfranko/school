@@ -5,7 +5,7 @@ import React from 'react';
 
 class AddRestaurant extends React.Component {
   constructor(props) {
-    console.log('in AddRestaurant');
+    // console.log('AddRestaurant | constructor');
     super(props);
     this.state = {
       resName: '',
@@ -24,7 +24,8 @@ class AddRestaurant extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.postDataToServer('addRestaurant', '&user_Id=5826fdc1680d800d2064d1da&name=' + this.state['resName'] + '&address='+this.state['resAddress'])
+    this.props.handleClick(this.state);
+    // this.postDataToServer('addRestaurant', '&user_Id=5826fdc1680d800d2064d1da&name=' + this.state['resName'] + '&address='+this.state['resAddress'])
   }
 
   postDataToServer(url, data) {
@@ -34,9 +35,8 @@ class AddRestaurant extends React.Component {
       cache: false,
       data: data,
       success: function(recData) {
-        console.log('done');
+        // console.log('AddRestaurant | postDataToServer done', recData);
         this.setState({loading: false});
-        console.log(recData);
         this.props.handleClick();
       }.bind(this),
       error: function(xhr, status, err) {
@@ -46,8 +46,6 @@ class AddRestaurant extends React.Component {
   }
 
   render() {
-    // console.log('here');
-    // console.log(this.state);
     return (
       <div>
         {this.props.exit}

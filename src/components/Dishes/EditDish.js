@@ -5,7 +5,7 @@ import React from 'react';
 
 class EditDish extends React.Component {
   constructor(props) {
-    console.log('EditDish | constructor');
+    // console.log('EditDish | constructor');
     super(props);
     this.state = {
       dishName: this.props['dishName'],
@@ -20,13 +20,25 @@ class EditDish extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({[event.target.name]: event.target.value});
+    // console.log('EditDish | handleChange', event.target.value);
+    if (event.target.name == 'defaultPrice') {
+      if (event.target.value == parseInt(event.target.value, 10)) {
+        // console.log('EditDish | isInteger');
+        this.setState({[event.target.name]: event.target.value});
+      }
+      else {
+        // console.log('EditDish | not Integer');
+        alert('The price can be only numbers')
+      }
+    } else {
+      this.setState({[event.target.name]: event.target.value});
+    }
   }
 
   handleSubmit(event) {
     event.preventDefault();
     this.setState({loading: true});
-    console.log('EditDish | handleSubmit', this.state);
+    // console.log('EditDish | handleSubmit', this.state);
     this.postDataToServer('editDish', '&dish_Id=' + this.state['dishId'] + '&name=' + this.state['dishName'] + '&description='+this.state['dishDescription'] + '&default_Price='+this.state['defaultPrice'])
   }
 

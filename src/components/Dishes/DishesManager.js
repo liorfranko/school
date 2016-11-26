@@ -25,7 +25,7 @@ class DishesManager extends React.Component {
   }
 
   componentDidMount() {
-    console.log('DishesManager | componentDidMount', this.props);
+    // console.log('DishesManager | componentDidMount', this.props);
     // TODO: Ajax to load dishes
     if (!this.props.appData.dishes) {
       this.getDishes(this.props.uid);
@@ -39,13 +39,13 @@ class DishesManager extends React.Component {
   };
 
   handleClick() {
-    console.log('DishesManager | handleClick');
+    // console.log('DishesManager | handleClick');
     this.setState({mode: 'main'});
     this.getDishes();
   }
 
   getDishes() {
-    console.log("DishesManager | getDishes");
+    // console.log("DishesManager | getDishes");
     // TODO: Ajax to fetch
     const options = {
       url: 'http://35.156.80.173/WebService1.asmx/getDishes',
@@ -56,8 +56,8 @@ class DishesManager extends React.Component {
 
     $.post(options, (data) => {
       const items = JSON.parse(data).items || [];
-      console.log('DishesManager | getDishes data', data);
-      console.log('DishesManager | getDishes items ', items);
+      // console.log('DishesManager | getDishes data', data);
+      // console.log('DishesManager | getDishes items ', items);
       this.setState({
         dishes: items
       });
@@ -67,7 +67,7 @@ class DishesManager extends React.Component {
   }
 
   editDish(data) {
-    console.log('DishesManager | editDish', data);
+    // console.log('DishesManager | editDish', data);
     this.setState({
       mode: 'edit',
       selectedDish: data
@@ -75,7 +75,7 @@ class DishesManager extends React.Component {
   }
 
   deleteDish(data) {
-    console.log('DishesManager | deleteDish', data);
+    // console.log('DishesManager | deleteDish', data);
     this.setState({
       mode: 'delete',
       selectedDish: data
@@ -83,14 +83,14 @@ class DishesManager extends React.Component {
   }
 
   addDish() {
-    console.log('DishesManager | addDish', this.state);
+    // console.log('DishesManager | addDish', this.state);
     this.setState({
       mode: 'add'
     });
   }
 
   render() {
-    console.log('DishesManager | render', this.state);
+    // console.log('DishesManager | render', this.state);
     switch (this.state.mode) {
       case 'add':
         return (
