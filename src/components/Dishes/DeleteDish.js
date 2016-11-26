@@ -8,29 +8,11 @@ class DeleteDish extends React.Component {
     // console.log('DeleteDish | constructor');
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.postDataToServer = this.postDataToServer.bind(this);
-  }
-
-  postDataToServer(url, data) {
-    var $ = require('jquery');
-    $.post({
-      url: 'http://35.156.80.173/WebService1.asmx/' + url,
-      cache: false,
-      data: data,
-      success: function (recData) {
-        // console.log('DeleteDish | postDataToServer done', recData);
-        this.props.handleClick();
-      }.bind(this),
-      error: function (xhr, status, err) {
-        console.error(url, status, err.toString());
-      }.bind(this)
-    });
   }
 
   handleSubmit(event) {
     event.preventDefault();
     this.props.handleClick();
-    // this.postDataToServer('removeDish', '&dish_Id=' + this.props['dishId'] + '&user_Id=5826fdc1680d800d2064d1da');
   }
 
 

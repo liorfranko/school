@@ -8,30 +8,11 @@ class DeleteRestaurant extends React.Component {
     // console.log('DeleteRestaurant | constructor');
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.postDataToServer = this.postDataToServer.bind(this);
-  }
-
-  postDataToServer(url, data, cb) {
-    var $ = require('jquery');
-    $.post({
-      url: 'http://35.156.80.173/WebService1.asmx/' + url,
-      cache: false,
-      data: data,
-      success: function (recData) {
-        // console.log('DeleteRestaurant | postDataToServer done', recData);
-        this.props.handleClick();
-
-      }.bind(this),
-      error: function (xhr, status, err) {
-        console.error(url, status, err.toString());
-      }.bind(this)
-    });
   }
 
   handleSubmit(event) {
     event.preventDefault();
     this.props.handleClick();
-    // this.postDataToServer('removeRestaurant', '&restaurant_Id=' + this.props['resId'] + '&user_Id=5826fdc1680d800d2064d1da');
   }
 
 

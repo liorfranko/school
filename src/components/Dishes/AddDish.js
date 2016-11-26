@@ -15,35 +15,28 @@ class AddDish extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.postDataToServer = this.postDataToServer.bind(this);
   }
 
   handleChange(event) {
-    this.setState({[event.target.name]: event.target.value});
+    // console.log('AddDish | handleChange', event.target.value);
+    if (event.target.name == 'defaultPrice') {
+      if (event.target.value == parseInt(event.target.value, 10)) {
+        // console.log('AddDish | isInteger');
+        this.setState({[event.target.name]: event.target.value});
+      }
+      else {
+        // console.log('AddDish | not Integer');
+        alert('The price can be only numbers')
+      }
+    } else {
+      this.setState({[event.target.name]: event.target.value});
+    }
   }
 
 
   handleSubmit(event) {
     event.preventDefault();
     this.props.handleClick(this.state);
-    // this.postDataToServer('addDish', '&user_Id=5826fdc1680d800d2064d1da&name=' + this.state['dishName'] + '&description='+this.state['dishDescription'] + '&defaultPrice='+this.state['defaultPrice'])
-  }
-
-  postDataToServer(url, data) {
-    var $ = require ('jquery');
-    $.post({
-      url: 'http://35.156.80.173/WebService1.asmx/'+url,
-      cache: false,
-      data: data,
-      success: function(recData) {
-        // console.log('AddDish | postDataToServer done', recData);
-        this.setState({loading: false});
-        this.props.handleClick();
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(url, status, err.toString());
-      }.bind(this)
-    });
   }
 
   render() {

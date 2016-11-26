@@ -5,7 +5,7 @@ import React from 'react';
 import DishesListItem from './DishesListItem';
 
 const ListOfDishes = (props) => {
-  console.log('ListOfDishes |', props);
+  // console.log('ListOfDishes |', props);
   return (
     <ul className="dishList list-group">
       {

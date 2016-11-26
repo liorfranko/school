@@ -2,7 +2,6 @@ import React from 'react';
 import ListOfDishes from './ListOfDishes';
 import './dishes.styl';
 import Popup from '../Popup/popup';
-import * as $ from 'jquery';
 import AddDish from './AddDish.js';
 import EditDish from './EditDish.js';
 import DeleteDish from './DeleteDish.js';
@@ -16,11 +15,9 @@ class DishesManager extends React.Component {
     };
     this.componentDidMount = this.componentDidMount.bind(this);
     this.exitPopup = this.exitPopup.bind(this);
-    this.handleClick = this.handleClick.bind(this);
     this.handleAddClick = this.handleAddClick.bind(this);
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
     this.handleEditClick = this.handleEditClick.bind(this);
-    this.getDishes = this.getDishes.bind(this);
     this.editDish = this.editDish.bind(this);
     this.deleteDish = this.deleteDish.bind(this);
     this.addDish = this.addDish.bind(this);
@@ -31,7 +28,6 @@ class DishesManager extends React.Component {
     // TODO: Ajax to load dishes
     if (!this.props.appData.dishes) {
       this.props.getDishes();
-      // this.getDishes(this.props.uid);
     }
   }
 
@@ -40,12 +36,6 @@ class DishesManager extends React.Component {
       mode: 'main'
     });
   };
-
-  handleClick() {
-    // console.log('DishesManager | handleClick');
-    this.setState({mode: 'main'});
-    this.getDishes();
-  }
 
   handleAddClick (data) {
     // console.log('DishesManager | handleAddClick', this.state);
@@ -58,31 +48,11 @@ class DishesManager extends React.Component {
     this.props.editDish(data);
     this.setState({mode: 'main'});
   }
+
   handleDeleteClick () {
     // console.log('DishesManager | handleDeleteClick', this.state.selectedDish);
     this.props.deleteDish(this.state.selectedDish);
     this.setState({mode: 'main'});
-  }
-  getDishes() {
-    // console.log("DishesManager | getDishes");
-    // TODO: Ajax to fetch
-    const options = {
-      url: 'http://35.156.80.173/WebService1.asmx/getDishes',
-      data: {
-        user_Id: this.props.uid
-      }
-    };
-
-    $.post(options, (data) => {
-      const items = JSON.parse(data).items || [];
-      // console.log('DishesManager | getDishes data', data);
-      // console.log('DishesManager | getDishes items ', items);
-      this.setState({
-        dishes: items
-      });
-      this.props.updateState({dishes: items});
-
-    });
   }
 
   editDish(data) {
@@ -109,9 +79,9 @@ class DishesManager extends React.Component {
   }
 
   render() {
-    console.log('DishesManager | render', this.state);
+    // console.log('DishesManager | render', this.state);
     if (!this.props.appData.data.dishes) {
-      console.log('DishesManager | loading');
+      // console.log('DishesManager | loading');
       return (
         <div>Loading</div>
       )

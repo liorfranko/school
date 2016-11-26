@@ -40,9 +40,9 @@ class App extends React.Component {
 
   }
   updateDishes(data) {
-    console.log('App | updateDishes data', data);
+    // console.log('App | updateDishes data', data);
     const items = JSON.parse(data).items || [];
-    console.log('App | updateDishes', items);
+    // console.log('App | updateDishes', items);
     this.setState({
       data: {dishes: items},
       loading: false
@@ -61,7 +61,7 @@ class App extends React.Component {
   }
 
   getDishes() {
-    console.log("App | getDishes");
+    // console.log("App | getDishes");
     this.setState({loading: true});
     var data = {
       user_Id: this.state.uid
@@ -84,7 +84,7 @@ class App extends React.Component {
   }
 
   addDish(data) {
-    console.log('App | addDish', data);
+    // console.log('App | addDish', data);
     this.setState({loading: true});
     // this.postDataToServer('addDish', '&user_Id=5826fdc1680d800d2064d1da&name=' + this.state['dishName'] + '&description='+this.state['dishDescription'] + '&defaultPrice='+this.state['defaultPrice'])
     var postData = '&name=' + data.dishName + '&description=' + data.dishDescription + '&user_Id=' + this.state.uid + '&defaultPrice=' + data.defaultPrice;
@@ -92,21 +92,21 @@ class App extends React.Component {
   }
 
   deleteDish(dishNum) {
-    console.log('App | deleteDish', this.state.data.dishes);
+    // console.log('App | deleteDish', this.state.data.dishes);
     this.setState({loading: true});
     var postData = '&dish_Id=' + this.state.data.dishes[dishNum]._id + '&user_Id=' + this.state.uid;
     api.postRequest('removeDish', postData, this.getDishes);
     // this.postDataToServer('removeDish', '&dish_Id=' + this.props['dishId'] + '&user_Id=5826fdc1680d800d2064d1da');
   }
   deleteRest(restNum) {
-    console.log('App | deleteRest', restNum);
+    // console.log('App | deleteRest', restNum);
     this.setState({loading: true});
     var postData = '&restaurant_Id=' + this.state.data.rests[restNum]._id + '&user_Id=' + this.state.uid;
     api.postRequest('removeRestaurant', postData, this.getRests);
   }
 
   editDish(data) {
-    console.log('App | editDish', data);
+    // console.log('App | editDish', data);
     this.setState({loading: true});
     var postData = '&dish_Id=' + data.dishId + '&name=' + data.dishName + '&description=' + data.dishDescription + '&default_Price=' + data.defaultPrice;
     api.postRequest('editDish', postData, this.getDishes);

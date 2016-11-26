@@ -16,7 +16,6 @@ class EditDish extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.postDataToServer = this.postDataToServer.bind(this);
   }
 
   handleChange(event) {
@@ -38,25 +37,6 @@ class EditDish extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     this.props.handleClick(this.state);
-    // console.log('EditDish | handleSubmit', this.state);
-    // this.postDataToServer('editDish', '&dish_Id=' + this.state['dishId'] + '&name=' + this.state['dishName'] + '&description='+this.state['dishDescription'] + '&default_Price='+this.state['defaultPrice'])
-  }
-
-  postDataToServer(url, data) {
-    var $ = require ('jquery');
-    $.post({
-      url: 'http://35.156.80.173/WebService1.asmx/'+url,
-      cache: false,
-      data: data,
-      success: function(recData) {
-        // console.log('EditDish | postDataToServer done', recData);
-        this.setState({loading: false});
-        this.props.handleClick();
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(url, status, err.toString());
-      }.bind(this)
-    });
   }
 
   render() {
