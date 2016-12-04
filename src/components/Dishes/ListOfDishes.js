@@ -20,7 +20,7 @@ const ListOfDishes = (props) => {
     });
     console.log(output.join(''));
     console.log('ListOfDishes | options', options);
-    props.updateDishes(options)
+    // props.updateDishes(options)
   };
   var testData = [];
   props.dishes.map((dish) => {

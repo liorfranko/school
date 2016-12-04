@@ -10,6 +10,8 @@ import Popup from '../Popup/popup';
 import EditRestaurant from './EditRestaurant.js';
 import DeleteRestaurant from './DeleteRestaurant.js';
 import AddRestaurant from './AddRestaurant.js';
+import Restaurant from './Restaurant'
+// import AddRestaurant from './AddRestaurant.js';
 import RestMenuManager from '../restMenu/restMenuManager';
 import AddRestMenu from '../restMenu/AddRestMenu';
 import EditRestMenu from '../restMenu/EditRestMenu'
@@ -26,13 +28,14 @@ class RestaurantsManager extends React.Component {
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
     this.handleAddClick = this.handleAddClick.bind(this);
     this.handleEditClick = this.handleEditClick.bind(this);
-    this.handleAddRestMenuClick = this.handleAddRestMenuClick.bind(this);
-    this.handleMenuClick = this.handleMenuClick.bind(this);
+    // this.handleAddRestMenuClick = this.handleAddRestMenuClick.bind(this);
+    // this.handleMenuClick = this.handleMenuClick.bind(this);
     this.exitPopup = this.exitPopup.bind(this);
     this.deleteRest = this.deleteRest.bind(this);
     this.addRest = this.addRest.bind(this);
-    this.editMenu = this.editMenu.bind(this);
-    this.addRestMenu = this.addRestMenu.bind(this);
+    this.openRest = this.openRest.bind(this);
+    // this.editMenu = this.editMenu.bind(this);
+    // this.addRestMenu = this.addRestMenu.bind(this);
   }
 
   componentDidMount() {
@@ -80,19 +83,19 @@ class RestaurantsManager extends React.Component {
     this.setState({mode: 'main'});
   }
 
-  handleAddRestMenuClick(data) {
-    console.log('RestaurantsManager | handleAddRestMenuClick', data);
-    this.props.addRestMenu(data);
-  }
-  handleMenuClick(data) {
-    console.log('RestaurantsManager | handleMenuClick', data);
-    this.props.editRestMenu(data);
-    this.setState({mode: 'main'});
-  }
+  // handleAddRestMenuClick(data) {
+  //   console.log('RestaurantsManager | handleAddRestMenuClick', data);
+  //   this.props.addRestMenu(data);
+  // }
+  // handleMenuClick(data) {
+  //   console.log('RestaurantsManager | handleMenuClick', data);
+  //   this.props.editRestMenu(data);
+  //   this.setState({mode: 'main'});
+  // }
 
   editRest(data) {
     // TODO: Ajax to edit
-    // console.log('RestaurantsManager | editRest', data);
+    console.log('RestaurantsManager | editRest', data);
     this.setState({
       mode: 'edit',
       selectedRes: data
@@ -106,23 +109,30 @@ class RestaurantsManager extends React.Component {
     });
   }
 
-  editMenu(data) {
-    console.log('RestaurantsManager | editMenu, data', data);
+  // editMenu(data) {
+  //   console.log('RestaurantsManager | editMenu, data', data);
+  //   this.setState({
+  //     mode: 'editMenu',
+  //     selectedMenu: data
+  //   });
+  // }
+  //
+  // addRestMenu() {
+  //   console.log('RestaurantsManager | addRestMenu');
+  //   this.setState({
+  //     mode: 'addRestMenu'
+  //   });
+  // }
+  openRest(data) {
+    console.log('RestaurantsManager | openRest, data', data);
     this.setState({
-      mode: 'editMenu',
-      selectedMenu: data
-    });
-  }
-
-  addRestMenu() {
-    console.log('RestaurantsManager | addRestMenu');
-    this.setState({
-      mode: 'addRestMenu'
+      mode: 'restaurant',
+      selectedRes: data
     });
   }
   render() {
-    // console.log('Restaurants Manager | this.props', this.props);
-    // console.log('Restaurants Manager | this.state', this.state);
+    console.log('Restaurants Manager | this.props', this.props);
+    console.log('Restaurants Manager | this.state', this.state);
     if (!this.props.appData.data.rests) {
       // console.log('RestaurantsManager | loading');
       return (
@@ -156,20 +166,9 @@ class RestaurantsManager extends React.Component {
               <AddRestaurant handleClick={this.handleAddClick.bind(this)}/>
             </Popup>
           );
-        case 'editMenu':
+        case 'restaurant':
           return (
-            <Popup exitPopup={this.exitPopup.bind(this)}>
-              <EditRestMenu handleClick={this.handleMenuClick.bind(this)}
-                               restManagerData={this.props}
-                               selectedMenu={this.state.selectedMenu}
-              />
-            </Popup>
-          );
-        case 'addRestMenu':
-          return (
-            <Popup exitPopup={this.exitPopup.bind(this)}>
-              <AddRestMenu handleClick={this.handleAddRestMenuClick.bind(this)} restManagerData={this.props}/>
-            </Popup>
+            <Restaurant data={this.props.appData.data} selectedRest={this.state.selectedRes} getDishes={this.props.getDishes}/>
           );
         default:
           return (
@@ -178,7 +177,7 @@ class RestaurantsManager extends React.Component {
               Restaurants Manager
             </span>
               <ListOfRestaurants rests={this.props.appData.data.rests} editRest={this.editRest}
-                                 deleteRest={this.deleteRest} editMenu={this.editMenu} addRestMenu={this.addRestMenu} getMenu={this.props.getMenus}/>
+                                 deleteRest={this.deleteRest} openRest={this.openRest}/>
               <div onClick={this.addRest}>Add restaurant</div>
             </div>
           );

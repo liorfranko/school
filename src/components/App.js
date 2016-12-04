@@ -58,33 +58,36 @@ class App extends React.Component {
   }
 
   updateMenus(data) {
-    // console.log('App | updateMenus data', data);
+    console.log('App | updateMenus data', data);
     const items = JSON.parse(data).items || [];
     console.log('App | updateMenus items', items);
-    console.log('App | updateMenus this.state.data.rests', this.state.data.rests);
-    var restaurantId = {};
-    items.map((menu, i) => {
-      this.state.data.rests.map ((rest, i) => {
-        if (rest._id === menu.restaurantId) {
-          restaurantId = menu.restaurantId;
-        }
+      this.setState({
+        data: Object.assign({}, this.state.data, {rests: newArray})
       });
-    });
-    console.log('App | updateMenus restaurantId', restaurantId);
-    var newArray = this.state.data.rests.slice();
-    newArray.map((rest, i) => {
-      console.log('App | updateMenus rest', rest);
-      if (restaurantId === rest._id) {
-        console.log('App | updateMenus ===');
-        rest['menus'] = [];
-        items.map((menu, i) => {
-          rest['menus'].push(menu);
-        });
-        // this.setState({
-        //   data: Object.assign({}, this.state.data, {rests: newArray})
-        // });
-      }
-    });
+    // console.log('App | updateMenus this.state.data.rests', this.state.data.rests);
+    // var restaurantId = {};
+    // items.map((menu, i) => {
+    //   this.state.data.rests.map ((rest, i) => {
+    //     if (rest._id === menu.restaurantId) {
+    //       restaurantId = menu.restaurantId;
+    //     }
+    //   });
+    // });
+    // console.log('App | updateMenus restaurantId', restaurantId);
+    // var newArray = this.state.data.rests.slice();
+    // newArray.map((rest, i) => {
+    //   console.log('App | updateMenus rest', rest);
+    //   if (restaurantId === rest._id) {
+    //     console.log('App | updateMenus ===');
+    //     rest['menus'] = [];
+    //     items.map((menu, i) => {
+    //       rest['menus'].push(menu);
+    //     });
+    //     // this.setState({
+    //     //   data: Object.assign({}, this.state.data, {rests: newArray})
+    //     // });
+    //   }
+    // });
       // this.setState({
       //   data: Object.assign({}, this.state.data, {rests: newArray})
       // });
