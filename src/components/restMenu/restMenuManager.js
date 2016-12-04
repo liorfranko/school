@@ -3,33 +3,40 @@
  */
 import React from 'react';
 import ListOfDishes from '../Dishes/ListOfDishes';
+import ListOfRestMenus from './ListOfRestMenus'
 
-class morningMenu extends React.Component {
+class restMenuManager extends React.Component {
   constructor(props) {
     super(props);
     this.componentDidMount = this.componentDidMount.bind(this);
+    this.addRestMenu = this.addRestMenu.bind(this);
   }
 
   componentDidMount() {
-    console.log('morningMenu | componentDidMount', this.props);
+    console.log('restMenuManager | componentDidMount', this.props);
     if (!this.props.restManagerData.appData.data.dishes) {
       this.props.restManagerData.getDishes();
     }
   }
 
-  render () {
-    console.log('morningMenu | props', this.props.restManagerData.appData);
+  addRestMenu() {
+    console.log('restMenuManager | addRestMenu');
+  }
+
+  render() {
+    console.log('restMenuManager | props', this.props.restManagerData.appData);
     var style = {
       display: 'flex',
+      flexWrap: 'wrap',
       flexDirection: 'row',
     };
     var leftStyle = {
-      background: 'black',
+      background: 'green',
       width: '70%',
     };
     var rightStyle = {
-      background: 'red',
-      width: '30%',
+      background: 'blue',
+      width: '30%'
     };
     if (!this.props.restManagerData.appData.data.dishes) {
       console.log('loading');
@@ -40,15 +47,8 @@ class morningMenu extends React.Component {
       return (
         <div>
           {this.props.exit}
-          <div name="menuContainer" style={style}>
-            <div name="menuLeft" style={leftStyle}>
-              morningMenu:
-            </div>
-            <div name="menuRight" style={rightStyle}>
-              Dishes:
-              <ListOfDishes dishes={this.props.restManagerData.appData.data.dishes} type="inMenu"/>
-            </div>
-          </div>
+          Edit Menu:
+
         </div>
       )
     }
@@ -56,4 +56,4 @@ class morningMenu extends React.Component {
   }
 }
 
-export default morningMenu;
+export default restMenuManager;

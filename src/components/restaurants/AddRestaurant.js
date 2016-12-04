@@ -17,6 +17,7 @@ class AddRestaurant extends React.Component {
   }
 
   handleChange(event) {
+    console.log('AddRestaurant | handleChange', event.target);
     this.setState({[event.target.name]: event.target.value});
   }
 

@@ -5,6 +5,7 @@
 import React from 'react';
 import Menu from './menu/Menu';
 import api from '../api/API'
+import 'react-super-select/lib/react-super-select.css';
 
 class App extends React.Component {
   constructor(props) {
@@ -15,49 +16,96 @@ class App extends React.Component {
       data: {},
       loading: true
     };
+     var restaurantId = null;
 
-    // this.updateState = this.updateState.bind(this);
     this.updateRest = this.updateRest.bind(this);
     this.updateDishes = this.updateDishes.bind(this);
+    this.updateMenus = this.updateMenus.bind(this);
+
     this.getRests = this.getRests.bind(this);
     this.getDishes = this.getDishes.bind(this);
+    this.getMenus = this.getMenus.bind(this);
+
     this.deleteRest = this.deleteRest.bind(this);
-    this.addRest = this.addRest.bind(this);
-    this.editRest = this.editRest.bind(this);
-    this.addDish = this.addDish.bind(this);
     this.deleteDish = this.deleteDish.bind(this);
+
+    this.addRest = this.addRest.bind(this);
+    this.addDish = this.addDish.bind(this);
+    this.addRestMenu = this.addRestMenu.bind(this);
+
     this.editDish = this.editDish.bind(this);
+    this.editRest = this.editRest.bind(this);
+    this.editRestMenu = this.editRestMenu.bind(this);
   }
 
   updateRest(data) {
-    console.log('App | updateRest data', data);
+    // console.log('App | updateRest data', data);
     const items = JSON.parse(data).items || [];
-    console.log('App | updateRest', items);
+    // console.log('App | updateRest', items);
     this.setState({
-      // data: {rests: items},
       data: Object.assign({}, this.state.data, {rests: items}),
       loading: false
     });
-
   }
+
   updateDishes(data) {
     // console.log('App | updateDishes data', data);
     const items = JSON.parse(data).items || [];
     // console.log('App | updateDishes', items);
-    //data: Object.assign({}, this.state.data, data)
-
     this.setState({
-      // data: Object.assign({}, this.state.data, items),
-      data: Object.assign({}, this.state.data, {dishes: items}),
-      // data: {dishes: items},
-      loading: false
+      data: Object.assign({}, this.state.data, {dishes: items})
     });
-
   }
 
+  updateMenus(data) {
+    // console.log('App | updateMenus data', data);
+    const items = JSON.parse(data).items || [];
+    console.log('App | updateMenus items', items);
+    console.log('App | updateMenus this.state.data.rests', this.state.data.rests);
+    var restaurantId = {};
+    items.map((menu, i) => {
+      this.state.data.rests.map ((rest, i) => {
+        if (rest._id === menu.restaurantId) {
+          restaurantId = menu.restaurantId;
+        }
+      });
+    });
+    console.log('App | updateMenus restaurantId', restaurantId);
+    var newArray = this.state.data.rests.slice();
+    newArray.map((rest, i) => {
+      console.log('App | updateMenus rest', rest);
+      if (restaurantId === rest._id) {
+        console.log('App | updateMenus ===');
+        rest['menus'] = [];
+        items.map((menu, i) => {
+          rest['menus'].push(menu);
+        });
+        // this.setState({
+        //   data: Object.assign({}, this.state.data, {rests: newArray})
+        // });
+      }
+    });
+      // this.setState({
+      //   data: Object.assign({}, this.state.data, {rests: newArray})
+      // });
+    // items.map((menu, i) => {
+    //   var newArray = this.state.data.rests.slice();
+    //   newArray.map((rest, i) => {
+    //     if (!rest['menus']) {
+    //       rest['menus'] = []
+    //     }
+    //     if (rest._id === menu.restaurantId) {
+    //       rest['menus'].push(menu);
+    //     }
+    //   });
+    //   this.setState({
+    //     data: Object.assign({}, this.state.data, {rests: newArray})
+    //   });
+    // });
+  }
 
   getRests() {
-    // console.log("App | getRests");
+    // console.log("App | getRests", this.state);
     this.setState({loading: true});
     var data = {
       user_Id: this.state.uid
@@ -66,7 +114,7 @@ class App extends React.Component {
   }
 
   getDishes() {
-    console.log("App | getDishes");
+    // console.log("App | getDishes");
     this.setState({loading: true});
     var data = {
       user_Id: this.state.uid
@@ -74,11 +122,38 @@ class App extends React.Component {
     api.postRequest('getDishes', data, this.updateDishes);
   }
 
-  editRest(data) {
-    // console.log('App | editRest', data);
+  getMenus(restaurant_Id) {
+    // console.log("App | getMenus, restaurant_Id", restaurant_Id);
+    // console.log("App | getMenus, this.restaurantId", this.restaurantId);
+    // this.setState({loading: true});
+    // this.restaurantId = restaurant_Id;
+    var data = {};
+    if (typeof this.restaurantId != 'undefined') {
+      data = {
+        restaurant_Id: this.restaurantId
+      };
+    } else {
+      data = {
+        restaurant_Id: restaurant_Id
+      };
+    }
+    // console.log("App | getMenus, data", data);
+    api.postRequest('getMenus', data, this.updateMenus);
+  }
+
+  deleteDish(dishNum) {
+    // console.log('App | deleteDish', this.state.data.dishes);
     this.setState({loading: true});
-    var postData = '&restaurant_Id=' + data.resId + '&name=' + data.resName + '&address=' + data.resAddress;
-    api.postRequest('editRestaurant', postData, this.getRests);
+    var postData = '&dish_Id=' + this.state.data.dishes[dishNum]._id + '&user_Id=' + this.state.uid;
+    api.postRequest('removeDish', postData, this.getDishes);
+    // this.postDataToServer('removeDish', '&dish_Id=' + this.props['dishId'] + '&user_Id=5826fdc1680d800d2064d1da');
+  }
+
+  deleteRest(restNum) {
+    // console.log('App | deleteRest', restNum);
+    this.setState({loading: true});
+    var postData = '&restaurant_Id=' + this.state.data.rests[restNum]._id + '&user_Id=' + this.state.uid;
+    api.postRequest('removeRestaurant', postData, this.getRests);
   }
 
   addRest(data) {
@@ -96,18 +171,17 @@ class App extends React.Component {
     api.postRequest('addDish', postData, this.getDishes);
   }
 
-  deleteDish(dishNum) {
-    // console.log('App | deleteDish', this.state.data.dishes);
-    this.setState({loading: true});
-    var postData = '&dish_Id=' + this.state.data.dishes[dishNum]._id + '&user_Id=' + this.state.uid;
-    api.postRequest('removeDish', postData, this.getDishes);
-    // this.postDataToServer('removeDish', '&dish_Id=' + this.props['dishId'] + '&user_Id=5826fdc1680d800d2064d1da');
+  addRestMenu(data) {
+    console.log('App | addRestMenu', data);
+    // var postData = '&name=' + data.dishName + '&menu_id=' + data.dishDescription;
+    // api.postRequest('addSubMenu', postData, this.getDishes);
   }
-  deleteRest(restNum) {
-    // console.log('App | deleteRest', restNum);
+
+  editRest(data) {
+    // console.log('App | editRest', data);
     this.setState({loading: true});
-    var postData = '&restaurant_Id=' + this.state.data.rests[restNum]._id + '&user_Id=' + this.state.uid;
-    api.postRequest('removeRestaurant', postData, this.getRests);
+    var postData = '&restaurant_Id=' + data.resId + '&name=' + data.resName + '&address=' + data.resAddress;
+    api.postRequest('editRestaurant', postData, this.getRests);
   }
 
   editDish(data) {
@@ -115,9 +189,16 @@ class App extends React.Component {
     this.setState({loading: true});
     var postData = '&dish_Id=' + data.dishId + '&name=' + data.dishName + '&description=' + data.dishDescription + '&default_Price=' + data.defaultPrice;
     api.postRequest('editDish', postData, this.getDishes);
-    // this.postDataToServer('editDish', '&dish_Id=' + this.state['dishId'] + '&name=' + this.state['dishName'] + '&description='+this.state['dishDescription'] + '&default_Price='+this.state['defaultPrice'])
 
   }
+
+  editRestMenu(data) {
+    console.log('App | editRestMenu, data.restaurantId', data.restaurantId);
+    var postData = '&menu_Id=' + data.restMenuId + '&name=' + data.restMenuName;
+    this.restaurantId = data.restaurantId;
+    api.postRequest('editMenu', postData, this.getMenus);
+  }
+
 
   render() {
     // console.log('App.js | this.state', this.state);
@@ -131,12 +212,15 @@ class App extends React.Component {
           appData: this.state,
           getRests: this.getRests,
           getDishes: this.getDishes,
-          deleteRest: this.deleteRest,
+          getMenus: this.getMenus,
           addRest: this.addRest,
-          editRest: this.editRest,
           addDish: this.addDish,
-          deleteDish: this.deleteDish,
+          addRestMenu: this.addRestMenu,
+          editRest: this.editRest,
           editDish: this.editDish,
+          editRestMenu: this.editRestMenu,
+          deleteRest: this.deleteRest,
+          deleteDish: this.deleteDish,
         }))}
         <div>Footer - links, & other shit</div>
       </div>

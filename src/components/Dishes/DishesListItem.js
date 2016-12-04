@@ -9,7 +9,7 @@
 import React from 'react';
 
 const DishesListItem = (props) => {
-  // console.log("DishesListItem | ", props);
+  console.log("DishesListItem | ", props);
   function onEditClick() {
     // console.log('DishesListItem | onEditClick');
     props.editDish(props.dishNum)
@@ -19,7 +19,6 @@ const DishesListItem = (props) => {
     // console.log('DishesListItem | onDeleteClick');
     props.deleteDish(props.dishNum)
   }
-
   return (
     <li className="dishItem list-group-item">
       <div className="innerItem name">
@@ -39,6 +38,8 @@ const DishesListItem = (props) => {
       </div>
     </li>
   );
+
+
 };
 
 DishesListItem.PropTypes = {
