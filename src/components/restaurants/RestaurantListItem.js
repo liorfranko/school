@@ -30,18 +30,18 @@ const RestaurantListItem = (props) => {
   }
   return (
     <li className="restItem list-group-item">
-      <div className="innerItem name" onClick={onOpenClick.bind(this)}>
+      <a className="innerItem name" onClick={onOpenClick.bind(this)}>
         {props.item.name}
-      </div>
+      </a>
       <div className="innerItem address">
         {props.item.address}
       </div>
-      <div className="innerItem delete" onClick={onDeleteClick.bind(this)}>
+      <a className="innerItem delete" onClick={onDeleteClick.bind(this)}>
         del
-      </div>
-      <div className="innerItem edit" onClick={onEditClick.bind(this)}>
+      </a>
+      <a className="innerItem edit" onClick={onEditClick.bind(this)}>
         edit
-      </div>
+      </a>
       {/*<div>*/}
         {/*Menus*/}
       {/*</div>*/}

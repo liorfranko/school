@@ -4,21 +4,10 @@
 import React from 'react';
 import DishesListItem from './DishesListItem';
 import ReactSuperSelect from 'react-super-select'
-import _ from 'lodash';
 
 const ListOfDishes = (props) => {
-  console.log('ListOfDishes | props', props);
-
+  // console.log('ListOfDishes | props', props);
   var handlerExample = function (options) {
-    var output = [];
-    _.map(options, function (option) {
-      output = output.concat([
-        'Multiselect Chosen Option = {\n',
-        '\tid: ', option.id, '\n',
-        '\tname: ', option.name, '\n',
-        '\tsize: ', option.size, '\n\t};']);
-    });
-    console.log(output.join(''));
     console.log('ListOfDishes | options', options);
     // props.updateDishes(options)
   };

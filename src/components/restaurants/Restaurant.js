@@ -19,46 +19,54 @@ class Restaurant extends React.Component {
     this.getMenus = this.getMenus.bind(this);
     this.updateMenus = this.updateMenus.bind(this);
     this.editRestMenu = this.editRestMenu.bind(this);
+    this.addRestMenu = this.addRestMenu.bind(this);
   }
 
   componentDidMount() {
-    console.log('Restaurant | componentDidMount', this.props);
+    // console.log('Restaurant | componentDidMount', this.props);
     if (!this.props.data.dishes) {
       this.props.getDishes();
     }
     if (!this.state.data.menus) {
-      this.getMenus(this.props.data.rests[this.props.selectedRest]._id);
+      this.getMenus();
     }
   }
 
-  getMenus(restaurant_Id) {
-    console.log("Restaurant | getMenus, restaurant_Id", restaurant_Id);
+  getMenus() {
+    // console.log("Restaurant | getMenus, this.props.data.rests", this.props.data.rests);
     var data = {
-      restaurant_Id: restaurant_Id
+      restaurant_Id: this.props.data.rests[this.props.selectedRest]._id
     };
-    console.log("Restaurant | getMenus, data", data);
+    // console.log("Restaurant | getMenus, data", data);
     api.postRequest('getMenus', data, this.updateMenus);
   }
 
   updateMenus(data) {
-    console.log('Restaurant | updateMenus data', data);
+    // console.log('Restaurant | updateMenus data', data);
     const items = JSON.parse(data).items || [];
-    console.log('Restaurant | updateMenus items', items);
+    // console.log('Restaurant | updateMenus items', items);
     this.setState({
       data: Object.assign({}, this.state.data, {menus: items})
     });
   }
 
   editRestMenu(data) {
-    console.log('App | editRestMenu, data.restaurantId', data.restaurantId);
+    // console.log('App | editRestMenu, data.restaurantId', data.restaurantId);
     var postData = '&menu_Id=' + data.restMenuId + '&name=' + data.restMenuName;
     this.restaurantId = data.restaurantId;
     api.postRequest('editMenu', postData, this.getMenus);
   }
 
+  addRestMenu(data) {
+    // console.log('Restaurant | addRestMenu', data);
+    // console.log('Restaurant | this.props', this.props);
+    var postData = '&name=' + data.resMenuName + '&restaurant_Id=' + this.props.data.rests[this.props.selectedRest]._id;
+    api.postRequest('addMenu', postData, this.getMenus);
+  }
+
   render() {
-    console.log('Restaurant | render |this.props', this.props);
-    console.log('Restaurant | render |this.state', this.state);
+    // console.log('Restaurant | render |this.props', this.props);
+    // console.log('Restaurant | render |this.state', this.state);
     if (!this.props.data.dishes || !this.state.data.menus) {
       return (
         <div>Loading</div>
@@ -66,11 +74,8 @@ class Restaurant extends React.Component {
     } else {
       var rest = this.props.data.rests[this.props.selectedRest];
       return (
-        <div> Restaurant:
-          <div>
-            {rest.name}
-          </div>
-          <RestMenuManager rest={rest} menus={this.state.data.menus}/>
+        <div> Restaurant name:  {rest.name}
+          <RestMenuManager rest={rest} menus={this.state.data.menus} addRestMenu={this.addRestMenu}/>
           <ListOfDishes  dishes={this.props.data.dishes} type="inMenu"/>
         </div>
       )

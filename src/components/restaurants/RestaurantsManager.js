@@ -124,15 +124,15 @@ class RestaurantsManager extends React.Component {
   //   });
   // }
   openRest(data) {
-    console.log('RestaurantsManager | openRest, data', data);
+    // console.log('RestaurantsManager | openRest, data', data);
     this.setState({
       mode: 'restaurant',
       selectedRes: data
     });
   }
   render() {
-    console.log('Restaurants Manager | this.props', this.props);
-    console.log('Restaurants Manager | this.state', this.state);
+    // console.log('Restaurants Manager | this.props', this.props);
+    // console.log('Restaurants Manager | this.state', this.state);
     if (!this.props.appData.data.rests) {
       // console.log('RestaurantsManager | loading');
       return (
@@ -178,7 +178,7 @@ class RestaurantsManager extends React.Component {
             </span>
               <ListOfRestaurants rests={this.props.appData.data.rests} editRest={this.editRest}
                                  deleteRest={this.deleteRest} openRest={this.openRest}/>
-              <div onClick={this.addRest}>Add restaurant</div>
+              <a onClick={this.addRest}>Add restaurant</a>
             </div>
           );
       }

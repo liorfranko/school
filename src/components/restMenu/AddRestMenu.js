@@ -9,19 +9,12 @@ class AddRestMenu extends React.Component {
     console.log('AddRestMenu | constructor');
     super(props);
     this.state = {
-      restMenuName: '',
-      dishes:[]
+      resMenuName: '',
     };
+
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.updateDishes = this.updateDishes.bind(this);
-  }
-
-  componentDidMount() {
-    console.log('AddRestMenu | componentDidMount', this.props);
-    if (!this.props.restManagerData.appData.data.dishes) {
-      this.props.restManagerData.getDishes();
-    }
   }
 
   handleChange(event) {
@@ -47,59 +40,22 @@ class AddRestMenu extends React.Component {
   render() {
     console.log('AddRestMenu | props', this.props);
     console.log('AddRestMenu | state', this.state);
-    var style = {
-      display: 'flex',
-      flexWrap: 'wrap',
-      flexDirection: 'row',
-    };
-    var leftStyle = {
-      background: 'green',
-      width: '70%',
-    };
-    var rightStyle = {
-      background: 'blue',
-      width: '30%'
-    };
-    if (!this.props.restManagerData.appData.data.dishes) {
-      console.log('AddRestMenu | loading');
-      return (
-        <div>Loading</div>
-      )
-    } else {
-      return (
+    return (
+      <div>
+        {this.props.exit}
+        <div>Adding new Menu</div>
         <div>
-          {this.props.exit}
-          <div>Adding new Menu</div>
-          <div name="menuContainer" style={style}>
-            <div name="menuLeft" style={leftStyle}>
-              <form onSubmit={this.handleSubmit}>
-                <label>
-                  <div>Menu Name:
-                    <input type="text" name="restMenuName" value={this.state.restMenuName} onChange={this.handleChange}
-                           required/>
-                  </div>
-                  <div>Dishes:</div>
-                  {
-                    this.state.dishes.map((dish, i) => {
-                      console.log('dish | ', dish);
-                      return (
-                        <div key={i}>{dish[i].name}</div>
-                      );
-                    })
-                  }
-                </label>
-                <input type="submit" value="Submit"/>
-              </form>
-            </div>
-            <div name="menuRight" style={rightStyle}>
-              Dishes:
-              <ListOfDishes dishes={this.props.restManagerData.appData.data.dishes} type="inMenu"
-                            updateDishes={this.updateDishes}/>
-            </div>
-          </div>
+          <form onSubmit={this.handleSubmit}>
+            <label>
+              <div>Menu Name:
+                <input type="text" name="resMenuName" value={this.state.resMenuName} onChange={this.handleChange} required/>
+              </div>
+            </label>
+            <input type="submit" value="Submit"/>
+          </form>
         </div>
-      )
-    }
+      </div>
+    )
   }
 }
 

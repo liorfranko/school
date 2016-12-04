@@ -7,23 +7,16 @@ import React from 'react';
 const restMenuListItem = (props) => {
   // console.log("restMenuListItem | ", props);
   function onEditClick() {
-    console.log('restMenuListItem | onEditClick');
-    props.editRest(props.resNum)
+    console.log('restMenuListItem | onEditClick, props', props);
+    props.editRestMenu(props)
   }
-
-  function onDeleteClick() {
-    console.log('restMenuListItem | onDeleteClick');
-    props.deleteRest(props.resNum)
-  }
-
-  function editMenu() {
-    console.log('restMenuListItem | editMenu, props', props);
-    props.editMenu(props.item);
-  }
+  var style = {
+    display: 'block'
+  };
   return (
-    <div className="innerItem name" onClick={editMenu.bind(this)}>
+    <a className="innerItem name" onClick={onEditClick.bind(this)} style={style}>
       {props.item.name}
-    </div>
+    </a>
   );
 };
 

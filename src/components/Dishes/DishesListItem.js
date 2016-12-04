@@ -30,12 +30,12 @@ const DishesListItem = (props) => {
       <div className="innerItem Price">
         {props.item.defaultPrice}
       </div>
-      <div className="innerItem delete" onClick={onDeleteClick.bind(this)}>
+      <a className="innerItem delete" onClick={onDeleteClick.bind(this)}>
         del
-      </div>
-      <div className="innerItem edit" onClick={onEditClick.bind(this)}>
+      </a>
+      <a className="innerItem edit" onClick={onEditClick.bind(this)}>
         edit
-      </div>
+      </a>
     </li>
   );
 
