@@ -11,6 +11,7 @@ import api from '../../api/API'
 class Restaurant extends React.Component {
 
   constructor(props) {
+    console.log('Restaurant | constructor | this.props', props);
     super(props);
     this.state = {
       data: {}
@@ -24,7 +25,7 @@ class Restaurant extends React.Component {
 
   componentDidMount() {
     // console.log('Restaurant | componentDidMount', this.props);
-    if (!this.props.data.dishes) {
+    if (!this.props.appData.data.dishes) {
       this.props.getDishes();
     }
     if (!this.state.data.menus) {
@@ -35,7 +36,7 @@ class Restaurant extends React.Component {
   getMenus() {
     // console.log("Restaurant | getMenus, this.props.data.rests", this.props.data.rests);
     var data = {
-      restaurant_Id: this.props.data.rests[this.props.selectedRest]._id
+      restaurant_Id: this.props.appData.data.rests[this.props.params.restNum]._id
     };
     // console.log("Restaurant | getMenus, data", data);
     api.postRequest('getMenus', data, this.updateMenus);
@@ -58,25 +59,25 @@ class Restaurant extends React.Component {
   }
 
   addRestMenu(data) {
-    // console.log('Restaurant | addRestMenu', data);
-    // console.log('Restaurant | this.props', this.props);
-    var postData = '&name=' + data.resMenuName + '&restaurant_Id=' + this.props.data.rests[this.props.selectedRest]._id;
+    console.log('Restaurant | addRestMenu', data);
+    console.log('Restaurant | this.props', this.props);
+    var postData = '&name=' + data.resMenuName + '&restaurant_Id=' + this.props.appData.data.rests[this.props.params.restNum]._id;
     api.postRequest('addMenu', postData, this.getMenus);
   }
 
   render() {
-    // console.log('Restaurant | render |this.props', this.props);
-    // console.log('Restaurant | render |this.state', this.state);
-    if (!this.props.data.dishes || !this.state.data.menus) {
+    console.log('Restaurant | render |this.props', this.props);
+    console.log('Restaurant | render |this.state', this.state);
+    if (!this.props.appData.data.dishes || !this.state.data.menus) {
       return (
         <div>Loading</div>
       )
     } else {
-      var rest = this.props.data.rests[this.props.selectedRest];
+      var rest = this.props.appData.data.rests[this.props.params.restNum];
       return (
         <div> Restaurant name:  {rest.name}
           <RestMenuManager rest={rest} menus={this.state.data.menus} addRestMenu={this.addRestMenu}/>
-          <ListOfDishes  dishes={this.props.data.dishes} type="inMenu"/>
+          <ListOfDishes  dishes={this.props.appData.data.dishes} type="inMenu"/>
         </div>
       )
     }

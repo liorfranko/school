@@ -5,12 +5,12 @@ import React from 'react';
 
 class EditRestMenu extends React.Component {
   constructor(props) {
-    console.log('EditRestMenu | constructor, props', props.selectedMenu);
+    console.log('EditRestMenu | constructor, props', props);
     super(props);
     this.state = {
-      restMenuName: this.props.selectedMenu.name,
-      restMenuId: this.props.selectedMenu._id,
-      restaurantId: this.props.selectedMenu.restaurantId
+      restMenuName: this.props.rest.name,
+      restMenuId: this.props.rest._id,
+      restaurantId: this.props.rest.restaurantId
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);

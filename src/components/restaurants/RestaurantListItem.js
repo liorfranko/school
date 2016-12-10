@@ -4,6 +4,8 @@
 
 "use strict";
 import React from 'react';
+import {Link} from 'react-router';
+import { IndexLink } from 'react-router'
 // import ListOfRestMenus from '../restMenu/ListOfRestMenus'
 
 const RestaurantListItem = (props) => {
@@ -30,9 +32,13 @@ const RestaurantListItem = (props) => {
   }
   return (
     <li className="restItem list-group-item">
-      <a className="innerItem name" onClick={onOpenClick.bind(this)}>
-        {props.item.name}
-      </a>
+      <div className="innerItem name">
+        <IndexLink to={`/rest/${props.resNum}`}>{props.item.name}</IndexLink>
+      </div>
+
+      {/*<a className="innerItem name" onClick={onOpenClick.bind(this)}>*/}
+        {/**/}
+      {/*</a>*/}
       <div className="innerItem address">
         {props.item.address}
       </div>

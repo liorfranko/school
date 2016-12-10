@@ -180,6 +180,7 @@ class RestaurantsManager extends React.Component {
                                  deleteRest={this.deleteRest} openRest={this.openRest}/>
               <a onClick={this.addRest}>Add restaurant</a>
             </div>
+
           );
       }
     }

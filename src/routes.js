@@ -8,6 +8,7 @@ import {Router, Route, browserHistory, IndexRoute} from 'react-router';
 import App from './components/App';
 import Homepage from './components/homepage/Homepage';
 import Restaurants from './components/restaurants/RestaurantsManager';
+import Restaurant from './components/restaurants/Restaurant';
 import Dishes from './components/Dishes/DishesManager';
 // import DishesManager
 
@@ -17,8 +18,10 @@ export default class Routes extends Component {
       <Router history={browserHistory}>
         <Route path="/" component={App}>
           <IndexRoute component={Homepage}/>
-          <Route path="rests" component={Restaurants} />
-          <Route path="dishes" component={Dishes} />
+          {/*<IndexRoute component={Restaurants}/>*/}
+          <Route path="rests" component={Restaurants}/>
+          <Route path="rest/:restNum" component={Restaurant}/>
+          <Route path="dishes" component={Dishes}/>
         </Route>
       </ Router>
     );

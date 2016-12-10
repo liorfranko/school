@@ -4,6 +4,7 @@
 import React from 'react';
 import ListOfRestMenus from './ListOfRestMenus';
 import AddRestMenu from './AddRestMenu'
+import EditRestMenu from './EditRestMenu'
 import Popup from '../Popup/popup';
 
 class restMenuManager extends React.Component {
@@ -16,6 +17,7 @@ class restMenuManager extends React.Component {
     this.handleAddClick = this.handleAddClick.bind(this);
     this.state = {
       mode: 'main',
+      rest: {}
     }
   }
   exitPopup() {
@@ -32,17 +34,21 @@ class restMenuManager extends React.Component {
   };
   editRestMenu(data) {
     console.log('restMenuManager | editRestMenu | data', data);
+    var copy = Object.assign({}, data.item);
+    this.setState({mode: 'edit', rest: data.item});
 
   };
   handleAddClick(data) {
-    // console.log('restMenuManager | handleAddClick');
+    console.log('restMenuManager | handleAddClick');
     this.props.addRestMenu(data);
+
+    // console.log('')
     this.setState({mode: 'main'});
   }
 
   render() {
     // console.log('restMenuManager | props', this.props);
-    // console.log('restMenuManager | this.state', this.state);
+    console.log('restMenuManager | this.state', this.state);
     var style = {
       display: 'flex',
       flexWrap: 'wrap',
@@ -61,6 +67,12 @@ class restMenuManager extends React.Component {
         return (
           <Popup exitPopup={this.exitPopup.bind(this)}>
             <AddRestMenu handleClick={this.handleAddClick.bind(this)}/>
+          </Popup>
+        );
+      case 'edit':
+        return (
+          <Popup exitPopup={this.exitPopup.bind(this)}>
+            <EditRestMenu handleClick={this.handleAddClick.bind(this)}  rest={this.state.rest}/>
           </Popup>
         );
       default:
