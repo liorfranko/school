@@ -71,16 +71,6 @@ class RestaurantsManager extends React.Component {
     this.setState({mode: 'main'});
   }
 
-  // handleAddRestMenuClick(data) {
-  //   console.log('RestaurantsManager | handleAddRestMenuClick', data);
-  //   this.props.addRestMenu(data);
-  // }
-  // handleMenuClick(data) {
-  //   console.log('RestaurantsManager | handleMenuClick', data);
-  //   this.props.editRestMenu(data);
-  //   this.setState({mode: 'main'});
-  // }
-
   editRest(data) {
     console.log('RestaurantsManager | editRest', data);
     this.setState({
@@ -97,6 +87,7 @@ class RestaurantsManager extends React.Component {
   }
 
   openRest(data) {
+    //Need to check if to delete
     // console.log('RestaurantsManager | openRest, data', data);
     this.setState({
       mode: 'restaurant',

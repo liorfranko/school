@@ -7,15 +7,21 @@ import {Link} from 'react-router';
 
 const restMenuListItem = (props) => {
   // console.log("restMenuListItem | ", props);
-  function onEditClick() {
-    // console.log('restMenuListItem | onEditClick, props', props);
-    props.editRestMenu(props)
+  function onDeleteClick() {
+    console.log('restMenuListItem | onDeleteClick, props', props);
+    props.deleteRestMenu(props.item)
   }
+
   return (
     <li className="menuItem list-group-item">
       <div className="innerItem name">
         <Link to={`/rest/${props.rest.name}/menu/${props.item.name}`}>{props.item.name}</Link>
       </div>
+      <a className="innerItem delete" onClick={onDeleteClick.bind(this)}>
+        del
+      </a>
+      <div className="innerItem name"> delete</div>
+
     </li>
   );
 };

@@ -11,7 +11,7 @@ class RestMenu extends React.Component {
   }
 
   addSubMenu() {
-    console.log('RestMenu | addSubmenu | this.props', this.props)
+    console.log('RestMenu | addSubmenu | this.props', this.props);
     this.addSubMenu('test');
   }
   render() {

@@ -19,12 +19,6 @@ const RestaurantListItem = (props) => {
     props.deleteRest(props.resNum)
   }
 
-  function onOpenClick() {
-    props.openRest(props.resNum)
-  }
-  // function addRestMenu() {
-  //   props.addRestMenu();
-  // }
   return (
     <li className="restItem list-group-item">
       <div className="innerItem name">

@@ -8,13 +8,13 @@ import React from 'react';
 import RestMenuListItem from './restMenuListItem';
 
 const ListOfRestMenus = (props) => {
-  // console.log('ListOfRestMenus |', props);
+  console.log('ListOfRestMenus |', props);
   return (
     <ul className="restMenuList list-group">
       {
         props.menus.map((menu, i) => {
           return (
-            <RestMenuListItem key={i} item={menu} editRestMenu={props.editRestMenu} rest={props.rest}/>
+            <RestMenuListItem key={i} item={menu} deleteRestMenu={props.deleteRestMenu} rest={props.rest}/>
           );
         })
       }

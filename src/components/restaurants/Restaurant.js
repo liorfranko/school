@@ -42,7 +42,7 @@ class Restaurant extends React.Component {
       } else {
         return (
           <div> Restaurant name:  {this.props.appData.data.rests[rest].name}
-            <RestMenuManager rest={this.props.appData.data.rests[rest]} menus={this.props.appData.data.rests[rest].menus} addRestMenu={this.props.addRestMenu}/>
+            <RestMenuManager rest={this.props.appData.data.rests[rest]} menus={this.props.appData.data.rests[rest].menus} addRestMenu={this.props.addRestMenu} deleteRestMenu={this.props.deleteRestMenu}/>
             {/*<ListOfDishes  dishes={this.props.appData.data.dishes} type="inMenu"/>*/}
           </div>
         )

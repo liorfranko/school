@@ -4,21 +4,21 @@
 import React from 'react';
 import ListOfRestMenus from './ListOfRestMenus';
 import AddRestMenu from './AddRestMenu'
-import EditRestMenu from './EditRestMenu'
+import DeleteRestMenu from './DeleteRestMenu'
 import Popup from '../Popup/popup';
 import './restMenu.styl';
 
 class restMenuManager extends React.Component {
   constructor(props) {
-    // console.log('restMenuManager | constructor', props);
+    console.log('restMenuManager | constructor', props);
     super(props);
     this.exitPopup = this.exitPopup.bind(this);
     this.addRestMenu = this.addRestMenu.bind(this);
-    this.editRestMenu = this.editRestMenu.bind(this);
+    this.deleteRestMenu = this.deleteRestMenu.bind(this);
     this.handleAddClick = this.handleAddClick.bind(this);
+    this.handleDeleteClick = this.handleDeleteClick.bind(this);
     this.state = {
-      mode: 'main',
-      rest: {}
+      mode: 'main'
     }
   }
   exitPopup() {
@@ -30,12 +30,17 @@ class restMenuManager extends React.Component {
   addRestMenu() {
     // console.log('restMenuManager | addRestMenu');
     this.setState({
-      mode: 'add'
+      mode: 'add',
+      chosenMenu: null
     });
   };
-  editRestMenu(data) {
-    // console.log('restMenuManager | editRestMenu | data', data);
-    this.setState({mode: 'edit', rest: data.item});
+
+  deleteRestMenu(data) {
+    console.log('restMenuManager | deleteRestMenu | data', data);
+    this.setState({
+      mode: 'delete',
+      chosenMenu: data
+    });
 
   };
   handleAddClick(...data) {
@@ -44,6 +49,11 @@ class restMenuManager extends React.Component {
     this.setState({mode: 'main'});
   }
 
+  handleDeleteClick(...data) {
+    console.log('restMenuManager | handleDeleteClick this.props', data);
+    this.props.deleteRestMenu(...data);
+    this.setState({mode: 'main'});
+  }
   render() {
     // console.log('restMenuManager | props', this.props);
     // console.log('restMenuManager | this.state', this.state);
@@ -54,17 +64,17 @@ class restMenuManager extends React.Component {
             <AddRestMenu handleClick={this.handleAddClick.bind(this)} rest={this.props.rest}/>
           </Popup>
         );
-      case 'edit':
+      case 'delete':
         return (
           <Popup exitPopup={this.exitPopup.bind(this)}>
-            <EditRestMenu handleClick={this.handleAddClick.bind(this)}  rest={this.state.rest}/>
+            <DeleteRestMenu handleClick={this.handleDeleteClick.bind(this)}  rest={this.props.rest} chosenMenu={this.state.chosenMenu}/>
           </Popup>
         );
       default:
         return (
           <div id="restMenu">
             Menus:
-            <ListOfRestMenus menus={this.props.menus} editRestMenu={this.editRestMenu} rest={this.props.rest}/>
+            <ListOfRestMenus menus={this.props.menus} deleteRestMenu={this.deleteRestMenu} rest={this.props.rest}/>
             <a onClick={this.addRestMenu}>Add Menu</a>
           </div>
         )
