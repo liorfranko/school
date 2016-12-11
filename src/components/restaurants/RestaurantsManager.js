@@ -11,10 +11,6 @@ import EditRestaurant from './EditRestaurant.js';
 import DeleteRestaurant from './DeleteRestaurant.js';
 import AddRestaurant from './AddRestaurant.js';
 import Restaurant from './Restaurant'
-// import AddRestaurant from './AddRestaurant.js';
-import RestMenuManager from '../restMenu/restMenuManager';
-import AddRestMenu from '../restMenu/AddRestMenu';
-import EditRestMenu from '../restMenu/EditRestMenu'
 
 class RestaurantsManager extends React.Component {
   constructor(props) {
@@ -28,25 +24,17 @@ class RestaurantsManager extends React.Component {
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
     this.handleAddClick = this.handleAddClick.bind(this);
     this.handleEditClick = this.handleEditClick.bind(this);
-    // this.handleAddRestMenuClick = this.handleAddRestMenuClick.bind(this);
-    // this.handleMenuClick = this.handleMenuClick.bind(this);
     this.exitPopup = this.exitPopup.bind(this);
     this.deleteRest = this.deleteRest.bind(this);
     this.addRest = this.addRest.bind(this);
     this.openRest = this.openRest.bind(this);
-    // this.editMenu = this.editMenu.bind(this);
-    // this.addRestMenu = this.addRestMenu.bind(this);
   }
 
   componentDidMount() {
     // console.log('RestaurantsManager | componentDidMount', this.props);
-    if (!this.props.appData.rests) {
+    if (!this.props.appData.data.rests) {
       this.props.getRests();
     }
-    // if (!this.props.appData.menus) {
-    //   this.props.getMenus();
-    // }
-
   }
 
   exitPopup() {
@@ -94,7 +82,6 @@ class RestaurantsManager extends React.Component {
   // }
 
   editRest(data) {
-    // TODO: Ajax to edit
     console.log('RestaurantsManager | editRest', data);
     this.setState({
       mode: 'edit',
@@ -109,20 +96,6 @@ class RestaurantsManager extends React.Component {
     });
   }
 
-  // editMenu(data) {
-  //   console.log('RestaurantsManager | editMenu, data', data);
-  //   this.setState({
-  //     mode: 'editMenu',
-  //     selectedMenu: data
-  //   });
-  // }
-  //
-  // addRestMenu() {
-  //   console.log('RestaurantsManager | addRestMenu');
-  //   this.setState({
-  //     mode: 'addRestMenu'
-  //   });
-  // }
   openRest(data) {
     // console.log('RestaurantsManager | openRest, data', data);
     this.setState({

@@ -5,7 +5,6 @@
 "use strict";
 import React from 'react';
 import {Link} from 'react-router';
-import { IndexLink } from 'react-router'
 // import ListOfRestMenus from '../restMenu/ListOfRestMenus'
 
 const RestaurantListItem = (props) => {
@@ -23,22 +22,14 @@ const RestaurantListItem = (props) => {
   function onOpenClick() {
     props.openRest(props.resNum)
   }
-  // function editMenu(event) {
-  //   console.log('RestaurantListItem | editMenu, event', event.target.name);
-  //   // props.editMenu();
+  // function addRestMenu() {
+  //   props.addRestMenu();
   // }
-  function addRestMenu() {
-    props.addRestMenu();
-  }
   return (
     <li className="restItem list-group-item">
       <div className="innerItem name">
-        <IndexLink to={`/rest/${props.resNum}`}>{props.item.name}</IndexLink>
+        <Link to={`/rest/${props.item.name}`}>{props.item.name}</Link>
       </div>
-
-      {/*<a className="innerItem name" onClick={onOpenClick.bind(this)}>*/}
-        {/**/}
-      {/*</a>*/}
       <div className="innerItem address">
         {props.item.address}
       </div>
@@ -48,13 +39,6 @@ const RestaurantListItem = (props) => {
       <a className="innerItem edit" onClick={onEditClick.bind(this)}>
         edit
       </a>
-      {/*<div>*/}
-        {/*Menus*/}
-      {/*</div>*/}
-      {/*<div className="innerItem menus">*/}
-        {/*<ListOfRestMenus menus={props.item.menus} editMenu={props.editMenu}/>*/}
-      {/*</div>*/}
-      {/*<div onClick={addRestMenu.bind(this)}>Add menu</div>*/}
     </li>
   );
 };

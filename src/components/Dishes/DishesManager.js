@@ -26,7 +26,7 @@ class DishesManager extends React.Component {
   componentDidMount() {
     // console.log('DishesManager | componentDidMount', this.props);
     // TODO: Ajax to load dishes
-    if (!this.props.appData.dishes) {
+    if (!this.props.appData.data.dishes) {
       this.props.getDishes();
     }
   }

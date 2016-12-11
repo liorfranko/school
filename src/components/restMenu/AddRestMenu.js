@@ -6,7 +6,7 @@ import ListOfDishes from '../Dishes/ListOfDishes';
 
 class AddRestMenu extends React.Component {
   constructor(props) {
-    console.log('AddRestMenu | constructor');
+    console.log('AddRestMenu | constructor props', props);
     super(props);
     this.state = {
       resMenuName: '',
@@ -18,7 +18,7 @@ class AddRestMenu extends React.Component {
   }
 
   handleChange(event) {
-    console.log('AddRestMenu | handleChange', event.target);
+    // console.log('AddRestMenu | handleChange', event.target);
     this.setState({[event.target.name]: event.target.value});
   }
 
@@ -28,18 +28,20 @@ class AddRestMenu extends React.Component {
     this.setState({
       dishes: newArray
     });
-    console.log('AddRestMenu | updateDishes data', data);
-    console.log('AddRestMenu | updateDishes', this.state);
+    // console.log('AddRestMenu | updateDishes data', data);
+    // console.log('AddRestMenu | updateDishes', this.state);
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.handleClick(this.state);
+    // console.log('AddRestMenu | handleSubmit', this.props);
+    this.props.handleClick(this.state, this.props.rest._id);
+
   }
 
   render() {
-    console.log('AddRestMenu | props', this.props);
-    console.log('AddRestMenu | state', this.state);
+    // console.log('AddRestMenu | props', this.props);
+    // console.log('AddRestMenu | state', this.state);
     return (
       <div>
         {this.props.exit}

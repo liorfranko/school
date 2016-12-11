@@ -13,19 +13,6 @@ const ListOfRestaurants = (props) => {
     <ul className="restList list-group">
       {
         props.rests.map((rest, i) => {
-          {/*console.log('RestaurantListItem | rest', rest);*/}
-          {/*console.log('RestaurantListItem | rest.menus', rest.menus);*/}
-          {/*if (!rest.menus) {*/}
-            {/*/!*console.log('ListOfRestaurants | loading');*!/*/}
-            {/*props.getMenu(rest._id);*/}
-            {/*return (*/}
-              {/*<div key={i}>Loading</div>*/}
-            {/*)*/}
-          {/*} else {*/}
-            {/*return (*/}
-              {/*<RestaurantListItem key={i} item={rest} editRest={props.editRest} deleteRest={props.deleteRest} resNum={i} editMenu={props.editMenu} addRestMenu={props.addRestMenu}/>*/}
-            {/*);*/}
-          {/*}*/}
           return (
             <RestaurantListItem key={i} item={rest} editRest={props.editRest} deleteRest={props.deleteRest} resNum={i} openRest={props.openRest}/>
           );

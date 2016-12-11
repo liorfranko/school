@@ -6,6 +6,7 @@ import React from 'react';
 import Menu from './menu/Menu';
 import api from '../api/API'
 import 'react-super-select/lib/react-super-select.css';
+import update from 'immutability-helper';
 
 class App extends React.Component {
   constructor(props) {
@@ -23,6 +24,8 @@ class App extends React.Component {
     this.getRests = this.getRests.bind(this);
     this.getDishes = this.getDishes.bind(this);
     this.getMenus = this.getMenus.bind(this);
+    this.getMenus2 = this.getMenus2.bind(this);
+    this.getSubMenu = this.getSubMenu.bind(this);
 
     this.deleteRest = this.deleteRest.bind(this);
     this.deleteDish = this.deleteDish.bind(this);
@@ -30,6 +33,7 @@ class App extends React.Component {
     this.addRest = this.addRest.bind(this);
     this.addDish = this.addDish.bind(this);
     this.addRestMenu = this.addRestMenu.bind(this);
+    this.addSubMenu = this.addSubMenu.bind(this);
 
     this.editDish = this.editDish.bind(this);
     this.editRest = this.editRest.bind(this);
@@ -56,16 +60,27 @@ class App extends React.Component {
   }
 
   updateMenus(data) {
-    console.log('App | updateMenus data', data);
+    // console.log('App | updateMenus data', data);
+    // console.log('App | updateMenus this.state.data', this.state.data);
     const items = JSON.parse(data).items || [];
-    console.log('App | updateMenus items', items);
-      this.setState({
-        data: Object.assign({}, this.state.data, {rests: newArray})
-      });
+    var arrayvar = this.state.data.rests.slice();
+    var index;
+    arrayvar.map((rest, i) => {
+      if (rest._id === items[0].restaurantId) {
+        index = i;
+        var curRestArray = this.state.data.rests[i];
+        curRestArray.menus = items;
+        let newRestArray = update(this.state.data.rests, {
+          [i]: {$set: curRestArray}});
+        this.setState({
+          data: Object.assign({}, this.state.data, {rests: newRestArray})
+        });
+      }
+    });
   }
 
   getRests() {
-    // console.log("App | getRests", this.state);
+    console.log("App | getRests", this.state);
     this.setState({loading: true});
     var data = {
       user_Id: this.state.uid
@@ -82,23 +97,38 @@ class App extends React.Component {
     api.postRequest('getDishes', data, this.updateDishes);
   }
 
-  getMenus(restaurant_Id) {
-    // console.log("App | getMenus, restaurant_Id", restaurant_Id);
+  getMenus2(restaurant_Id) {
+    console.log("App | getMenus, restaurant_Id", restaurant_Id);
     // console.log("App | getMenus, this.restaurantId", this.restaurantId);
-    // this.setState({loading: true});
-    // this.restaurantId = restaurant_Id;
-    var data = {};
-    if (typeof this.restaurantId != 'undefined') {
-      data = {
-        restaurant_Id: this.restaurantId
-      };
-    } else {
-      data = {
+    //1.
+    //  const that = this;
+    //2. bind the function
+
+    // 3. call function
+    // 4. apply function
+
+
+    return function () {
+      var data = {
         restaurant_Id: restaurant_Id
       };
-    }
+      console.log("App | getMenus, data", data);
+      api.postRequest('getMenus', data, this.updateMenus);
+    }.bind(this)
+  }
+
+  getMenus(restaurant_Id) {
+    // console.log("App | getMenus, restaurant_Id", restaurant_Id);
+    var data = {
+      restaurant_Id: restaurant_Id
+    };
     // console.log("App | getMenus, data", data);
     api.postRequest('getMenus', data, this.updateMenus);
+  }
+
+  getSubMenu(data) {
+    console.log('Restaurant | getSubMenu | data', data);
+    console.log('Restaurant | getSubMenu | this.state', this.state);
   }
 
   deleteDish(dishNum) {
@@ -131,10 +161,14 @@ class App extends React.Component {
     api.postRequest('addDish', postData, this.getDishes);
   }
 
-  addRestMenu(data) {
-    console.log('App | addRestMenu', data);
-    // var postData = '&name=' + data.dishName + '&menu_id=' + data.dishDescription;
-    // api.postRequest('addSubMenu', postData, this.getDishes);
+  addRestMenu(data, restId) {
+    console.log('App | addRestMenu', data, restId);
+    var postData = '&name=' + data.resMenuName + '&restaurant_Id=' + restId;
+    api.postRequest('addMenu', postData, this.getMenus2(restId));
+  }
+
+  addSubMenu(data) {
+    console.log('App | addSubMenu', data);
   }
 
   editRest(data) {
@@ -177,12 +211,14 @@ class App extends React.Component {
           getMenus: this.getMenus,
           addRest: this.addRest,
           addDish: this.addDish,
+          addSubMenu: this.addSubMenu,
           addRestMenu: this.addRestMenu,
           editRest: this.editRest,
           editDish: this.editDish,
           editRestMenu: this.editRestMenu,
           deleteRest: this.deleteRest,
           deleteDish: this.deleteDish,
+          getSubMenu: this.getSubMenu,
         }))}
         <div>Footer - links, & other shit</div>
       </div>

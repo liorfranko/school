@@ -3,20 +3,20 @@
  */
 "use strict";
 import React from 'react';
+import {Link} from 'react-router';
 
 const restMenuListItem = (props) => {
   // console.log("restMenuListItem | ", props);
   function onEditClick() {
-    console.log('restMenuListItem | onEditClick, props', props);
+    // console.log('restMenuListItem | onEditClick, props', props);
     props.editRestMenu(props)
   }
-  var style = {
-    display: 'block'
-  };
   return (
-    <a className="innerItem name" onClick={onEditClick.bind(this)} style={style}>
-      {props.item.name}
-    </a>
+    <li className="menuItem list-group-item">
+      <div className="innerItem name">
+        <Link to={`/rest/${props.rest.name}/menu/${props.item.name}`}>{props.item.name}</Link>
+      </div>
+    </li>
   );
 };
 
