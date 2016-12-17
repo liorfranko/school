@@ -20,8 +20,6 @@ const restMenuListItem = (props) => {
       <a className="innerItem delete" onClick={onDeleteClick.bind(this)}>
         del
       </a>
-      <div className="innerItem name"> delete</div>
-
     </li>
   );
 };

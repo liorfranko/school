@@ -8,11 +8,17 @@ class RestMenu extends React.Component {
     console.log('RestMenu | constructor | this.props', props);
     super(props);
     this.addSubMenu = this.addSubMenu.bind(this);
+    this.editSubMenu = this.editSubMenu.bind(this);
   }
 
   addSubMenu() {
     console.log('RestMenu | addSubmenu | this.props', this.props);
-    this.addSubMenu('test');
+    // this.props.addSubMenu('test');
+  }
+
+  editSubMenu() {
+    console.log('RestMenu | editSubMenu | this.props', this.props);
+    // this.props.editSubMenu('test');
   }
   render() {
     return (
@@ -42,6 +48,8 @@ class RestMenu extends React.Component {
                 <div className="innerItem"> Edit</div>
                 <div className="innerItem"> Delete</div>
               </div>
+              <a onClick={this.addSubMenu} className="innerItem">Add Submenu</a>
+              <a onClick={this.editSubMenu} className="innerItem">Edit Submenu</a>
             </div>
             <div className="innerItem sub1">
               Submenu2
@@ -65,6 +73,8 @@ class RestMenu extends React.Component {
                 <div className="innerItem"> Edit</div>
                 <div className="innerItem"> Delete</div>
               </div>
+              <a onClick={this.addSubMenu} className="innerItem">Add Submenu</a>
+              <a onClick={this.editSubMenu} className="innerItem">Edit Submenu</a>
             </div>
             <div className="innerItem sub1">
               Submenu3
@@ -88,6 +98,8 @@ class RestMenu extends React.Component {
                 <div className="innerItem"> Edit</div>
                 <div className="innerItem"> Delete</div>
               </div>
+              <a onClick={this.addSubMenu} className="innerItem">Add Submenu</a>
+              <a onClick={this.editSubMenu} className="innerItem">Edit Submenu</a>
             </div>
             <div className="innerItem sub1">
               Submenu4
@@ -111,11 +123,11 @@ class RestMenu extends React.Component {
                 <div className="innerItem"> Edit</div>
                 <div className="innerItem"> Delete</div>
               </div>
+              <a onClick={this.addSubMenu} className="innerItem">Add Submenu</a>
+              <a onClick={this.editSubMenu} className="innerItem">Edit Submenu</a>
             </div>
           </li>
-          <a onClick={this.addSubMenu}>Add restaurant</a>
-          {/*<div className="innerItem">Add Submenu</div>*/}
-          <div className="innerItem">Edit Menu</div>
+
         </ul>
       </div>
     )

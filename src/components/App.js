@@ -66,25 +66,38 @@ class App extends React.Component {
     // console.log('App | updateMenus this.state.data', this.state.data);
     const items = JSON.parse(data).items || [];
     console.log('App | updateMenus items.length()', items.length);
-    var arrayvar = this.state.data.rests.slice();
-    var index;
+    var arrayVar = this.state.data.rests.slice();
+    // var index;
     if (items.length > 0) {
-      arrayvar.map((rest, i) => {
+      arrayVar.map((rest, i) => {
         if (rest._id === items[0].restaurantId) {
-          index = i;
+          // index = i;
           var curRestArray = this.state.data.rests[i];
           curRestArray.menus = items;
           let newRestArray = update(this.state.data.rests, {
-            [i]: {$set: curRestArray}});
+            [i]: {$set: curRestArray}
+          });
           this.setState({
             data: Object.assign({}, this.state.data, {rests: newRestArray})
           });
         }
       });
     } else {
-
+      var restId = JSON.parse(data).reason;
+      // console.log('App | updateMenus restId', restId);
+      // console.log('App | updateMenus this.state.data.rests', this.state.data.rests);
+      // var curRestArray = this.state.data.rests.indexOf(restId);
+      var index = this.state.data.rests.findIndex(x => x._id==restId);
+      // console.log('App | updateMenus index', index);
+      var curRestArray = this.state.data.rests[index];
+      curRestArray.menus = items;
+      let newRestArray = update(this.state.data.rests, {
+        [index]: {$set: curRestArray}
+      });
+      this.setState({
+        data: Object.assign({}, this.state.data, {rests: newRestArray})
+      });
     }
-
   }
 
   getRests() {
@@ -159,6 +172,7 @@ class App extends React.Component {
     var postData = '&restaurant_Id=' + data.restaurantId + '&menu_id=' + data._id;
     api.postRequest('removeMenu', postData, this.getMenusLocal(data.restaurantId));
   }
+
   addRest(data) {
     // console.log('App | addRest', data);
     this.setState({loading: true});
@@ -182,6 +196,7 @@ class App extends React.Component {
 
   addSubMenu(data) {
     console.log('App | addSubMenu', data);
+
   }
 
   editRest(data) {
