@@ -1,27 +1,29 @@
 import React from 'react';
 import ListOfDishes from './ListOfDishes';
 import './dishes.styl';
-import Popup from '../Popup/popup';
 import AddDish from './AddDish.js';
 import EditDish from './EditDish.js';
 import DeleteDish from './DeleteDish.js';
-import { Popover, ButtonToolbar, OverlayTrigger, Button} from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 class DishesManager extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
     this.state = {
       mode: 'main',
-      selectedDish: null
+      selectedDish: 0,
+      showEditModal: false,
+      showAddModal: false,
+      showDeleteModal: false
     };
     this.componentDidMount = this.componentDidMount.bind(this);
     this.exitPopup = this.exitPopup.bind(this);
     this.handleAddClick = this.handleAddClick.bind(this);
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
     this.handleEditClick = this.handleEditClick.bind(this);
-    this.editDish = this.editDish.bind(this);
-    this.deleteDish = this.deleteDish.bind(this);
-    this.addDish = this.addDish.bind(this);
+    this.openEditDish = this.openEditDish.bind(this);
+    this.openDeleteDish = this.openDeleteDish.bind(this);
+    this.openAddDish = this.openAddDish.bind(this);
   }
 
   componentDidMount() {
@@ -34,58 +36,55 @@ class DishesManager extends React.Component {
 
   exitPopup() {
     this.setState({
-      mode: 'main'
+      mode: 'main',
+      showAddModal: false,
+      showEditModal: false,
+      showDeleteModal: false
     });
   };
 
-  handleAddClick (data) {
-    // console.log('DishesManager | handleAddClick', this.state);
+  handleAddClick(data) {
+    // console.log('DishesManager | handleAddClick | data', data);
     this.props.addDish(data);
-    this.setState({mode: 'main'});
+    this.setState({showAddModal: false});
   }
 
-  handleEditClick (data) {
+  handleEditClick(data) {
     // console.log('DishesManager | handleEditClick', this.state);
     this.props.editDish(data);
-    this.setState({mode: 'main'});
+    this.setState({showEditModal: false});
   }
 
-  handleDeleteClick () {
+  handleDeleteClick() {
     // console.log('DishesManager | handleDeleteClick', this.state.selectedDish);
     this.props.deleteDish(this.state.selectedDish);
-    this.setState({mode: 'main'});
+    this.setState({showDeleteModal: false});
   }
 
-  editDish(data) {
-    // console.log('DishesManager | editDish', data);
+  openEditDish(data) {
+    console.log('DishesManager | editDish', data);
     this.setState({
-      mode: 'edit',
-      selectedDish: data
+      selectedDish: data,
+      showEditModal: true
     });
   }
 
-  deleteDish(data) {
+  openDeleteDish(data) {
     // console.log('DishesManager | deleteDish', data);
     this.setState({
-      mode: 'delete',
-      selectedDish: data
+      selectedDish: data,
+      showDeleteModal: true
     });
   }
 
-  addDish() {
+  openAddDish() {
     // console.log('DishesManager | addDish', this.state);
     this.setState({
-      mode: 'add'
+      showAddModal: true
     });
   }
 
   render() {
-    const popoverClickRootClose = (
-      <Popover id="popover-trigger-click-root-close" title="Popover bottom">
-        <AddDish handleClick={this.handleAddClick.bind(this)}/>
-      </Popover>
-    );
-
     // console.log('DishesManager | render', this.state);
     if (!this.props.appData.data.dishes) {
       // console.log('DishesManager | loading');
@@ -93,65 +92,36 @@ class DishesManager extends React.Component {
         <div>Loading</div>
       )
     } else {
-      switch (this.state.mode) {
-        case 'add':
-          return (
-            <div id="dishes">
+      return (
+        <div id="dishes">
             <span>
               Dishes Manager
             </span>
-              <ListOfDishes dishes={this.props.appData.data.dishes} editDish={this.editDish} deleteDish={this.deleteDish}/>
-              <a onClick={this.addDish}>Add Dish</a>
-            </div>
-          // return (
-          // <Popover id="popover-trigger-click-root-close" title="Popover bottom">
-          //   <AddDish handleClick={this.handleAddClick.bind(this)}/>
-          // </Popover>
-            // <Popup exitPopup={this.exitPopup.bind(this)}>
-            //   <AddDish handleClick={this.handleAddClick.bind(this)}/>
-            // </Popup>
-          );
-        case 'edit':
-          return (
-            <Popup exitPopup={this.exitPopup.bind(this)}>
-              <EditDish dishId={this.props.appData.data.dishes[this.state.selectedDish]._id}
-                        dishName={this.props.appData.data.dishes[this.state.selectedDish].name}
-                        dishDescription={this.props.appData.data.dishes[this.state.selectedDish].description}
-                        defaultPrice={this.props.appData.data.dishes[this.state.selectedDish].defaultPrice}
-                        handleClick={this.handleEditClick.bind(this)}
-              />
-            </Popup>
-          );
-        case 'delete':
-          return (
-            <Popup exitPopup={this.exitPopup.bind(this)}>
-              <DeleteDish dishId={this.props.appData.data.dishes[this.state.selectedDish]._id}
-                          dishName={this.props.appData.data.dishes[this.state.selectedDish].name}
-                          dishDescription={this.props.appData.data.dishes[this.state.selectedDish].description}
-                          defaultPrice={this.props.appData.data.dishes[this.state.selectedDish].defaultPrice}
-                          handleClick={this.handleDeleteClick.bind(this)}
-              />
-            </Popup>
-          );
-        default:
-          return (
-            <div id="dishes">
-            <span>
-              Dishes Manager
-            </span>
-              <ListOfDishes dishes={this.props.appData.data.dishes} editDish={this.editDish} deleteDish={this.deleteDish}/>
-              {/*<a onClick={this.addDish}>Add Dish</a>*/}
-              <ButtonToolbar>
-                <OverlayTrigger trigger="click" placement="bottom" overlay={popoverClickRootClose}>
-                  <Button>Add Dish</Button>
-                </OverlayTrigger>
-              </ButtonToolbar>
-            </div>
-          )
-      }
+          <ListOfDishes dishes={this.props.appData.data.dishes} editDish={this.openEditDish} deleteDish={this.openDeleteDish}
+                        show={this.state.showEditModal}/>
+          <Button onClick={this.openAddDish}>
+            Add Dish
+          </Button>
+          <AddDish handleClick={this.handleAddClick.bind(this)} exit={this.exitPopup.bind(this)} show={this.state.showAddModal}/>
+          <EditDish dishId={this.props.appData.data.dishes[this.state.selectedDish]._id}
+                    dishName={this.props.appData.data.dishes[this.state.selectedDish].name}
+                    dishDescription={this.props.appData.data.dishes[this.state.selectedDish].description}
+                    defaultPrice={this.props.appData.data.dishes[this.state.selectedDish].defaultPrice}
+                    handleClick={this.handleEditClick.bind(this)}
+                    exit={this.exitPopup.bind(this)}
+                    show={this.state.showEditModal}
+          />
+          <DeleteDish dishId={this.props.appData.data.dishes[this.state.selectedDish]._id}
+                      dishName={this.props.appData.data.dishes[this.state.selectedDish].name}
+                      dishDescription={this.props.appData.data.dishes[this.state.selectedDish].description}
+                      defaultPrice={this.props.appData.data.dishes[this.state.selectedDish].defaultPrice}
+                      handleClick={this.handleDeleteClick.bind(this)}
+                      exit={this.exitPopup.bind(this)}
+                      show={this.state.showDeleteModal}
+          />
+        </div>
+      )
     }
-
-
   }
 }
 

@@ -2,6 +2,7 @@
  * Created by liorf on 11/16/16.
  */
 import React from 'react';
+import {Modal, Button} from 'react-bootstrap';
 
 class AddDish extends React.Component {
   constructor(props) {
@@ -36,33 +37,63 @@ class AddDish extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.handleClick(this.state);
+    this.props.handleClick(this.state, event);
   }
 
   render() {
+    //FIXME - Change the submit button to be the same as the modal buttons
     return (
-      <div>
-        {this.props.exit}
-        <div>Adding new Dish</div>
-        <div>
-          <form onSubmit={this.handleSubmit}>
+      <Modal show={this.props.show} onHide={this.props.exit}>
+        <Modal.Header closeButton>
+          <Modal.Title>Adding new Dish</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form id="AddDishForm" onSubmit={this.handleSubmit}>
             <label>
               <div>Dish Name:
                 <input type="text" name="dishName" value={this.state.dishName} onChange={this.handleChange} required/>
               </div>
               <div>
                 Dish Description:
-                <input type="text" name="dishDescription" value={this.state.dishDescription} onChange={this.handleChange} required/>
+                <input type="text" name="dishDescription" value={this.state.dishDescription}
+                       onChange={this.handleChange} required/>
               </div>
               <div>
                 Dish Price:
-                <input type="text" name="defaultPrice" value={this.state.defaultPrice} onChange={this.handleChange} required/>
+                <input type="text" name="defaultPrice" value={this.state.defaultPrice} onChange={this.handleChange}
+                       required/>
               </div>
             </label>
-            <input type="submit" value="Submit"/>
           </form>
-        </div>
-      </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <input type="submit" form="AddDishForm" value="Submit"/>
+          <Button onClick={this.props.exit}>Close</Button>
+          {/*<Button onClick={this.handleSubmit}>Submit</Button>*/}
+        </Modal.Footer>
+      </Modal>
+      // <div>
+      //   {this.props.exit}
+      //   <div>Adding new Dish</div>
+      //   <div>
+      //     <form onSubmit={this.handleSubmit}>
+      //       <label>
+      //         <div>Dish Name:
+      //           <input type="text" name="dishName" value={this.state.dishName} onChange={this.handleChange} required/>
+      //         </div>
+      //         <div>
+      //           Dish Description:
+      //           <input type="text" name="dishDescription" value={this.state.dishDescription} onChange={this.handleChange} required/>
+      //         </div>
+      //         <div>
+      //           Dish Price:
+      //           <input type="text" name="defaultPrice" value={this.state.defaultPrice} onChange={this.handleChange} required/>
+      //         </div>
+      //       </label>
+      //       <input type="submit" value="Submit"/>
+      //     </form>
+      //   </div>
+      // </div>
     )
 
   }

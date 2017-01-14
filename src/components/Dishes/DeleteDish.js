@@ -2,6 +2,7 @@
  * Created by liorf on 11/16/16.
  */
 import React from 'react';
+import {Modal, Button} from 'react-bootstrap';
 
 class DeleteDish extends React.Component {
   constructor(props) {
@@ -19,25 +20,28 @@ class DeleteDish extends React.Component {
   render() {
     // console.log('DeleteDish | render', this.props);
     return (
-      <div>
-        {this.props.exit}
-        <div >Deleting Dish</div>
-        <div>
-          <form onSubmit={this.handleSubmit}>
+      <Modal show={this.props.show} onHide={this.props.exit}>
+        <Modal.Header closeButton>
+          <Modal.Title>Delete Dish</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form id="AddDishForm" onSubmit={this.handleSubmit}>
             <label>
               <div>Dish Name:
-                <div>{this.props['dishName']}</div>
-              </div>
+                {this.props['dishName']}
+                </div>
               <div>
                 Dish Description:
-                <div>{this.props['dishDescription']}</div>
-                <div>Are you sure you want to delete?</div>
+                {this.props['dishDescription']}
               </div>
             </label>
-            <input type="submit" value="Submit"/>
           </form>
-        </div>
-      </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <input type="submit" form="AddDishForm" value="Delete"/>
+          <Button onClick={this.props.exit}>Close</Button>
+        </Modal.Footer>
+      </Modal>
     )
   }
 }
