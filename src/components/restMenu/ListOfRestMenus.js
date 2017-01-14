@@ -8,7 +8,7 @@ import React from 'react';
 import RestMenuListItem from './restMenuListItem';
 
 const ListOfRestMenus = (props) => {
-  console.log('ListOfRestMenus |', props);
+  // console.log('ListOfRestMenus |', props);
   return (
     <ul className="restMenuList list-group">
       {

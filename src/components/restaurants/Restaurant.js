@@ -5,8 +5,6 @@
 
 import React from 'react';
 import RestMenuManager from '../restMenu/restMenuManager'
-// import ListOfDishes from '../Dishes/ListOfDishes';
-// import api from '../../api/API'
 
 class Restaurant extends React.Component {
   constructor(props) {
@@ -16,7 +14,7 @@ class Restaurant extends React.Component {
   }
 
   componentDidMount() {
-    console.log('Restaurant | componentDidMount', this.props);
+    // console.log('Restaurant | componentDidMount', this.props);
     var rest = this.props.appData.data.rests.findIndex(x => x.name==this.props.params.restName);
     // console.log('Restaurant | componentDidMount | rest', rest);
     // console.log('Restaurant | componentDidMount | this.props.appData.data.rests[rest].menus', this.props.appData.data.rests[rest]);
@@ -28,7 +26,7 @@ class Restaurant extends React.Component {
     }  }
 
   render() {
-    console.log('Restaurant | render |this.props', this.props);
+    // console.log('Restaurant | render |this.props', this.props);
     if (!this.props.appData.data.rests) {
       return (
         <div>Loading</div>

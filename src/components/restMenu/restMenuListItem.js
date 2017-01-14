@@ -8,7 +8,7 @@ import {Link} from 'react-router';
 const restMenuListItem = (props) => {
   // console.log("restMenuListItem | ", props);
   function onDeleteClick() {
-    console.log('restMenuListItem | onDeleteClick, props', props);
+    // console.log('restMenuListItem | onDeleteClick, props', props);
     props.deleteRestMenu(props.item)
   }
 

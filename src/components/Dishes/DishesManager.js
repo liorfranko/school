@@ -5,6 +5,7 @@ import Popup from '../Popup/popup';
 import AddDish from './AddDish.js';
 import EditDish from './EditDish.js';
 import DeleteDish from './DeleteDish.js';
+import { Popover, ButtonToolbar, OverlayTrigger, Button} from 'react-bootstrap';
 
 class DishesManager extends React.Component {
   constructor(props) {
@@ -79,6 +80,12 @@ class DishesManager extends React.Component {
   }
 
   render() {
+    const popoverClickRootClose = (
+      <Popover id="popover-trigger-click-root-close" title="Popover bottom">
+        <AddDish handleClick={this.handleAddClick.bind(this)}/>
+      </Popover>
+    );
+
     // console.log('DishesManager | render', this.state);
     if (!this.props.appData.data.dishes) {
       // console.log('DishesManager | loading');
@@ -89,9 +96,20 @@ class DishesManager extends React.Component {
       switch (this.state.mode) {
         case 'add':
           return (
-            <Popup exitPopup={this.exitPopup.bind(this)}>
-              <AddDish handleClick={this.handleAddClick.bind(this)}/>
-            </Popup>
+            <div id="dishes">
+            <span>
+              Dishes Manager
+            </span>
+              <ListOfDishes dishes={this.props.appData.data.dishes} editDish={this.editDish} deleteDish={this.deleteDish}/>
+              <a onClick={this.addDish}>Add Dish</a>
+            </div>
+          // return (
+          // <Popover id="popover-trigger-click-root-close" title="Popover bottom">
+          //   <AddDish handleClick={this.handleAddClick.bind(this)}/>
+          // </Popover>
+            // <Popup exitPopup={this.exitPopup.bind(this)}>
+            //   <AddDish handleClick={this.handleAddClick.bind(this)}/>
+            // </Popup>
           );
         case 'edit':
           return (
@@ -122,7 +140,12 @@ class DishesManager extends React.Component {
               Dishes Manager
             </span>
               <ListOfDishes dishes={this.props.appData.data.dishes} editDish={this.editDish} deleteDish={this.deleteDish}/>
-              <div onClick={this.addDish}>Add Dish</div>
+              {/*<a onClick={this.addDish}>Add Dish</a>*/}
+              <ButtonToolbar>
+                <OverlayTrigger trigger="click" placement="bottom" overlay={popoverClickRootClose}>
+                  <Button>Add Dish</Button>
+                </OverlayTrigger>
+              </ButtonToolbar>
             </div>
           )
       }

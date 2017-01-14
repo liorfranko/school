@@ -10,7 +10,7 @@ import './restMenu.styl';
 
 class restMenuManager extends React.Component {
   constructor(props) {
-    console.log('restMenuManager | constructor', props);
+    // console.log('restMenuManager | constructor', props);
     super(props);
     this.exitPopup = this.exitPopup.bind(this);
     this.addRestMenu = this.addRestMenu.bind(this);
@@ -36,7 +36,7 @@ class restMenuManager extends React.Component {
   };
 
   deleteRestMenu(data) {
-    console.log('restMenuManager | deleteRestMenu | data', data);
+    // console.log('restMenuManager | deleteRestMenu | data', data);
     this.setState({
       mode: 'delete',
       chosenMenu: data
@@ -50,7 +50,7 @@ class restMenuManager extends React.Component {
   }
 
   handleDeleteClick(...data) {
-    console.log('restMenuManager | handleDeleteClick this.props', data);
+    // console.log('restMenuManager | handleDeleteClick this.props', data);
     this.props.deleteRestMenu(...data);
     this.setState({mode: 'main'});
   }
