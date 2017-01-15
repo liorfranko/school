@@ -109,7 +109,7 @@ class RestaurantsManager extends React.Component {
       )
     } else {
       let styleDiv = {
-        fontSize: '30'
+        fontSize: 30
       };
       return (
         <div id="rests" className="panel panel-default">

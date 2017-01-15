@@ -6,7 +6,7 @@ import React from 'react';
 
 const Homepage = (props) => {
   let styleDiv = {
-    fontSize: '30'
+    fontSize: 30
   };
 
   return (

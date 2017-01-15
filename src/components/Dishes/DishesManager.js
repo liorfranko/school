@@ -91,7 +91,7 @@ class DishesManager extends React.Component {
       )
     } else {
       let styleDiv = {
-        fontSize: '30'
+        fontSize: 30
       };
       return (
         <div id="dishes" className="panel panel-default">
