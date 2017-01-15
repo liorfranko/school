@@ -14,7 +14,11 @@ const ListOfRestaurants = (props) => {
       {
         props.rests.map((rest, i) => {
           return (
-            <RestaurantListItem key={i} item={rest} editRest={props.editRest} deleteRest={props.deleteRest} resNum={i} openRest={props.openRest}/>
+            <RestaurantListItem key={i}
+                                item={rest}
+                                editRest={props.editRest}
+                                deleteRest={props.deleteRest}
+                                resNum={i}/>
           );
         })
       }

@@ -6,7 +6,7 @@ import {Modal, Button} from 'react-bootstrap';
 
 class EditDish extends React.Component {
   constructor(props) {
-    console.log('EditDish | constructor | props', props);
+    // console.log('EditDish | constructor | props', props);
     super(props);
     this.state = {
       dishName: this.props['dishName'],
@@ -20,8 +20,8 @@ class EditDish extends React.Component {
     this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
   }
   componentWillReceiveProps (nextProps) {
-    console.log('EditDish | componentWillReceiveProps | nextProps', nextProps);
-    console.log('EditDish | componentWillReceiveProps | nextProps', this.props);
+    // console.log('EditDish | componentWillReceiveProps | nextProps', nextProps);
+    // console.log('EditDish | componentWillReceiveProps | nextProps', this.props);
 
     this.setState (
       {
@@ -32,6 +32,7 @@ class EditDish extends React.Component {
       }
     )
   }
+
   handleChange(event) {
     // console.log('EditDish | handleChange', event.target.value);
     if (event.target.name == 'defaultPrice') {
@@ -54,7 +55,7 @@ class EditDish extends React.Component {
   }
 
   render() {
-    console.log('EditDish | render | props', this.props);
+    // console.log('EditDish | render | props', this.props);
     return (
     <Modal show={this.props.show} onHide={this.props.exit}>
       <Modal.Header closeButton>

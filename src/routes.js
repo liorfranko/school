@@ -16,7 +16,6 @@ import RestMenu from './components/restMenu/restMenu'
 export default class Routes extends Component {
   render() {
     return (
-
       <Router history={browserHistory}>
         <Route path="/" component={App}>
           <IndexRoute component={Homepage}/>

@@ -92,7 +92,7 @@ class App extends React.Component {
       // console.log('App | updateMenus restId', restId);
       // console.log('App | updateMenus this.state.data.rests', this.state.data.rests);
       // var curRestArray = this.state.data.rests.indexOf(restId);
-      var index = this.state.data.rests.findIndex(x => x._id==restId);
+      var index = this.state.data.rests.findIndex(x => x._id == restId);
       // console.log('App | updateMenus index', index);
       var curRestArray = this.state.data.rests[index];
       curRestArray.menus = items;
@@ -336,31 +336,44 @@ class App extends React.Component {
     // console.log('App.js | this.props.params', this.props.params);
     // console.log('App.js | this.props.children', this.props.children);
     return (
-      <div className="container">
-        <div>Header - Logo + Menu</div>
-        <Menu menu={[
-          {name: 'homepage', path: '/'}, {name: 'rests', path: 'rests'}, {name: 'dishes', path: 'dishes'}
-        ]}/>
-        {React.Children.map(this.props.children, (child) => React.cloneElement(child, {
-          appData: this.state,
-          getRests: this.getRests,
-          getDishes: this.getDishes,
-          getMenus: this.getMenus,
-          getSubMenus: this.getSubMenus,
-          addRest: this.addRest,
-          addDish: this.addDish,
-          addSubMenu: this.addSubMenu,
-          addRestMenu: this.addRestMenu,
-          editRest: this.editRest,
-          editDish: this.editDish,
-          editRestMenu: this.editRestMenu,
-          editSubMenu: this.editSubMenu,
-          deleteRest: this.deleteRest,
-          deleteDish: this.deleteDish,
-          deleteRestMenu: this.deleteRestMenu,
-          deleteSubMenu: this.deleteSubMenu,
-        }))}
-        <div>Footer - links, & other shit</div>
+      <div>
+
+
+        <nav className="navbar navbar-inverse navbar-fixed-top">
+          <div className="container">
+            <Menu menu={[
+              {name: 'homepage', path: '/'}, {name: 'rests', path: 'rests'}, {name: 'dishes', path: 'dishes'}
+            ]}/>
+          </div>
+        </nav>
+        <div className="jumbotron">
+          <div className="container">
+            <h1>Header - Logo + Menu</h1>
+            {/*<Menu menu={[*/}
+              {/*{name: 'homepage', path: '/'}, {name: 'rests', path: 'rests'}, {name: 'dishes', path: 'dishes'}*/}
+            {/*]}/>*/}
+            {React.Children.map(this.props.children, (child) => React.cloneElement(child, {
+              appData: this.state,
+              getRests: this.getRests,
+              getDishes: this.getDishes,
+              getMenus: this.getMenus,
+              getSubMenus: this.getSubMenus,
+              addRest: this.addRest,
+              addDish: this.addDish,
+              addSubMenu: this.addSubMenu,
+              addRestMenu: this.addRestMenu,
+              editRest: this.editRest,
+              editDish: this.editDish,
+              editRestMenu: this.editRestMenu,
+              editSubMenu: this.editSubMenu,
+              deleteRest: this.deleteRest,
+              deleteDish: this.deleteDish,
+              deleteRestMenu: this.deleteRestMenu,
+              deleteSubMenu: this.deleteSubMenu,
+            }))}
+            <footer>Footer - links, & other shit</footer>
+          </div>
+        </div>
       </div>
     )
   }

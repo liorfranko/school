@@ -34,7 +34,7 @@ const ListOfDishes = (props) => {
         {
           props.dishes.map((dish, i) => {
             return (
-              <DishesListItem key={i} item={dish} editDish={props.editDish} deleteDish={props.deleteDish} dishNum={i} show={props.show}/>
+              <DishesListItem key={i} item={dish} editDish={props.editDish} deleteDish={props.deleteDish} dishNum={i}/>
             );
           })
         }

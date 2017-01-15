@@ -25,7 +25,7 @@ class DeleteDish extends React.Component {
           <Modal.Title>Delete Dish</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form id="AddDishForm" onSubmit={this.handleSubmit}>
+          <form id="DeleteDishForm" onSubmit={this.handleSubmit}>
             <label>
               <div>Dish Name:
                 {this.props['dishName']}
@@ -38,7 +38,7 @@ class DeleteDish extends React.Component {
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <input type="submit" form="AddDishForm" value="Delete"/>
+          <input type="submit" form="DeleteDishForm" value="Delete"/>
           <Button onClick={this.props.exit}>Close</Button>
         </Modal.Footer>
       </Modal>

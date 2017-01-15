@@ -2,7 +2,7 @@
  * Created by liorf on 12/10/16.
  */
 import React from 'react';
-import Example from './test'
+// import Example from './test'
 import SubMenuManager from '../SubMenus/SubMenuManager'
 
 class RestMenu extends React.Component {

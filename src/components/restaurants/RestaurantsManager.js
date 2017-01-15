@@ -11,14 +11,17 @@ import EditRestaurant from './EditRestaurant.js';
 import DeleteRestaurant from './DeleteRestaurant.js';
 import AddRestaurant from './AddRestaurant.js';
 import Restaurant from './Restaurant'
+import { Button } from 'react-bootstrap';
 
 class RestaurantsManager extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      mode: 'main',
-      selectedRes: null,
-      selectedMenu: null
+      selectedRes: 0,
+      selectedMenu: null,
+      showAddModal: false,
+      showEditModal: false,
+      showDeleteModal: false
     };
     this.editRest = this.editRest.bind(this);
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
@@ -39,55 +42,57 @@ class RestaurantsManager extends React.Component {
 
   exitPopup() {
     this.setState({
-      mode: 'main'
+      showAddModal: false,
+      showEditModal: false,
+      showDeleteModal: false
     });
   };
 
-  deleteRest(data) {
-    // TODO: Ajax to delete
-    // console.log('RestaurantsManager | deleteRest', data);
-    this.setState({
-      mode: 'delete',
-      selectedRes: data
-    });
-  }
+
 
   handleDeleteClick() {
     // console.log('RestaurantsManager | handleDeleteClick', resNum);
     console.log('RestaurantsManager | handleDeleteClick', this.state.selectedRes);
     this.props.deleteRest(this.state.selectedRes);
-    this.setState({mode: 'main'});
+    this.setState({showDeleteModal: false});
   }
 
   handleAddClick(data) {
     // console.log('RestaurantsManager | handleAddClick', this.state);
     this.props.addRest(data);
-    this.setState({mode: 'main'});
+    this.setState({showAddModal: false});
   }
 
   handleEditClick(data) {
     // console.log('RestaurantsManager | handleEditClick', this.state);
     this.props.editRest(data);
-    this.setState({mode: 'main'});
+    this.setState({showEditModal: false});
   }
 
   editRest(data) {
-    console.log('RestaurantsManager | editRest', data);
+    // console.log('RestaurantsManager | editRest', data);
     this.setState({
-      mode: 'edit',
-      selectedRes: data
+      selectedRes: data,
+      showEditModal: true
     });
   }
 
   addRest() {
     // console.log('RestaurantsManager | addRest');
     this.setState({
-      mode: 'add'
+      showAddModal: true
+    });
+  }
+
+  deleteRest(data) {
+    // console.log('RestaurantsManager | deleteRest', data);
+    this.setState({
+      showDeleteModal: true,
+      selectedRes: data
     });
   }
 
   openRest(data) {
-    //Need to check if to delete
     // console.log('RestaurantsManager | openRest, data', data);
     this.setState({
       mode: 'restaurant',
@@ -103,50 +108,40 @@ class RestaurantsManager extends React.Component {
         <div>Loading</div>
       )
     } else {
-      switch (this.state.mode) {
-        case 'edit':
-          return (
-            <Popup exitPopup={this.exitPopup.bind(this)}>
-              <EditRestaurant resId={this.props.appData.data.rests[this.state.selectedRes]._id}
+      let styleDiv = {
+        fontSize: '30'
+      };
+      return (
+        <div id="rests" className="panel panel-default">
+          <div className="panel-heading" style={styleDiv}>Restaurants Manager</div>
+          <div className="panel-body">
+            <ListOfRestaurants rests={this.props.appData.data.rests}
+                               editRest={this.editRest}
+                               deleteRest={this.deleteRest}
+                               openRest={this.openRest}/>
+            {/*<a onClick={this.addRest} >Add restaurant</a>*/}
+            <AddRestaurant handleClick={this.handleAddClick.bind(this)}
+                           exit={this.exitPopup.bind(this)}
+                           show={this.state.showAddModal}/>
+            <Button onClick={this.addRest}>Add restaurant</Button>
+            <DeleteRestaurant resId={this.props.appData.data.rests[this.state.selectedRes]._id}
                               resName={this.props.appData.data.rests[this.state.selectedRes].name}
                               resAddress={this.props.appData.data.rests[this.state.selectedRes].address}
-                              handleClick={this.handleEditClick.bind(this)}
-              />
-            </Popup>
-          );
-        case 'delete':
-          return (
-            <Popup exitPopup={this.exitPopup.bind(this)}>
-              <DeleteRestaurant resId={this.props.appData.data.rests[this.state.selectedRes]._id}
-                                resName={this.props.appData.data.rests[this.state.selectedRes].name}
-                                resAddress={this.props.appData.data.rests[this.state.selectedRes].address}
-                                handleClick={this.handleDeleteClick.bind(this)}
-              />
-            </Popup>
-          );
-        case 'add':
-          return (
-            <Popup exitPopup={this.exitPopup.bind(this)}>
-              <AddRestaurant handleClick={this.handleAddClick.bind(this)}/>
-            </Popup>
-          );
-        case 'restaurant':
-          return (
-            <Restaurant data={this.props.appData.data} selectedRest={this.state.selectedRes} getDishes={this.props.getDishes}/>
-          );
-        default:
-          return (
-            <div id="rests">
-            <span>
-              Restaurants Manager
-            </span>
-              <ListOfRestaurants rests={this.props.appData.data.rests} editRest={this.editRest}
-                                 deleteRest={this.deleteRest} openRest={this.openRest}/>
-              <a onClick={this.addRest}>Add restaurant</a>
-            </div>
+                              handleClick={this.handleDeleteClick.bind(this)}
+                              exit={this.exitPopup.bind(this)}
+                              show={this.state.showDeleteModal}
+            />
+            <EditRestaurant resId={this.props.appData.data.rests[this.state.selectedRes]._id}
+                            resName={this.props.appData.data.rests[this.state.selectedRes].name}
+                            resAddress={this.props.appData.data.rests[this.state.selectedRes].address}
+                            handleClick={this.handleEditClick.bind(this)}
+                            exit={this.exitPopup.bind(this)}
+                            show={this.state.showEditModal}
+            />
+          </div>
+        </div>
 
-          );
-      }
+      );
     }
 
   }
