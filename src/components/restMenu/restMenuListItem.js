@@ -9,13 +9,13 @@ const restMenuListItem = (props) => {
   // console.log("restMenuListItem | ", props);
   function onDeleteClick() {
     // console.log('restMenuListItem | onDeleteClick, props', props);
-    props.deleteRestMenu(props.item)
+    props.deleteRestMenu(props.menuNum)
   }
 
   return (
     <li className="menuItem list-group-item">
       <div className="innerItem name">
-        <Link to={`/rest/${props.rest.name}/menu/${props.item.name}`}>{props.item.name}</Link>
+        <Link to={`/rest/${props.item.name}`}>{props.item.name}</Link>
       </div>
       <a className="innerItem delete" onClick={onDeleteClick.bind(this)}>
         del

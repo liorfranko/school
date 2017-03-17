@@ -13,7 +13,6 @@ const Menu = (props) => {
   // console.log('Menu | props', props);
   function handleSelect(selectedKey) {
     // alert('selected ' + selectedKey);
-
   }
 
   return (

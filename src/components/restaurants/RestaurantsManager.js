@@ -6,11 +6,11 @@ import React from 'react';
 
 import ListOfRestaurants from './ListOfRestaurants';
 import './rests.styl';
-import Popup from '../Popup/popup';
+// import Popup from '../Popup/popup';
 import EditRestaurant from './EditRestaurant.js';
 import DeleteRestaurant from './DeleteRestaurant.js';
 import AddRestaurant from './AddRestaurant.js';
-import Restaurant from './Restaurant'
+// import Restaurant from './Restaurant'
 import { Button } from 'react-bootstrap';
 
 class RestaurantsManager extends React.Component {
@@ -44,7 +44,8 @@ class RestaurantsManager extends React.Component {
     this.setState({
       showAddModal: false,
       showEditModal: false,
-      showDeleteModal: false
+      showDeleteModal: false,
+      selectedRes: 0
     });
   };
 
@@ -54,19 +55,28 @@ class RestaurantsManager extends React.Component {
     // console.log('RestaurantsManager | handleDeleteClick', resNum);
     console.log('RestaurantsManager | handleDeleteClick', this.state.selectedRes);
     this.props.deleteRest(this.state.selectedRes);
-    this.setState({showDeleteModal: false});
+    this.setState({
+      showDeleteModal: false,
+      selectedRes: 0
+    });
   }
 
   handleAddClick(data) {
     // console.log('RestaurantsManager | handleAddClick', this.state);
     this.props.addRest(data);
-    this.setState({showAddModal: false});
+    this.setState({
+      showAddModal: false,
+      selectedRes: 0
+    });
   }
 
   handleEditClick(data) {
     // console.log('RestaurantsManager | handleEditClick', this.state);
     this.props.editRest(data);
-    this.setState({showEditModal: false});
+    this.setState({
+      showEditModal: false,
+      selectedRes: 0
+    });
   }
 
   editRest(data) {
@@ -95,7 +105,6 @@ class RestaurantsManager extends React.Component {
   openRest(data) {
     // console.log('RestaurantsManager | openRest, data', data);
     this.setState({
-      mode: 'restaurant',
       selectedRes: data
     });
   }

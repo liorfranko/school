@@ -44,19 +44,28 @@ class DishesManager extends React.Component {
   handleAddClick(data) {
     // console.log('DishesManager | handleAddClick | data', data);
     this.props.addDish(data);
-    this.setState({showAddModal: false});
+    this.setState({
+      showAddModal: false,
+      selectedDish: 0
+    });
   }
 
   handleEditClick(data) {
     // console.log('DishesManager | handleEditClick', this.state);
     this.props.editDish(data);
-    this.setState({showEditModal: false});
+    this.setState({
+      showEditModal: false,
+      selectedDish: 0
+    });
   }
 
   handleDeleteClick() {
     // console.log('DishesManager | handleDeleteClick', this.state.selectedDish);
     this.props.deleteDish(this.state.selectedDish);
-    this.setState({showDeleteModal: false});
+    this.setState({
+      showDeleteModal: false,
+      selectedDish: 0
+    });
   }
 
   openEditDish(data) {
@@ -84,6 +93,7 @@ class DishesManager extends React.Component {
 
   render() {
     // console.log('DishesManager | render', this.state);
+    // console.log('DishesManager | this.props.appData.data.dishes', this.props.appData.data.dishes);
     if (!this.props.appData.data.dishes) {
       // console.log('DishesManager | loading');
       return (

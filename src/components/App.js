@@ -337,8 +337,6 @@ class App extends React.Component {
     // console.log('App.js | this.props.children', this.props.children);
     return (
       <div>
-
-
         <nav className="navbar navbar-inverse navbar-fixed-top">
           <div className="container">
             <Menu menu={[
@@ -349,9 +347,6 @@ class App extends React.Component {
         <div className="jumbotron">
           <div className="container">
             <h1>Header - Logo + Menu</h1>
-            {/*<Menu menu={[*/}
-              {/*{name: 'homepage', path: '/'}, {name: 'rests', path: 'rests'}, {name: 'dishes', path: 'dishes'}*/}
-            {/*]}/>*/}
             {React.Children.map(this.props.children, (child) => React.cloneElement(child, {
               appData: this.state,
               getRests: this.getRests,

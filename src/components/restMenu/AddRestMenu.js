@@ -3,10 +3,11 @@
  */
 import React from 'react';
 import ListOfDishes from '../Dishes/ListOfDishes';
+import {Modal, Button} from 'react-bootstrap';
 
 class AddRestMenu extends React.Component {
   constructor(props) {
-    console.log('AddRestMenu | constructor props', props);
+    // console.log('AddRestMenu | constructor props', props);
     super(props);
     this.state = {
       resMenuName: '',
@@ -14,7 +15,7 @@ class AddRestMenu extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.updateDishes = this.updateDishes.bind(this);
+    // this.updateDishes = this.updateDishes.bind(this);
   }
 
   handleChange(event) {
@@ -22,15 +23,15 @@ class AddRestMenu extends React.Component {
     this.setState({[event.target.name]: event.target.value});
   }
 
-  updateDishes(data) {
-    var newArray = this.state.dishes.slice();
-    newArray.push(data);
-    this.setState({
-      dishes: newArray
-    });
+  // updateDishes(data) {
+  //   var newArray = this.state.dishes.slice();
+  //   newArray.push(data);
+  //   this.setState({
+  //     dishes: newArray
+  //   });
     // console.log('AddRestMenu | updateDishes data', data);
     // console.log('AddRestMenu | updateDishes', this.state);
-  }
+  // }
 
   handleSubmit(event) {
     event.preventDefault();
@@ -43,20 +44,39 @@ class AddRestMenu extends React.Component {
     // console.log('AddRestMenu | props', this.props);
     // console.log('AddRestMenu | state', this.state);
     return (
-      <div>
-        {this.props.exit}
-        <div>Adding new Menu</div>
-        <div>
-          <form onSubmit={this.handleSubmit}>
-            <label>
-              <div>Menu Name:
-                <input type="text" name="resMenuName" value={this.state.resMenuName} onChange={this.handleChange} required/>
-              </div>
-            </label>
-            <input type="submit" value="Submit"/>
-          </form>
-        </div>
-      </div>
+    <Modal show={this.props.show} onHide={this.props.exit}>
+      <Modal.Header closeButton>
+        <Modal.Title>Adding new Menu</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <form id="AddMenuForm" onSubmit={this.handleSubmit}>
+          <label>
+            <div>Menu Name:
+              <input type="text" name="resMenuName" value={this.state.resMenuName} onChange={this.handleChange} required/>
+            </div>
+          </label>
+        </form>
+      </Modal.Body>
+      <Modal.Footer>
+        <input type="submit" form="AddMenuForm" value="Submit"/>
+        <Button onClick={this.props.exit}>Close</Button>
+        {/*<Button type="submit" onClick={this.handleSubmit} form="AddDishForm">Submit</Button>*/}
+      </Modal.Footer>
+    </Modal>
+      // <div>
+      //   {this.props.exit}
+      //   <div>Adding new Menu</div>
+      //   <div>
+      //     <form onSubmit={this.handleSubmit}>
+      //       <label>
+      //         <div>Menu Name:
+      //           <input type="text" name="resMenuName" value={this.state.resMenuName} onChange={this.handleChange} required/>
+      //         </div>
+      //       </label>
+      //       <input type="submit" value="Submit"/>
+      //     </form>
+      //   </div>
+      // </div>
     )
   }
 }
