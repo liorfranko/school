@@ -74,7 +74,7 @@ class restMenuManager extends React.Component {
     };
     return (
       <div id="restMenu" className="panel panel-default">
-        <div className="panel-heading" style={styleDiv}>Restaurants Manager</div>
+        <div className="panel-heading" style={styleDiv}>RestMenuManager Manager</div>
         <div className="panel-body">
           Menus:
           <ListOfRestMenus menus={this.props.menus}
