@@ -11,6 +11,8 @@ import Restaurants from './components/restaurants/RestaurantsManager';
 import Restaurant from './components/restaurants/Restaurant';
 import Dishes from './components/Dishes/DishesManager';
 import RestMenu from './components/restMenu/restMenu'
+import RestSubMenu from './components/SubMenus/RestSubMenu'
+
 // import DishesManager
 //TODO Fix back button
 export default class Routes extends Component {
@@ -21,8 +23,9 @@ export default class Routes extends Component {
           <IndexRoute component={Homepage}/>
           {/*<IndexRoute component={Restaurants}/>*/}
           <Route path="rests" component={Restaurants}/>
-          <Route path="rest/:restName" component={Restaurant}/>
-          <Route path="rest/:restName/menu/:menuName" component={RestMenu}/>
+          <Route path=":restName" component={Restaurant}/>
+          <Route path=":restName/:menuName" component={RestMenu}/>
+          <Route path=":restName/:menuName/:subMenuName" component={RestSubMenu}/>
           <Route path="dishes" component={Dishes}/>
         </Route>
       </ Router>

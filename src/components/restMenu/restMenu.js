@@ -60,28 +60,68 @@ class RestMenu extends React.Component {
   render() {
     console.log('RestMenu | render | this.props.appData', this.props.appData);
     console.log('RestMenu | render | this.props.params', this.props.params);
+    console.log('RestMenu | render | this.props.appData.data.dishes', this.props.appData.data.dishes);
     const rest = this.props.appData.data.rests.findIndex(x => x.name == this.props.params.restName);
     console.log('RestMenu | componentDidMount | rest', rest);
     const menu = this.props.appData.data.rests[rest].menus.findIndex(x => x.name == this.props.params.menuName);
-    console.log('RestMenu | componentDidMount | menu', menu);
-    if (!this.props.appData.data.rests[rest].menus[menu].subMenus || !this.props.appData.data.dishes) {
-      // FIXME
+    console.log('RestMenu | render | menu', menu);
+    console.log('RestMenu | render | this.props.appData.data.rests[rest].menus[menu].subMenus', this.props.appData.data.rests[rest].menus[menu]);
+    if (!this.props.appData.data.dishes) {
       return (
-        <div>Loading
-          <a onClick={this.addSubMenu} className="innerItem">Add Submenu</a>
-          <a onClick={this.editSubMenu} className="innerItem">Edit Submenu</a>
+        <div>Loading dishes
+
         </div>
       )
     } else {
-      return (
-        <div id="subMenu">RestMenu
-          Name: {this.props.params.menuName}
-          <SubMenuManager subMenus={this.props.appData.data.rests[rest].menus[menu].subMenus}
-                          dishes={this.props.appData.data.dishes}
-                          delSubMenu = {this.props.deleteSubMenu}
-                          editSubMenu = {this.props.editSubMenu}
-          />
-          <a onClick={this.addSubMenu} className="innerItem">Add Submenu</a>
+      let subMenus = this.props.appData.data.rests[rest].menus[menu].subMenus;
+      if (!subMenus) {
+        // let subMenus = [];
+        // return(
+          {/*<div id="subMenu">Sub Menu Name: {this.props.params.menuName}*/}
+            {/*<SubMenuManager subMenus={subMenus}*/}
+                            // dishes={this.props.appData.data.dishes}
+                            // delSubMenu = {this.props.deleteSubMenu}
+                            // editSubMenu = {this.props.editSubMenu}
+                            // addSubMenu = {this.props.addSubMenu}
+            // />
+        return (
+          <div>Loading submenus </div>
+        )
+      } else {
+        return (
+          <div id="subMenu">Sub Menu Name: {this.props.params.menuName}
+            <SubMenuManager subMenus={subMenus}
+                            dishes={this.props.appData.data.dishes}
+                            rest={this.props.appData.data.rests[rest]}
+                            menu={this.props.appData.data.rests[rest].menus[menu]}
+                            delSubMenu = {this.props.deleteSubMenu}
+                            editSubMenu = {this.props.editSubMenu}
+                            addSubMenu = {this.props.addSubMenu}
+            />
+            {/*<a onClick={this.addSubMenu} className="innerItem">Add Submenu</a>*/}
+          </div>
+        );
+      }
+    }
+
+    // if (!this.props.appData.data.rests[rest].menus[menu].subMenus || !this.props.appData.data.dishes) {
+    //   FIXME
+      // return (
+      //   <div>Loading
+      //     <a onClick={this.addSubMenu} className="innerItem">Add Submenu</a>
+      //     <a onClick={this.editSubMenu} className="innerItem">Edit Submenu</a>
+      //   </div>
+      // )
+    // } else {
+    //   return (
+    //     <div id="subMenu">RestMenu
+    //       Name: {this.props.params.menuName}
+    //       <SubMenuManager subMenus={this.props.appData.data.rests[rest].menus[menu].subMenus}
+    //                       dishes={this.props.appData.data.dishes}
+    //                       delSubMenu = {this.props.deleteSubMenu}
+    //                       editSubMenu = {this.props.editSubMenu}
+    //       />
+    //       <a onClick={this.addSubMenu} className="innerItem">Add Submenu</a>
           {/*<ul className="subMenuList list-group">*/}
             {/*<li className="subMenuItem list-group-item">*/}
               {/*{*/}
@@ -118,9 +158,9 @@ class RestMenu extends React.Component {
             {/*</li>*/}
 
           {/*</ul>*/}
-        </div>
-      )
-    }
+        // </div>
+      // )
+    // }
 
 
   }

@@ -7,20 +7,20 @@ import SubMenuListItem from './SubMenuListItem';
 const ListOfSubMenus = (props) => {
   console.log('ListOfSubMenus |', props);
   return (
-    <ul className="subMenusList list-group">
-      <li className="subMenuItem list-group-item">
+    <ul className="restSubMenuList list-group">
       {
         props.subMenus.map((subMenu, i) => {
           return (
             <SubMenuListItem key={i} item={subMenu}
                              dishes={props.dishes}
                              delSubMenu = {props.delSubMenu}
-                             editSubMenu = {props.editSubMenu}
+                             rest = {props.rest}
+                             menu = {props.menu}
+                             subMenuNum = {i}
             />
           );
         })
       }
-      </li>
     </ul>
   )
 };

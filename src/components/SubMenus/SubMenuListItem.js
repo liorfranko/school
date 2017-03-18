@@ -14,55 +14,18 @@ const SubMenuListItem = (props) => {
 
   function onDeleteClick() {
     console.log('SubMenuListItem | onDeleteClick | props', props);
-    props.delSubMenu({subMenuId: props.item._id, menuId: props.item.menuId})
+    props.delSubMenu(props.subMenuNum)
   }
-
-  if (props.item.dishArray == null) {
-    return (
-      <div className="innerItem sub">
-        SubMenu Name: {props.item.name}
-        <div className="innerItem">
-          <a className="innerItem delete" onClick={onDeleteClick.bind(this)}>
-            Delete Submenu
-          </a>
-        </div>
-        <div className="innerItem">
-          <a className="innerItem edit" onClick={onEditClick.bind(this)}>
-            Edit Submenu
-          </a>
-        </div>
+  return (
+    <li className="subMenuItem list-group-item">
+      <div className="innerItem name">
+        <Link to={`/${props.rest.name}/${props.menu.name}/${props.item.name}`}>{props.item.name}</Link>
       </div>
-    );
-  } else {
-    return (
-      <div className="innerItem sub">
-        SubMenu Name: {props.item.name}
-        {console.log('SubMenuListItem | dishArray', props.item.dishArray)}
-        {props.item.dishArray.map((dish, i) => {
-          let dish_index = props.dishes.findIndex(x => x._id==dish);
-          {/*console.log('SubMenuListItem | dish_index', props.dishes[dish_index].name);*/}
-          return (
-            <div key={i}>
-              <div>Name: {props.dishes[dish_index].name}</div>
-              <div>Price: {props.dishes[dish_index].defaultPrice}</div>
-              <div>Description: {props.dishes[dish_index].description}</div>
-            </div>
-          );
-        })}
-        <div className="innerItem">
-          <a className="innerItem delete" onClick={onDeleteClick.bind(this)}>
-            Delete Submenu
-          </a>
-        </div>
-        <div className="innerItem">
-          <a className="innerItem edit" onClick={onEditClick.bind(this)}>
-            Edit Submenu
-          </a>
-        </div>
-      </div>
-    );
-  }
-
+      <a className="innerItem delete" onClick={onDeleteClick.bind(this)}>
+        del
+      </a>
+    </li>
+  )
 };
 
 SubMenuListItem.PropTypes = {

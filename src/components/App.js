@@ -272,7 +272,7 @@ class App extends React.Component {
 
   deleteSubMenu(data) {
     console.log('App | deleteSubMenu', data);
-    let postData = '&subMenu_Id=' + data.subMenuId + '&menu_Id=' + data.menuId;
+    let postData = '&subMenu_Id=' + data._id + '&menu_Id=' + data.menuId;
     api.postRequest('removeSubMenu', postData, this.getSubMenusLocal(data.menuId));
   }
 

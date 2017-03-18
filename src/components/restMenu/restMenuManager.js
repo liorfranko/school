@@ -28,7 +28,8 @@ class restMenuManager extends React.Component {
   exitPopup() {
     this.setState({
       showAddModal: false,
-      showDeleteModal: false
+      showDeleteModal: false,
+      selectedMenu: 0
     });
   };
 
@@ -48,18 +49,11 @@ class restMenuManager extends React.Component {
 
   };
 
-  openRestMenu(data) {
-    // console.log('restMenuManager | openRestMenu, data', data);
-    this.setState({
-      mode: 'restaurant',
-      selectedMenu: data
-    });
-  }
   handleAddClick(...data) {
     // console.log('restMenuManager | handleAddClick this.props', this.props);
     this.props.addRestMenu(...data);
     this.setState({
-      showAddModal: false,
+      showAddModal: false
     });
   }
 
@@ -82,6 +76,7 @@ class restMenuManager extends React.Component {
       <div id="restMenu" className="panel panel-default">
         <div className="panel-heading" style={styleDiv}>Restaurants Manager</div>
         <div className="panel-body">
+          Menus:
           <ListOfRestMenus menus={this.props.menus}
                            rest={this.props.rest}
                            deleteRestMenu={this.deleteRestMenu}
@@ -89,7 +84,8 @@ class restMenuManager extends React.Component {
           <AddRestMenu handleClick={this.handleAddClick.bind(this)}
                        rest={this.props.rest}
                        exit={this.exitPopup.bind(this)}
-                       show={this.state.showAddModal}/>
+                       show={this.state.showAddModal}
+          />
           <Button onClick={this.addRestMenu}>Add Menu</Button>
           <DeleteRestMenu chosenMenu={this.props.menus[this.state.selectedMenu]}
                           handleClick={this.handleDeleteClick.bind(this)}
@@ -98,7 +94,6 @@ class restMenuManager extends React.Component {
           />
         </div>
       </div>
-
     )
   }
 }

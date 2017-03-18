@@ -30,7 +30,6 @@ class RestaurantsManager extends React.Component {
     this.exitPopup = this.exitPopup.bind(this);
     this.deleteRest = this.deleteRest.bind(this);
     this.addRest = this.addRest.bind(this);
-    this.openRest = this.openRest.bind(this);
   }
 
   componentDidMount() {
@@ -102,12 +101,6 @@ class RestaurantsManager extends React.Component {
     });
   }
 
-  openRest(data) {
-    // console.log('RestaurantsManager | openRest, data', data);
-    this.setState({
-      selectedRes: data
-    });
-  }
   render() {
     // console.log('Restaurants Manager | this.props', this.props);
     // console.log('Restaurants Manager | this.state', this.state);
@@ -124,10 +117,11 @@ class RestaurantsManager extends React.Component {
         <div id="rests" className="panel panel-default">
           <div className="panel-heading" style={styleDiv}>Restaurants Manager</div>
           <div className="panel-body">
+            Restaurants:
             <ListOfRestaurants rests={this.props.appData.data.rests}
                                editRest={this.editRest}
                                deleteRest={this.deleteRest}
-                               openRest={this.openRest}/>
+            />
             {/*<a onClick={this.addRest} >Add restaurant</a>*/}
             <AddRestaurant handleClick={this.handleAddClick.bind(this)}
                            exit={this.exitPopup.bind(this)}
