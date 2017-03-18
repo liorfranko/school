@@ -4,6 +4,7 @@
 
 import React from 'react';
 import Menu from './menu/Menu';
+import Homepage from './homepage/Homepage';
 import api from '../api/API'
 import 'react-super-select/lib/react-super-select.css';
 import update from 'immutability-helper';
@@ -340,7 +341,7 @@ class App extends React.Component {
         <nav className="navbar navbar-inverse navbar-fixed-top">
           <div className="container">
             <Menu menu={[
-              {name: 'homepage', path: '/'}, {name: 'rests', path: 'rests'}, {name: 'dishes', path: 'dishes'}
+              {name: 'homepage', path: ''}, {name: 'rests', path: 'rests'}, {name: 'dishes', path: 'dishes'}
             ]}/>
           </div>
         </nav>
@@ -375,6 +376,4 @@ class App extends React.Component {
 
 }
 
-export
-default
-App;
+export default App;

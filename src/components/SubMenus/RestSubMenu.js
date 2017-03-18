@@ -4,6 +4,8 @@
 import React from 'react';
 import {render} from 'react-dom';
 import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
+// import {SortableGroup} from '../../../react-sortable-hoc/src/index'
+// import SortableGroup from './SortableGroup'
 
 const SortableItem = SortableElement(({value}) =>
   <li>{value}</li>
@@ -57,6 +59,44 @@ class RestSubMenu extends React.Component {
         </div>
       </div>
     )
+  }
+}
+
+class ConnectedLists extends React.Component {
+  constructor(props) {
+    console.log('ConnectedLists | constructor | this.props', props);
+    super(props);
+    // this.onSortEnd = this.onSortEnd.bind(this);
+    let available_dishes = [];
+    let selected_dishes = [];
+    this.props.appData.data.dishes.map((dish) => {
+      available_dishes.push(dish.name)
+    });
+    console.log('RestSubMenu | available_dishes ', available_dishes);
+    this.state = {
+      available_dishes: available_dishes,
+      selected_dishes: selected_dishes
+    };
+
+  }
+  render() {
+    const {items} = this.state;
+
+    return (
+      <SortableGroup
+        items={items}
+        handleMove={movedItems => this.setState({
+          items: moveGroupItems(items, movedItems)
+        })}
+      >
+        {connectGroupTarget =>
+          <div>
+            <SortableList {...connectGroupTarget('available_dishes')} axis='x' />
+            <SortableList {...connectGroupTarget('selected_dishes')} axis='x' />
+          </div>
+        }
+      </SortableGroup>
+    );
   }
 }
 
