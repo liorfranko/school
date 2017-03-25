@@ -58,7 +58,7 @@ class AddRestSubMenu extends React.Component {
         </form>
       </Modal.Body>
       <Modal.Footer>
-        <input type="submit" form="AddSubMenuForm" value="Submit"/>
+        <input type="submit" form="AddSubMenuForm" value="Submit" className="btn btn-default"/>
         <Button onClick={this.props.exit}>Close</Button>
         {/*<Button type="submit" onClick={this.handleSubmit} form="AddDishForm">Submit</Button>*/}
       </Modal.Footer>

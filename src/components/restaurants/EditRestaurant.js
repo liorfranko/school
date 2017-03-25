@@ -63,7 +63,7 @@ class EditRestaurant extends React.Component {
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <input type="submit" form="AddRestaurantForm" value="Submit"/>
+          <input type="submit" form="AddRestaurantForm" value="Submit" className="btn btn-default"/>
           <Button onClick={this.props.exit}>Close</Button>
           {/*<Button onClick={this.handleSubmit}>Submit</Button>*/}
         </Modal.Footer>

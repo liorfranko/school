@@ -34,7 +34,7 @@ class DeleteRestMenu extends React.Component {
         </form>
       </Modal.Body>
       <Modal.Footer>
-        <input type="submit" form="DeleteMenuForm" value="Delete"/>
+        <input type="submit" form="DeleteMenuForm" value="Delete" className="btn btn-default"/>
         <Button onClick={this.props.exit}>Close</Button>
       </Modal.Footer>
     </Modal>
