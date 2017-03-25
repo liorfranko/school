@@ -186,7 +186,7 @@ class App extends React.Component {
   }
 
   getRests() {
-    // console.log("App | getRests", this.state);
+    console.log("App | getRests", this.state);
     this.setState({loading: true});
     var data = {
       user_Id: this.state.uid

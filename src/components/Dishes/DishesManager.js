@@ -94,15 +94,21 @@ class DishesManager extends React.Component {
   render() {
     // console.log('DishesManager | render', this.state);
     // console.log('DishesManager | this.props.appData.data.dishes', this.props.appData.data.dishes);
+    const src = require("../../Images/5.gif");
+    const styleDiv = {
+      fontSize: 30
+    };
     if (!this.props.appData.data.dishes) {
       // console.log('DishesManager | loading');
       return (
-        <div>Loading</div>
+        <div id="dishes" className="panel panel-default">
+          <div className="panel-heading" style={styleDiv}>Dishes:</div>
+          <div className="panel-body">
+            <img src={ src } />
+          </div>
+        </div>
       )
     } else {
-      let styleDiv = {
-        fontSize: 30
-      };
       return (
         <div id="dishes" className="panel panel-default">
           <div className="panel-heading" style={styleDiv}>Dishes:</div>

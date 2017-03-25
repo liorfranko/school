@@ -3,6 +3,7 @@
  */
 
 import React from 'react';
+import Image from 'react'
 
 import ListOfRestaurants from './ListOfRestaurants';
 import './rests.styl';
@@ -11,7 +12,7 @@ import EditRestaurant from './EditRestaurant.js';
 import DeleteRestaurant from './DeleteRestaurant.js';
 import AddRestaurant from './AddRestaurant.js';
 // import Restaurant from './Restaurant'
-import { Button } from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
 
 class RestaurantsManager extends React.Component {
   constructor(props) {
@@ -47,7 +48,6 @@ class RestaurantsManager extends React.Component {
       selectedRes: 0
     });
   };
-
 
 
   handleDeleteClick() {
@@ -104,19 +104,26 @@ class RestaurantsManager extends React.Component {
   render() {
     // console.log('Restaurants Manager | this.props', this.props);
     // console.log('Restaurants Manager | this.state', this.state);
+    const src = require("../../Images/5.gif");
+    const styleDiv = {
+      fontSize: 30
+    };
     if (!this.props.appData.data.rests) {
       // console.log('RestaurantsManager | loading');
-      return (
-        <div>Loading</div>
-      )
-    } else {
-      let styleDiv = {
-        fontSize: 30
-      };
       return (
         <div id="rests" className="panel panel-default">
           <div className="panel-heading" style={styleDiv}>Restaurants:</div>
           <div className="panel-body">
+            <img src={ src } />
+          </div>
+        </div>
+    )
+    } else {
+      return (
+        <div id="rests" className="panel panel-default">
+          <div className="panel-heading" style={styleDiv}>Restaurants:</div>
+          <div className="panel-body">
+            {/*{this.props.appData.data.rests ? <img src={ src } />: 'Show'}*/}
             <ListOfRestaurants rests={this.props.appData.data.rests}
                                editRest={this.editRest}
                                deleteRest={this.deleteRest}

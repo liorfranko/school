@@ -67,11 +67,11 @@ class subMenuManager extends React.Component {
   render() {
     console.log('subMenuManager | render | this.props', this.props);
     console.log('subMenuManager | render | this.state', this.state);
-    let styleDiv = {
+    const styleDiv = {
       fontSize: 30
     };
     return (
-      <div id="subMenusubMenuManager" className="panel panel-default">
+      <div id="subMenu" className="panel panel-default">
         <div className="panel-heading" style={styleDiv}>{this.props.menu['name']}</div>
         <div className="panel-body">
           Sub Menus:

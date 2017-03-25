@@ -47,9 +47,9 @@ class RestSubMenu extends Component {
     // console.log('RestSubMenu | submitRestSubMenu | rest', rest);
     let menu = this.props.appData.data.rests[rest].menus.findIndex(x => x.name==this.props.params.menuName);
     // console.log('RestSubMenu | submitRestSubMenu | menu', menu);
-    let submenu = this.props.appData.data.rests[rest].menus[menu].subMenus.findIndex(x => x.name==this.props.params.subMenuName);
+    // let submenu = this.props.appData.data.rests[rest].menus[menu].subMenus.findIndex(x => x.name==this.props.params.subMenuName);
     // console.log('RestSubMenu | submitRestSubMenu | subMenu', submenu);
-    let subMenu_Id = this.props.appData.data.rests[rest].menus[menu].subMenus[submenu]['_id'];
+    // let subMenu_Id = this.props.appData.data.rests[rest].menus[menu].subMenus[submenu]['_id'];
     // console.log('RestSubMenu | submitRestSubMenu | subMenu_Id', subMenu_Id);
     //{`/${props.rest.name}/${props.menu.name}/${props.item.name}`}
     browserHistory.push(`/${this.props.appData.data.rests[rest].name}/${this.props.appData.data.rests[rest].menus[menu].name}`)

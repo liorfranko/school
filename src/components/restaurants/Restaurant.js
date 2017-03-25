@@ -14,28 +14,47 @@ class Restaurant extends React.Component {
   }
 
   componentDidMount() {
-    // console.log('Restaurant | componentDidMount', this.props);
-    var rest = this.props.appData.data.rests.findIndex(x => x.name==this.props.params.restName);
+    console.log('Restaurant | componentDidMount', this.props);
+    // let rest = this.props.appData.data.rests.findIndex(x => x.name == this.props.params.restName);
+
     // console.log('Restaurant | componentDidMount | rest', rest);
     // console.log('Restaurant | componentDidMount | this.props.appData.data.rests[rest].menus', this.props.appData.data.rests[rest]);
     if (!this.props.appData.data.rests) {
       this.props.getRests();
-    }
-    if (!this.props.appData.data.rests[rest].menus) {
-      this.props.getMenus(this.props.appData.data.rests[rest]._id);
-    }  }
-
-  render() {
-    // console.log('Restaurant | render |this.props', this.props);
-    if (!this.props.appData.data.rests) {
-      return (
-        <div>Loading</div>
-      )
     } else {
       let rest = this.props.appData.data.rests.findIndex(x => x.name==this.props.params.restName);
       if (!this.props.appData.data.rests[rest].menus) {
+        this.props.getMenus(this.props.appData.data.rests[rest]._id);
+      }
+    }
+
+  }
+
+  render() {
+    // console.log('Restaurant | render |this.props', this.props);
+    const src = require("../../Images/5.gif");
+    const styleDiv = {
+      fontSize: 30
+    };
+    if (!this.props.appData.data.rests) {
+      return (
+        <div id="rests" className="panel panel-default">
+          <div className="panel-heading" style={styleDiv}>Restaurants:</div>
+          <div className="panel-body">
+            <img src={ src }/>
+          </div>
+        </div>
+      )
+    } else {
+      let rest = this.props.appData.data.rests.findIndex(x => x.name == this.props.params.restName);
+      if (!this.props.appData.data.rests[rest].menus) {
         return (
-          <div>Loading</div>
+          <div id="rests" className="panel panel-default">
+            <div className="panel-heading" style={styleDiv}>Restaurants:</div>
+            <div className="panel-body">
+              <img src={ src }/>
+            </div>
+          </div>
         )
       } else {
         return (
@@ -45,7 +64,6 @@ class Restaurant extends React.Component {
                              addRestMenu={this.props.addRestMenu}
                              deleteRestMenu={this.props.deleteRestMenu}
             />
-            {/*<ListOfDishes  dishes={this.props.appData.data.dishes} type="inMenu"/>*/}
           </div>
         )
       }

@@ -66,103 +66,43 @@ class RestMenu extends React.Component {
     const menu = this.props.appData.data.rests[rest].menus.findIndex(x => x.name == this.props.params.menuName);
     console.log('RestMenu | render | menu', menu);
     console.log('RestMenu | render | this.props.appData.data.rests[rest].menus[menu].subMenus', this.props.appData.data.rests[rest].menus[menu]);
+    const src = require("../../Images/5.gif");
+    const styleDiv = {
+      fontSize: 30
+    };
     if (!this.props.appData.data.dishes) {
       return (
-        <div>Loading dishes
-
+        <div id="restMenu" className="panel panel-default">
+          <div className="panel-heading" style={styleDiv}>Restaurants:</div>
+          <div className="panel-body">
+            <img src={ src } />
+          </div>
         </div>
       )
     } else {
       let subMenus = this.props.appData.data.rests[rest].menus[menu].subMenus;
       if (!subMenus) {
-        // let subMenus = [];
-        // return(
-          {/*<div id="subMenu">Sub Menu Name: {this.props.params.menuName}*/}
-            {/*<SubMenuManager subMenus={subMenus}*/}
-                            // dishes={this.props.appData.data.dishes}
-                            // delSubMenu = {this.props.deleteSubMenu}
-                            // editSubMenu = {this.props.editSubMenu}
-                            // addSubMenu = {this.props.addSubMenu}
-            // />
         return (
-          <div>Loading submenus </div>
+          <div id="restMenu" className="panel panel-default">
+            <div className="panel-heading" style={styleDiv}>Restaurants:</div>
+            <div className="panel-body">
+              <img src={ src } />
+            </div>
+          </div>
         )
       } else {
         return (
-          <div id="subMenu">
-            <SubMenuManager subMenus={subMenus}
-                            dishes={this.props.appData.data.dishes}
-                            rest={this.props.appData.data.rests[rest]}
-                            menu={this.props.appData.data.rests[rest].menus[menu]}
-                            delSubMenu = {this.props.deleteSubMenu}
-                            editSubMenu = {this.props.editSubMenu}
-                            addSubMenu = {this.props.addSubMenu}
-            />
-            {/*<a onClick={this.addSubMenu} className="innerItem">Add Submenu</a>*/}
-          </div>
+          <SubMenuManager subMenus={subMenus}
+                          dishes={this.props.appData.data.dishes}
+                          rest={this.props.appData.data.rests[rest]}
+                          menu={this.props.appData.data.rests[rest].menus[menu]}
+                          delSubMenu = {this.props.deleteSubMenu}
+                          editSubMenu = {this.props.editSubMenu}
+                          addSubMenu = {this.props.addSubMenu}
+          />
         );
       }
     }
-
-    // if (!this.props.appData.data.rests[rest].menus[menu].subMenus || !this.props.appData.data.dishes) {
-    //   FIXME
-      // return (
-      //   <div>Loading
-      //     <a onClick={this.addSubMenu} className="innerItem">Add Submenu</a>
-      //     <a onClick={this.editSubMenu} className="innerItem">Edit Submenu</a>
-      //   </div>
-      // )
-    // } else {
-    //   return (
-    //     <div id="subMenu">RestMenu
-    //       Name: {this.props.params.menuName}
-    //       <SubMenuManager subMenus={this.props.appData.data.rests[rest].menus[menu].subMenus}
-    //                       dishes={this.props.appData.data.dishes}
-    //                       delSubMenu = {this.props.deleteSubMenu}
-    //                       editSubMenu = {this.props.editSubMenu}
-    //       />
-    //       <a onClick={this.addSubMenu} className="innerItem">Add Submenu</a>
-          {/*<ul className="subMenuList list-group">*/}
-            {/*<li className="subMenuItem list-group-item">*/}
-              {/*{*/}
-                {/*this.props.appData.data.rests[rest].menus[menu].subMenus.map((subMenu, i) => {*/}
-                  {/*console.log('RestMenu | render | subMenu.dishArray', subMenu.dishArray);*/}
-                  {/*if (subMenu.dishArray == null) {*/}
-                    {/*console.log('RestMenu | render | dishArray is null');*/}
-                    {/*let count;*/}
-                    {/*let indents = [];*/}
-                    {/*for (count = 0; count < 13; count++) {*/}
-                      {/*indents.push(*/}
-                        {/*<div key={count} className="innerItem">*/}
-                          {/*<div className="innerItem"> Dish name</div>*/}
-                          {/*<div className="innerItem"> Dish description</div>*/}
-                          {/*<div className="innerItem"> Dish price</div>*/}
-                          {/*<div className="innerItem"> Edit</div>*/}
-                          {/*<div className="innerItem"> Delete</div>*/}
-                        {/*</div>*/}
-                      {/*)*/}
-                    {/*}*/}
-                    {/*return (*/}
-                      {/*<div key={i} className="innerItem sub">*/}
-                        {/*{subMenu.name}*/}
-                        {/*{indents}*/}
-                        {/*<a onClick={this.editSubMenu} className="innerItem">Edit Submenu</a>*/}
-                        {/*<a onClick={this.deleteSubMenu} className="innerItem">Delete Submenu</a>*/}
-                      {/*</div>*/}
-                    {/*);*/}
-                  {/*} else {*/}
-                    {/*console.log('RestMenu | render | dishArray is not null')*/}
-                  {/*}*/}
-                {/*})*/}
-              {/*}*/}
-            {/*</li>*/}
-
-          {/*</ul>*/}
-        // </div>
-      // )
-    // }
-
-
   }
 }
 
