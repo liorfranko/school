@@ -5,9 +5,11 @@
 import React from 'react';
 import Menu from './menu/Menu';
 import Homepage from './homepage/Homepage';
+import {Button} from 'react-bootstrap';
 import api from '../api/API'
 import 'react-super-select/lib/react-super-select.css';
 import update from 'immutability-helper';
+import {browserHistory} from 'react-router';
 
 class App extends React.Component {
   constructor(props) {
@@ -17,6 +19,9 @@ class App extends React.Component {
       data: {},
       loading: true
     };
+
+    this.goBack = this.goBack.bind(this);
+    this.goForward = this.goForward.bind(this);
 
     this.updateRest = this.updateRest.bind(this);
     this.updateDishes = this.updateDishes.bind(this);
@@ -46,6 +51,12 @@ class App extends React.Component {
     this.editSubMenu = this.editSubMenu.bind(this);
   }
 
+  goBack() {
+    browserHistory.goBack();
+  }
+  goForward() {
+    browserHistory.goForward();
+  }
   updateRest(data) {
     // console.log('App | updateRest data', data);
     const items = JSON.parse(data).items || [];
@@ -329,7 +340,7 @@ class App extends React.Component {
 
   editSubMenu(data) {
     console.log('App | editSubMenu, data', data);
-
+    api.postRequest('updateSubMenuDishes', data);
   }
 
   render() {
@@ -367,6 +378,8 @@ class App extends React.Component {
               deleteRestMenu: this.deleteRestMenu,
               deleteSubMenu: this.deleteSubMenu,
             }))}
+            <Button onClick={this.goBack}>Back</Button>
+            <Button onClick={this.goForward}>Forward</Button>
             <footer>Footer - links, & other shit</footer>
           </div>
         </div>
