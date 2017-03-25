@@ -71,8 +71,8 @@ class subMenuManager extends React.Component {
       fontSize: 30
     };
     return (
-      <div id="subMenu" className="panel panel-default">
-        <div className="panel-heading" style={styleDiv}>Sub Menu Manager</div>
+      <div id="subMenusubMenuManager" className="panel panel-default">
+        <div className="panel-heading" style={styleDiv}>{this.props.menu['name']}</div>
         <div className="panel-body">
           Sub Menus:
           <ListOfSubMenus subMenus={this.props.subMenus}

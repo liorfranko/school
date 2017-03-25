@@ -55,11 +55,11 @@ class RestSubMenu extends Component {
     browserHistory.push(`/${this.props.appData.data.rests[rest].name}/${this.props.appData.data.rests[rest].menus[menu].name}`)
   }
   render() {
-    const style = {
-      display: "flex",
-      justifyContent: "space-around",
-      paddingTop: "20px"
-    };
+    // const style = {
+    //   display: "flex",
+    //   justifyContent: "space-around",
+    //   paddingTop: "20px"
+    // };
     let listOne = [];
     this.state.available_dishes.map((dish, i) => {
       listOne.push({id: i, text: dish})
@@ -68,13 +68,18 @@ class RestSubMenu extends Component {
     this.state.selected_dishes.map((dish, i) => {
       listTwo.push({id: i, text: dish})
     });
-
+    let styleDiv = {
+      fontSize: 30
+    };
     return (
-      <div style={{style}}>
-        <Container id={1} list={listOne} text="Available Dishes"/>
-        <Container id={2} list={listTwo} text="Selected Dishes"/>
-        <Button onClick={this.submitRestSubMenu}>Submit</Button>
-        <Button onClick={this.cancelRestSubMenu}>Cancel</Button>
+      <div id="subMenusubMenuManager" className="panel panel-default">
+        <div className="panel-heading" style={styleDiv}>{this.props.params.subMenuName}</div>
+        <div className="panel-body">
+          <Container id={1} list={listOne} text="Available Items"/>
+          <Container id={2} list={listTwo} text="Selected Items"/>
+          <Button onClick={this.submitRestSubMenu}>Submit</Button>
+          <Button onClick={this.cancelRestSubMenu}>Cancel</Button>
+        </div>
       </div>
     );
   }

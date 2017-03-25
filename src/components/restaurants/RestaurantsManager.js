@@ -115,9 +115,8 @@ class RestaurantsManager extends React.Component {
       };
       return (
         <div id="rests" className="panel panel-default">
-          <div className="panel-heading" style={styleDiv}>Restaurants Manager</div>
+          <div className="panel-heading" style={styleDiv}>Restaurants:</div>
           <div className="panel-body">
-            Restaurants:
             <ListOfRestaurants rests={this.props.appData.data.rests}
                                editRest={this.editRest}
                                deleteRest={this.deleteRest}

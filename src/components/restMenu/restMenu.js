@@ -89,7 +89,7 @@ class RestMenu extends React.Component {
         )
       } else {
         return (
-          <div id="subMenu">Sub Menu Name: {this.props.params.menuName}
+          <div id="subMenu">
             <SubMenuManager subMenus={subMenus}
                             dishes={this.props.appData.data.dishes}
                             rest={this.props.appData.data.rests[rest]}

@@ -39,7 +39,7 @@ class Restaurant extends React.Component {
         )
       } else {
         return (
-          <div> Restaurant name:  {this.props.appData.data.rests[rest].name}
+          <div>
             <RestMenuManager rest={this.props.appData.data.rests[rest]}
                              menus={this.props.appData.data.rests[rest].menus}
                              addRestMenu={this.props.addRestMenu}

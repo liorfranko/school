@@ -105,14 +105,12 @@ class DishesManager extends React.Component {
       };
       return (
         <div id="dishes" className="panel panel-default">
-          <div className="panel-heading" style={styleDiv}>Dishes Manager</div>
+          <div className="panel-heading" style={styleDiv}>Dishes:</div>
           <div className="panel-body">
             <ListOfDishes dishes={this.props.appData.data.dishes}
                           editDish={this.openEditDish}
                           deleteDish={this.openDeleteDish}/>
-            <Button onClick={this.openAddDish}>
-              Add Dish
-            </Button>
+            <Button onClick={this.openAddDish}>Add Dish</Button>
             <AddDish handleClick={this.handleAddClick.bind(this)} exit={this.exitPopup.bind(this)} show={this.state.showAddModal}/>
             <EditDish dishId={this.props.appData.data.dishes[this.state.selectedDish]._id}
                       dishName={this.props.appData.data.dishes[this.state.selectedDish].name}

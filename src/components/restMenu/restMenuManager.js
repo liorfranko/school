@@ -67,14 +67,14 @@ class restMenuManager extends React.Component {
   }
 
   render() {
-    // console.log('restMenuManager | props', this.props);
+    console.log('restMenuManager | props', this.props);
     // console.log('restMenuManager | this.state', this.state);
     let styleDiv = {
       fontSize: 30
     };
     return (
       <div id="restMenu" className="panel panel-default">
-        <div className="panel-heading" style={styleDiv}>RestMenuManager Manager</div>
+        <div className="panel-heading" style={styleDiv}>{this.props.rest.name}</div>
         <div className="panel-body">
           Menus:
           <ListOfRestMenus menus={this.props.menus}
