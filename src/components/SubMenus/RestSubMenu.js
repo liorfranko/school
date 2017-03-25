@@ -1,32 +1,16 @@
 /**
  * Created by liorf on 12/10/16.
  */
-import React from 'react';
+import React, { Component } from 'react';
 import {render} from 'react-dom';
-import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
-// import {SortableGroup} from '../../../react-sortable-hoc/src/index'
-// import SortableGroup from './SortableGroup'
-
-const SortableItem = SortableElement(({value}) =>
-  <li>{value}</li>
-);
-
-const SortableList = SortableContainer(({items}) => {
-  return (
-    <ul>
-      {items.map((value, index) => (
-        <SortableItem key={`item-${index}`} index={index} value={value}/>
-      ))}
-    </ul>
-  );
-});
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+import Container from './Container';
 //{"subMenu_Id":"583cb590422ce433e4abec81","items":[{"Id":"ABCD"},{"Id":"EFGH"},{"Id":"IJKL"}]}
 
-class RestSubMenu extends React.Component {
+class RestSubMenu extends Component {
   constructor(props) {
-    console.log('RestSubMenu | constructor | this.props', props);
     super(props);
-    this.onSortEnd = this.onSortEnd.bind(this);
     let available_dishes = [];
     let selected_dishes = [];
     this.props.appData.data.dishes.map((dish) => {
@@ -37,67 +21,28 @@ class RestSubMenu extends React.Component {
       available_dishes: available_dishes,
       selected_dishes: selected_dishes
     };
-
   }
-
-  onSortEnd(oldIndex, newIndex) {
-    console.log('RestSubMenu | constructor | this.state', this.state);
-    this.setState({
-      available_dishes: arrayMove(this.state.available_dishes, oldIndex, newIndex),
-    });
-  }
-
   render() {
+    const style = {
+      display: "flex",
+      justifyContent: "space-around",
+      paddingTop: "20px"
+    };
+    let listOne = [];
+    this.state.available_dishes.map((dish, i) => {
+      listOne.push({id: i, text: dish})
+    });
+    let listTwo = [];
+    this.state.selected_dishes.map((dish, i) => {
+      listTwo.push({id: i, text: dish})
+    });
     return (
-      <div className="innerItem name">
-        <div>Sub Menu name: {this.props.params.subMenuName}</div>
-        <div> Selected Dishes:
-          <SortableList items={this.state.selected_dishes} onSortEnd={this.onSortEnd}/>
-        </div>
-        <div> Available Dishes:
-          <SortableList items={this.state.available_dishes} onSortEnd={this.onSortEnd}/>
-        </div>
+      <div style={{style}}>
+        <Container id={1} list={listOne} text="Available Dishes"/>
+        <Container id={2} list={listTwo} text="Selected Dishes"/>
       </div>
-    )
-  }
-}
-
-class ConnectedLists extends React.Component {
-  constructor(props) {
-    console.log('ConnectedLists | constructor | this.props', props);
-    super(props);
-    // this.onSortEnd = this.onSortEnd.bind(this);
-    let available_dishes = [];
-    let selected_dishes = [];
-    this.props.appData.data.dishes.map((dish) => {
-      available_dishes.push(dish.name)
-    });
-    console.log('RestSubMenu | available_dishes ', available_dishes);
-    this.state = {
-      available_dishes: available_dishes,
-      selected_dishes: selected_dishes
-    };
-
-  }
-  render() {
-    const {items} = this.state;
-
-    return (
-      <SortableGroup
-        items={items}
-        handleMove={movedItems => this.setState({
-          items: moveGroupItems(items, movedItems)
-        })}
-      >
-        {connectGroupTarget =>
-          <div>
-            <SortableList {...connectGroupTarget('available_dishes')} axis='x' />
-            <SortableList {...connectGroupTarget('selected_dishes')} axis='x' />
-          </div>
-        }
-      </SortableGroup>
     );
   }
 }
 
-export default RestSubMenu;
+export default DragDropContext(HTML5Backend)(RestSubMenu);
