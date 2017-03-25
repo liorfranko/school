@@ -23,10 +23,10 @@ export default class Routes extends Component {
         <Route path="/" component={App}>
           <IndexRoute component={Homepage}/>
           <Route path="rests" component={Restaurants}/>
+          <Route path="dishes" component={Dishes}/>
           <Route path=":restName" component={Restaurant}/>
           <Route path=":restName/:menuName" component={RestMenu}/>
           <Route path=":restName/:menuName/:subMenuName" component={RestSubMenu}/>
-          <Route path="dishes" component={Dishes}/>
         </Route>
       </ Router>
     );
