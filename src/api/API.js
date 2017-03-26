@@ -12,7 +12,11 @@ class Api {
     $.post({
       url: 'http://'+host +'/' + servicName + '/' + url,
       cache: false,
+      // data: {any: data},
       data: data,
+      dataType: 'json',
+      // accept: 'application/json',
+      // contentType: 'application/json',
       success: function(recData) {
         callBack(recData);
       }.bind(this),
@@ -22,5 +26,6 @@ class Api {
     });
   }
 }
+
 
 export default Api;

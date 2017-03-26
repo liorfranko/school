@@ -58,8 +58,8 @@ class App extends React.Component {
     browserHistory.goForward();
   }
   updateRest(data) {
-    // console.log('App | updateRest data', data);
-    const items = JSON.parse(data).items || [];
+    // console.log('App | updateRest data', data.items);
+    const items = data.items || [];
     // console.log('App | updateRest', items);
     this.setState({
       data: Object.assign({}, this.state.data, {rests: items}),
@@ -69,7 +69,7 @@ class App extends React.Component {
 
   updateDishes(data) {
     // console.log('App | updateDishes data', data);
-    const items = JSON.parse(data).items || [];
+    const items = data.items || [];
     // console.log('App | updateDishes', items);
     this.setState({
       data: Object.assign({}, this.state.data, {dishes: items})
@@ -81,7 +81,7 @@ class App extends React.Component {
     // When loading menus and menus list is empty, How can I get the restaurant ID.
     // console.log('App | updateMenus data', data);
     // console.log('App | updateMenus this.state.data', this.state.data);
-    const items = JSON.parse(data).items || [];
+    const items = data.items || [];
     // console.log('App | updateMenus items.length()', items.length);
     var arrayVar = this.state.data.rests.slice();
     // var index;
@@ -100,7 +100,7 @@ class App extends React.Component {
         }
       });
     } else {
-      var restId = JSON.parse(data).reason;
+      var restId = data.reason;
       // console.log('App | updateMenus restId', restId);
       // console.log('App | updateMenus this.state.data.rests', this.state.data.rests);
       // var curRestArray = this.state.data.rests.indexOf(restId);
@@ -118,7 +118,7 @@ class App extends React.Component {
   }
 
   updateSubMenus(data) {
-    const items = JSON.parse(data).items || [];
+    const items = data.items || [];
     // console.log('App | updateSubMenus items', items);
     // console.log('App | updateSubMenus items.length()', items.length);
     // console.log('App | updateSubMenus this.state.data', this.state.data);

@@ -19,6 +19,11 @@ class DeleteRestSubMenu extends React.Component {
 
   render() {
     console.log('DeleteRestSubMenu | render', this.props);
+    if (!this.props.chosenSubMenu) {
+      return (
+        <div></div>
+      )
+    }
     return (
     <Modal show={this.props.show} onHide={this.props.exit}>
       <Modal.Header closeButton>
@@ -38,21 +43,6 @@ class DeleteRestSubMenu extends React.Component {
         <Button onClick={this.props.exit}>Close</Button>
       </Modal.Footer>
     </Modal>
-      // <div>
-      //   {this.props.exit}
-      //   <div >Deleting Menu</div>
-      //   <div>
-      //     <form onSubmit={this.handleSubmit}>
-      //       <label>
-      //         <div>Menu Name:
-      //           <div>{this.props.chosenMenu['name']}</div>
-      //         </div>
-      //         <div>Are you sure you want to delete?</div>
-      //       </label>
-      //       <input type="submit" value="Submit"/>
-      //     </form>
-      //   </div>
-      // </div>
     )
   }
 }
