@@ -17,7 +17,20 @@ import RestSubMenu from './components/SubMenus/RestSubMenu'
 //TODO Fix back button
 export default class Routes extends Component {
   render() {
-
+    // return (
+    //   <Router history={browserHistory}>
+    //     <Route path="/" name="Examples" component={App}>
+    //       <Route name="rests" path="rests" component={Restaurants}>
+    //         <Route name="restName" path=":restName" component={Restaurant}>
+    //           <Route name="menuName" path=":menuName" component={RestMenu}>
+    //             <Route name="subMenuName" path=":subMenuName" component={RestSubMenu}/>
+    //           </Route>
+    //         </Route>
+    //       </Route>
+    //       <Route name='dishes' path='dishes' component={Dishes}/>
+    //     </Route>
+    //   </Router>
+    // );
     return (
       <Router history={browserHistory}>
         <Route path="/" component={App}>

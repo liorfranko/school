@@ -4,16 +4,33 @@
 
 import React from 'react';
 import Menu from './menu/Menu';
-import Homepage from './homepage/Homepage';
+// import Homepage from './homepage/Homepage';
 import {Button} from 'react-bootstrap';
 import api from '../api/API'
 import 'react-super-select/lib/react-super-select.css';
 import update from 'immutability-helper';
 import {browserHistory} from 'react-router';
+// import FacebookLogin from 'react-facebook-login';
+// import FacebookLogout from 'react-facebook-login'
+import LoginHOC from 'react-facebook-login-hoc'
+
+// import Login from './Login.js'
+// import FacebookButton from './FacebookButton';
+const configureLoginProps = {
+  appId: '756445047848860',
+  scope: 'public_profile, email',
+  xfbml: true,
+  cookie: false,
+  version: 2.8,
+  language: 'en_US'
+};
 
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.status = this.props.fb.status;
+    this.login = this.props.fb.login;
+    this.logout = this.props.fb.logout;
     this.state = {
       uid: '5826fdc1680d800d2064d1da',
       data: {},
@@ -49,6 +66,13 @@ class App extends React.Component {
     this.editRest = this.editRest.bind(this);
     this.editRestMenu = this.editRestMenu.bind(this);
     this.editSubMenu = this.editSubMenu.bind(this);
+
+    this.getStatus = this.getStatus.bind(this);
+    this.responseApi = this.responseApi.bind(this);
+    this.checkLoginState = this.checkLoginState.bind(this);
+    this.loginFacebook = this.loginFacebook.bind(this);
+    this.logoutFacebook = this.logoutFacebook.bind(this);
+
   }
 
   goBack() {
@@ -343,10 +367,40 @@ class App extends React.Component {
     api.postRequest('updateSubMenuDishes', data);
   }
 
+  getStatus(response) {
+    if (response.authResponse) {
+      this.responseApi.call(this, response.authResponse)
+    }
+  }
+
+  responseApi(res) {
+    console.log('token:', res.accessToken)
+  }
+
+  checkLoginState() {
+    this.status(this.getStatus.bind(this))
+  };
+
+  loginFacebook() {
+    this.login(this.getStatus.bind(this))
+  }
+
+  logoutFacebook() {
+    this.logout()
+  }
+
   render() {
+    // const responseFacebook = (response) => {
+    //   console.log("responseFacebook", response);
+    // };
+    // const componentClicked = (response) => {
+    //   console.log("componentClicked", response);
+    // };
+
     // console.log('App.js | this.state', this.state);
     // console.log('App.js | this.props.params', this.props.params);
     // console.log('App.js | this.props.children', this.props.children);
+    // var Breadcrumbs = require('react-breadcrumbs');
     return (
       <div>
         <nav className="navbar navbar-inverse navbar-fixed-top">
@@ -357,6 +411,24 @@ class App extends React.Component {
           </div>
         </nav>
         <div className="jumbotron">
+          {/*<FacebookLogin*/}
+            {/*appId="756445047848860"*/}
+            {/*autoLoad={true}*/}
+            {/*fields="name,email,picture"*/}
+            {/*callback={responseFacebook} />*/}
+          <button onClick={ this.checkLoginState.bind(this) }>Get Facebook Login Status</button>
+          <button onClick={ this.loginFacebook.bind(this) }>Facebook Login</button>
+          <button onClick={ this.logoutFacebook.bind(this) }>Facebook Logout</button>
+          {/*<FacebookLogout*/}
+            {/*appId="756445047848860"*/}
+            {/*autoLoad={true}*/}
+            {/*fields="name,email,picture"*/}
+            {/*onClick={componentClicked}*/}
+            {/*callback={responseFacebook} />*/}
+          {/*<Breadcrumbs*/}
+            {/*routes={this.props.routes}*/}
+            {/*params={this.props.params}*/}
+          {/*/>*/}
           <div className="container">
             <h1>Header - Logo + Menu</h1>
             {React.Children.map(this.props.children, (child) => React.cloneElement(child, {
@@ -389,4 +461,5 @@ class App extends React.Component {
 
 }
 
-export default App;
+// export default App;
+export default LoginHOC(configureLoginProps)(App);
