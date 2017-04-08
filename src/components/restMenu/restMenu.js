@@ -75,30 +75,41 @@ class RestMenu extends React.Component {
         <div id="restMenu" className="panel panel-default">
           <div className="panel-heading" style={styleDiv}>Restaurants:</div>
           <div className="panel-body">
-            <img src={ src } />
+            <img src={ src }/>
           </div>
         </div>
       )
     } else {
       let subMenus = this.props.appData.data.rests[rest].menus[menu].subMenus;
       if (!subMenus) {
+        let subMenus = [];
         return (
-          <div id="restMenu" className="panel panel-default">
-            <div className="panel-heading" style={styleDiv}>Restaurants:</div>
-            <div className="panel-body">
-              <img src={ src } />
-            </div>
-          </div>
+        <SubMenuManager
+          subMenus={subMenus}
+          dishes={this.props.appData.data.dishes}
+          rest={this.props.appData.data.rests[rest]}
+          menu={this.props.appData.data.rests[rest].menus[menu]}
+          delSubMenu={this.props.deleteSubMenu}
+          editSubMenu={this.props.editSubMenu}
+          addSubMenu={this.props.addSubMenu}
+        />
+          // <div id="restMenu" className="panel panel-default">
+          //   <div className="panel-heading" style={styleDiv}>Restaurants:</div>
+          //   <div className="panel-body">
+          //     <img src={ src }/>
+          //   </div>
+          // </div>
         )
       } else {
         return (
-          <SubMenuManager subMenus={subMenus}
-                          dishes={this.props.appData.data.dishes}
-                          rest={this.props.appData.data.rests[rest]}
-                          menu={this.props.appData.data.rests[rest].menus[menu]}
-                          delSubMenu = {this.props.deleteSubMenu}
-                          editSubMenu = {this.props.editSubMenu}
-                          addSubMenu = {this.props.addSubMenu}
+          <SubMenuManager
+            subMenus={subMenus}
+            dishes={this.props.appData.data.dishes}
+            rest={this.props.appData.data.rests[rest]}
+            menu={this.props.appData.data.rests[rest].menus[menu]}
+            delSubMenu={this.props.deleteSubMenu}
+            editSubMenu={this.props.editSubMenu}
+            addSubMenu={this.props.addSubMenu}
           />
         );
       }

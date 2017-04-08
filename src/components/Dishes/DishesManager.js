@@ -4,7 +4,7 @@ import './dishes.styl';
 import AddDish from './AddDish.js';
 import EditDish from './EditDish.js';
 import DeleteDish from './DeleteDish.js';
-import { Button } from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
 
 class DishesManager extends React.Component {
   constructor(props, context) {
@@ -77,7 +77,7 @@ class DishesManager extends React.Component {
   }
 
   openDeleteDish(data) {
-    // console.log('DishesManager | deleteDish', data);
+    console.log('DishesManager | deleteDish', data);
     this.setState({
       selectedDish: data,
       showDeleteModal: true
@@ -92,8 +92,8 @@ class DishesManager extends React.Component {
   }
 
   render() {
-    // console.log('DishesManager | render', this.state);
-    // console.log('DishesManager | this.props.appData.data.dishes', this.props.appData.data.dishes);
+    console.log('DishesManager | render', this.state);
+    console.log('DishesManager | this.props.appData.data.dishes', this.props.appData.data.dishes);
     const src = require("../../Images/5.gif");
     const styleDiv = {
       fontSize: 30
@@ -104,7 +104,7 @@ class DishesManager extends React.Component {
         <div id="dishes" className="panel panel-default">
           <div className="panel-heading" style={styleDiv}>Dishes:</div>
           <div className="panel-body">
-            <img src={ src } />
+            <img src={ src }/>
           </div>
         </div>
       )
@@ -117,22 +117,19 @@ class DishesManager extends React.Component {
                           editDish={this.openEditDish}
                           deleteDish={this.openDeleteDish}/>
             <Button onClick={this.openAddDish}>Add Dish</Button>
-            <AddDish handleClick={this.handleAddClick.bind(this)} exit={this.exitPopup.bind(this)} show={this.state.showAddModal}/>
-            <EditDish dishId={this.props.appData.data.dishes[this.state.selectedDish]._id}
-                      dishName={this.props.appData.data.dishes[this.state.selectedDish].name}
-                      dishDescription={this.props.appData.data.dishes[this.state.selectedDish].description}
-                      defaultPrice={this.props.appData.data.dishes[this.state.selectedDish].defaultPrice}
-                      handleClick={this.handleEditClick.bind(this)}
-                      exit={this.exitPopup.bind(this)}
-                      show={this.state.showEditModal}
+            <AddDish handleClick={this.handleAddClick.bind(this)} exit={this.exitPopup.bind(this)}
+                     show={this.state.showAddModal}/>
+            <EditDish
+              dish={this.props.appData.data.dishes[this.state.selectedDish]}
+              handleClick={this.handleEditClick.bind(this)}
+              exit={this.exitPopup.bind(this)}
+              show={this.state.showEditModal}
             />
-            <DeleteDish dishId={this.props.appData.data.dishes[this.state.selectedDish]._id}
-                        dishName={this.props.appData.data.dishes[this.state.selectedDish].name}
-                        dishDescription={this.props.appData.data.dishes[this.state.selectedDish].description}
-                        defaultPrice={this.props.appData.data.dishes[this.state.selectedDish].defaultPrice}
-                        handleClick={this.handleDeleteClick.bind(this)}
-                        exit={this.exitPopup.bind(this)}
-                        show={this.state.showDeleteModal}
+            <DeleteDish
+              dish={this.props.appData.data.dishes[this.state.selectedDish]}
+              handleClick={this.handleDeleteClick.bind(this)}
+              exit={this.exitPopup.bind(this)}
+              show={this.state.showDeleteModal}
             />
           </div>
         </div>

@@ -7,6 +7,7 @@ import {Modal, Button} from 'react-bootstrap';
 class DeleteRestaurant extends React.Component {
   constructor(props) {
     // console.log('DeleteRestaurant | constructor');
+    // console.log('DeleteRestaurant | props', props);
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -19,29 +20,34 @@ class DeleteRestaurant extends React.Component {
 
   render() {
     // console.log('DeleteRestaurant | render', this.props);
-    return (
-    <Modal show={this.props.show} onHide={this.props.exit}>
-      <Modal.Header closeButton>
-        <Modal.Title>Delete Restaurant</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <form id="DeleteRestaurantForm" onSubmit={this.handleSubmit}>
-          <label>
-            <div>Dish Name:
-              {this.props['resName']}
-            </div>
-            <div>
-              Dish Description:
-              {this.props['resAddress']}
-            </div>
-          </label>
-        </form>
-      </Modal.Body>
-      <Modal.Footer>
-        <input type="submit" form="DeleteRestaurantForm" value="Delete" className="btn btn-default"/>
-        <Button onClick={this.props.exit}>Close</Button>
-      </Modal.Footer>
-    </Modal>
+    if (! this.props.rest) {
+      return (null)
+    } else {
+      return (
+        <Modal show={this.props.show} onHide={this.props.exit}>
+          <Modal.Header closeButton>
+            <Modal.Title>Delete Restaurant</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <form id="DeleteRestaurantForm" onSubmit={this.handleSubmit}>
+              <label>
+                <div>Dish Name:
+                  {this.props.rest['name']}
+                </div>
+                <div>
+                  Dish Description:
+                  {this.props.rest['address']}
+                </div>
+              </label>
+            </form>
+          </Modal.Body>
+          <Modal.Footer>
+            <input type="submit" form="DeleteRestaurantForm" value="Delete" className="btn btn-default"/>
+            <Button onClick={this.props.exit}>Close</Button>
+          </Modal.Footer>
+        </Modal> )
+    }
+
 
       // <div>
       //   {this.props.exit}
@@ -62,7 +68,7 @@ class DeleteRestaurant extends React.Component {
       //     </form>
       //   </div>
       // </div>
-    )
+
   }
 }
 

@@ -6,15 +6,23 @@ import {Modal, Button} from 'react-bootstrap';
 
 class EditDish extends React.Component {
   constructor(props) {
-    // console.log('EditDish | constructor | props', props);
+    console.log('EditDish | constructor | props', props);
     super(props);
-    this.state = {
-      dishName: this.props['dishName'],
-      dishId: this.props['dishId'],
-      dishDescription: this.props['dishDescription'],
-      defaultPrice: this.props['defaultPrice'],
-      loading: false
-    };
+    if (! props.dish) {
+      this.state = {
+        dishName: '',
+        dishId: '',
+        dishDescription: '',
+        defaultPrice: '',
+      };
+    } else {
+      this.state = {
+        dishName: this.props.dish['name'],
+        dishId: this.props.dish['_id'],
+        dishDescription: this.props.dish['description'],
+        defaultPrice: this.props.dish['defaultPrice'],
+      };
+    }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
@@ -22,15 +30,23 @@ class EditDish extends React.Component {
   componentWillReceiveProps (nextProps) {
     // console.log('EditDish | componentWillReceiveProps | nextProps', nextProps);
     // console.log('EditDish | componentWillReceiveProps | nextProps', this.props);
-
-    this.setState (
-      {
-        dishName: nextProps['dishName'],
-        dishId: nextProps['dishId'],
-        dishDescription: nextProps['dishDescription'],
-        defaultPrice: nextProps['defaultPrice'],
-      }
-    )
+    if (! nextProps.dish) {
+      this.state = {
+        dishName: '',
+        dishId: '',
+        dishDescription: '',
+        defaultPrice: '',
+      };
+    } else {
+      this.setState (
+        {
+          dishName: nextProps.dish['name'],
+          dishId: nextProps.dish['_id'],
+          dishDescription: nextProps.dish['description'],
+          defaultPrice: nextProps.dish['defaultPrice'],
+        }
+      )
+    }
   }
 
   handleChange(event) {

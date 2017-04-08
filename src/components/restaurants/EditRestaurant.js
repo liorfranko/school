@@ -6,14 +6,22 @@ import {Modal, Button} from 'react-bootstrap';
 
 class EditRestaurant extends React.Component {
   constructor(props) {
-    // console.log('EditRestaurant | constructor');
+    // console.log('EditRestaurant | constructor | props', props);
     super(props);
-    this.state = {
-      resName: this.props['resName'],
-      resId: this.props['resId'],
-      resAddress: this.props['resAddress'],
-      loading: false
-    };
+    if (! props.rest) {
+      this.state = {
+        resName: '',
+        resId: '',
+        resAddress: '',
+      };
+    } else {
+      this.state = {
+        resName: this.props.rest['name'],
+        resId: this.props.rest['_id'],
+        resAddress: this.props.rest['address'],
+      };
+    }
+
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
@@ -23,13 +31,19 @@ class EditRestaurant extends React.Component {
     // console.log('EditDish | componentWillReceiveProps | nextProps', nextProps);
     // console.log('EditDish | componentWillReceiveProps | nextProps', this.props);
 
-    this.setState (
-      {
-        resName: nextProps['resName'],
-        resId: nextProps['resId'],
-        resAddress: nextProps['resAddress']
-      }
-    )
+    if (! nextProps.rest) {
+      this.state = {
+        resName: '',
+        resId: '',
+        resAddress: '',
+      };
+    } else {
+      this.state = {
+        resName: nextProps.rest['name'],
+        resId: nextProps.rest['_id'],
+        resAddress: nextProps.rest['address'],
+      };
+    }
   }
 
   handleChange(event) {

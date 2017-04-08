@@ -114,10 +114,10 @@ class RestaurantsManager extends React.Component {
         <div id="rests" className="panel panel-default">
           <div className="panel-heading" style={styleDiv}>Restaurants:</div>
           <div className="panel-body">
-            <img src={ src } />
+            <img src={ src }/>
           </div>
         </div>
-    )
+      )
     } else {
       return (
         <div id="rests" className="panel panel-default">
@@ -133,19 +133,17 @@ class RestaurantsManager extends React.Component {
                            exit={this.exitPopup.bind(this)}
                            show={this.state.showAddModal}/>
             <Button onClick={this.addRest}>Add restaurant</Button>
-            <DeleteRestaurant resId={this.props.appData.data.rests[this.state.selectedRes]._id}
-                              resName={this.props.appData.data.rests[this.state.selectedRes].name}
-                              resAddress={this.props.appData.data.rests[this.state.selectedRes].address}
-                              handleClick={this.handleDeleteClick.bind(this)}
-                              exit={this.exitPopup.bind(this)}
-                              show={this.state.showDeleteModal}
+            <DeleteRestaurant
+              rest={this.props.appData.data.rests[this.state.selectedRes]}
+              handleClick={this.handleDeleteClick.bind(this)}
+              exit={this.exitPopup.bind(this)}
+              show={this.state.showDeleteModal}
             />
-            <EditRestaurant resId={this.props.appData.data.rests[this.state.selectedRes]._id}
-                            resName={this.props.appData.data.rests[this.state.selectedRes].name}
-                            resAddress={this.props.appData.data.rests[this.state.selectedRes].address}
-                            handleClick={this.handleEditClick.bind(this)}
-                            exit={this.exitPopup.bind(this)}
-                            show={this.state.showEditModal}
+            <EditRestaurant
+              rest={this.props.appData.data.rests[this.state.selectedRes]}
+              handleClick={this.handleEditClick.bind(this)}
+              exit={this.exitPopup.bind(this)}
+              show={this.state.showEditModal}
             />
           </div>
         </div>

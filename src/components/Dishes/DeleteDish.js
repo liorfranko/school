@@ -6,7 +6,7 @@ import {Modal, Button} from 'react-bootstrap';
 
 class DeleteDish extends React.Component {
   constructor(props) {
-    // console.log('DeleteDish | constructor');
+    console.log('DeleteDish | constructor | props', props);
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -18,31 +18,35 @@ class DeleteDish extends React.Component {
 
 
   render() {
-    // console.log('DeleteDish | render', this.props);
-    return (
-      <Modal show={this.props.show} onHide={this.props.exit}>
-        <Modal.Header closeButton>
-          <Modal.Title>Delete Dish</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <form id="DeleteDishForm" onSubmit={this.handleSubmit}>
-            <label>
-              <div>Dish Name:
-                {this.props['dishName']}
+    console.log('DeleteDish | render', this.props);
+    if (! this.props.dish) {
+      return (null)
+    } else {
+      return (
+        <Modal show={this.props.show} onHide={this.props.exit}>
+          <Modal.Header closeButton>
+            <Modal.Title>Delete Dish</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <form id="DeleteDishForm" onSubmit={this.handleSubmit}>
+              <label>
+                <div>Dish Name:
+                  {this.props.dish['name']}
                 </div>
-              <div>
-                Dish Description:
-                {this.props['dishDescription']}
-              </div>
-            </label>
-          </form>
-        </Modal.Body>
-        <Modal.Footer>
-          <input type="submit" form="DeleteDishForm" value="Delete" className="btn btn-default"/>
-          <Button onClick={this.props.exit}>Close</Button>
-        </Modal.Footer>
-      </Modal>
-    )
+                <div>
+                  Dish Description:
+                  {this.props.dish['description']}
+                </div>
+              </label>
+            </form>
+          </Modal.Body>
+          <Modal.Footer>
+            <input type="submit" form="DeleteDishForm" value="Delete" className="btn btn-default"/>
+            <Button onClick={this.props.exit}>Close</Button>
+          </Modal.Footer>
+        </Modal>
+      )
+    }
   }
 }
 

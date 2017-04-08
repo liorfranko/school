@@ -75,22 +75,25 @@ class subMenuManager extends React.Component {
         <div className="panel-heading" style={styleDiv}>{this.props.menu['name']}</div>
         <div className="panel-body">
           Sub Menus:
-          <ListOfSubMenus subMenus={this.props.subMenus}
-                          dishes={this.props.dishes}
-                          delSubMenu = {this.deleteRestSubMenu}
-                          rest={this.props.rest}
-                          menu={this.props.menu}
+          <ListOfSubMenus
+            subMenus={this.props.subMenus}
+            dishes={this.props.dishes}
+            delSubMenu={this.deleteRestSubMenu}
+            rest={this.props.rest}
+            menu={this.props.menu}
           />
-          <AddRestSubMenu handleClick={this.handleAddClick.bind(this)}
-                          exit={this.exitPopup.bind(this)}
-                          show={this.state.showAddModal}
-                          menu={this.props.menu}
+          <AddRestSubMenu
+            handleClick={this.handleAddClick.bind(this)}
+            exit={this.exitPopup.bind(this)}
+            show={this.state.showAddModal}
+            menu={this.props.menu}
           />
           <Button onClick={this.addRestSubMenu}>Add Sub Menu</Button>
-          <DeleteRestSubMenu chosenSubMenu={this.props.subMenus[this.state.selectedSubMenu]}
-                          handleClick={this.handleDeleteClick.bind(this)}
-                          exit={this.exitPopup.bind(this)}
-                          show={this.state.showDeleteModal}
+          <DeleteRestSubMenu
+            chosenSubMenu={this.props.subMenus[this.state.selectedSubMenu]}
+            handleClick={this.handleDeleteClick.bind(this)}
+            exit={this.exitPopup.bind(this)}
+            show={this.state.showDeleteModal}
           />
         </div>
       </div>

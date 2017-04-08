@@ -32,9 +32,12 @@ class App extends React.Component {
     this.login = this.props.fb.login;
     this.logout = this.props.fb.logout;
     this.state = {
-      uid: '5826fdc1680d800d2064d1da',
+      uid: '58e89d44680d8114243bd1af',
+      status: 'unknown',
+      facebook_id: '',
+      token: '',
       data: {},
-      loading: true
+      // loading: true
     };
 
     this.goBack = this.goBack.bind(this);
@@ -67,6 +70,8 @@ class App extends React.Component {
     this.editRestMenu = this.editRestMenu.bind(this);
     this.editSubMenu = this.editSubMenu.bind(this);
 
+    this.checkFacebookID = this.checkFacebookID.bind(this);
+    this.addUser = this.addUser.bind(this);
     this.getStatus = this.getStatus.bind(this);
     this.responseApi = this.responseApi.bind(this);
     this.checkLoginState = this.checkLoginState.bind(this);
@@ -75,19 +80,26 @@ class App extends React.Component {
 
   }
 
+  // componentDidMount() {
+  //   console.log('App | componentDidMount', this.state);
+  //
+  // }
+
   goBack() {
     browserHistory.goBack();
   }
+
   goForward() {
     browserHistory.goForward();
   }
+
   updateRest(data) {
     // console.log('App | updateRest data', data.items);
     const items = data.items || [];
     // console.log('App | updateRest', items);
     this.setState({
       data: Object.assign({}, this.state.data, {rests: items}),
-      loading: false
+      // loading: false
     });
   }
 
@@ -143,9 +155,9 @@ class App extends React.Component {
 
   updateSubMenus(data) {
     const items = data.items || [];
-    // console.log('App | updateSubMenus items', items);
-    // console.log('App | updateSubMenus items.length()', items.length);
-    // console.log('App | updateSubMenus this.state.data', this.state.data);
+    console.log('App | updateSubMenus items', items);
+    console.log('App | updateSubMenus items.length()', items.length);
+    console.log('App | updateSubMenus this.state.data', this.state.data);
 
 
     var arrayVar = this.state.data.rests.slice();
@@ -211,7 +223,7 @@ class App extends React.Component {
 
   getRests() {
     console.log("App | getRests", this.state);
-    this.setState({loading: true});
+    // this.setState({loading: true});
     var data = {
       user_Id: this.state.uid
     };
@@ -220,7 +232,7 @@ class App extends React.Component {
 
   getDishes() {
     // console.log("App | getDishes");
-    this.setState({loading: true});
+    // this.setState({loading: true});
     var data = {
       user_Id: this.state.uid
     };
@@ -287,7 +299,7 @@ class App extends React.Component {
 
   deleteDish(dishNum) {
     // console.log('App | deleteDish', this.state.data.dishes);
-    this.setState({loading: true});
+    // this.setState({loading: true});
     var postData = '&dish_Id=' + this.state.data.dishes[dishNum]._id + '&user_Id=' + this.state.uid;
     api.postRequest('removeDish', postData, this.getDishes);
     // this.postDataToServer('removeDish', '&dish_Id=' + this.props['dishId'] + '&user_Id=5826fdc1680d800d2064d1da');
@@ -295,7 +307,7 @@ class App extends React.Component {
 
   deleteRest(restNum) {
     // console.log('App | deleteRest', restNum);
-    this.setState({loading: true});
+    // this.setState({loading: true});
     var postData = '&restaurant_Id=' + this.state.data.rests[restNum]._id + '&user_Id=' + this.state.uid;
     api.postRequest('removeRestaurant', postData, this.getRests);
   }
@@ -313,15 +325,15 @@ class App extends React.Component {
   }
 
   addRest(data) {
-    // console.log('App | addRest', data);
-    this.setState({loading: true});
+    console.log('App | addRest', data);
+    // this.setState({loading: true});
     var postData = '&name=' + data.resName + '&address=' + data.resAddress + '&user_Id=' + this.state.uid;
     api.postRequest('addRestaurant', postData, this.getRests);
   }
 
   addDish(data) {
     // console.log('App | addDish', data);
-    this.setState({loading: true});
+    // this.setState({loading: true});
     // this.postDataToServer('addDish', '&user_Id=5826fdc1680d800d2064d1da&name=' + this.state['dishName'] + '&description='+this.state['dishDescription'] + '&default_price='+this.state['defaultPrice'])
     var postData = '&name=' + data.dishName + '&description=' + data.dishDescription + '&user_Id=' + this.state.uid + '&default_Price=' + data.defaultPrice;
     api.postRequest('addDish', postData, this.getDishes);
@@ -342,14 +354,14 @@ class App extends React.Component {
 
   editRest(data) {
     // console.log('App | editRest', data);
-    this.setState({loading: true});
+    // this.setState({loading: true});
     var postData = '&restaurant_Id=' + data.resId + '&name=' + data.resName + '&address=' + data.resAddress;
     api.postRequest('editRestaurant', postData, this.getRests);
   }
 
   editDish(data) {
     // console.log('App | editDish', data);
-    this.setState({loading: true});
+    // this.setState({loading: true});
     var postData = '&dish_Id=' + data.dishId + '&name=' + data.dishName + '&description=' + data.dishDescription + '&default_Price=' + data.defaultPrice;
     api.postRequest('editDish', postData, this.getDishes);
 
@@ -367,14 +379,43 @@ class App extends React.Component {
     api.postRequest('updateSubMenuDishes', data);
   }
 
+  addUser() {
+    let data = {
+      facebook_Id: this.state.facebook_id,
+      name: '',
+      password: '',
+    };
+    api.postRequest('addUser', data);
+  }
+
+  checkFacebookID() {
+    console.log('App | checkFacebookID | facebook_Id', this.state.facebook_id);
+    console.log('App | checkFacebookID | facebook_Id', this.state.status);
+    let data = {
+      facebook_Id: this.state.facebook_id
+    };
+    api.postRequest('checkFacebookID', data);
+  }
+
   getStatus(response) {
+    console.log('App | getStatus | response', response);
     if (response.authResponse) {
-      this.responseApi.call(this, response.authResponse)
+      this.responseApi.call(this, response)
+    } else {
+      console.log('App | getStatus | response', response);
     }
   }
 
   responseApi(res) {
-    console.log('token:', res.accessToken)
+    console.log('res:', res);
+    console.log('token:', res.authResponse.accessToken);
+    console.log('status:', res.status);
+    console.log('userID:', res.authResponse.userID);
+    this.setState({
+      status: res.status,
+      facebook_id: res.authResponse.userID,
+      token: res.authResponse.accessToken,
+    });
   }
 
   checkLoginState() {
@@ -390,17 +431,7 @@ class App extends React.Component {
   }
 
   render() {
-    // const responseFacebook = (response) => {
-    //   console.log("responseFacebook", response);
-    // };
-    // const componentClicked = (response) => {
-    //   console.log("componentClicked", response);
-    // };
-
-    // console.log('App.js | this.state', this.state);
-    // console.log('App.js | this.props.params', this.props.params);
-    // console.log('App.js | this.props.children', this.props.children);
-    // var Breadcrumbs = require('react-breadcrumbs');
+    console.log('App | render | this.state', this.state);
     return (
       <div>
         <nav className="navbar navbar-inverse navbar-fixed-top">
@@ -411,24 +442,11 @@ class App extends React.Component {
           </div>
         </nav>
         <div className="jumbotron">
-          {/*<FacebookLogin*/}
-            {/*appId="756445047848860"*/}
-            {/*autoLoad={true}*/}
-            {/*fields="name,email,picture"*/}
-            {/*callback={responseFacebook} />*/}
           <button onClick={ this.checkLoginState.bind(this) }>Get Facebook Login Status</button>
           <button onClick={ this.loginFacebook.bind(this) }>Facebook Login</button>
           <button onClick={ this.logoutFacebook.bind(this) }>Facebook Logout</button>
-          {/*<FacebookLogout*/}
-            {/*appId="756445047848860"*/}
-            {/*autoLoad={true}*/}
-            {/*fields="name,email,picture"*/}
-            {/*onClick={componentClicked}*/}
-            {/*callback={responseFacebook} />*/}
-          {/*<Breadcrumbs*/}
-            {/*routes={this.props.routes}*/}
-            {/*params={this.props.params}*/}
-          {/*/>*/}
+          <button onClick={ this.checkFacebookID.bind(this) }>App login</button>
+          <button onClick={ this.addUser.bind(this) }>Add User</button>
           <div className="container">
             <h1>Header - Logo + Menu</h1>
             {React.Children.map(this.props.children, (child) => React.cloneElement(child, {
