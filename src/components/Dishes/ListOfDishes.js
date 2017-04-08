@@ -20,7 +20,7 @@ const ListOfDishes = (props) => {
     })
   });
 
-  if (props.type ==="inMenu"){
+  if (props.type === "inMenu") {
     return (
       <ReactSuperSelect placeholder="Make Your Selections"
                         dataSource={testData}
@@ -34,7 +34,13 @@ const ListOfDishes = (props) => {
         {
           props.dishes.map((dish, i) => {
             return (
-              <DishesListItem key={i} item={dish} editDish={props.editDish} deleteDish={props.deleteDish} dishNum={i}/>
+              <DishesListItem
+                key={i}
+                item={dish}
+                editDish={props.editDish}
+                deleteDish={props.deleteDish}
+                dishNum={i}
+              />
             );
           })
         }

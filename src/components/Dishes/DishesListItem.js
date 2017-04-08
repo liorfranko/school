@@ -21,9 +21,9 @@ const DishesListItem = (props) => {
   }
   return (
     <li className="dishItem list-group-item">
-      <div className="innerItem name">
+      <a className="innerItem name" onClick={onEditClick.bind(this)}>
         {props.item.name}
-      </div>
+      </a>
       <div className="innerItem description">
         {props.item.description}
       </div>

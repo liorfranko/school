@@ -99,32 +99,8 @@ class EditDish extends React.Component {
       <Modal.Footer>
         <input type="submit" form="AddDishForm" value="Submit" className="btn btn-default"/>
         <Button onClick={this.props.exit}>Close</Button>
-        {/*<Button onClick={this.handleSubmit}>Submit</Button>*/}
       </Modal.Footer>
     </Modal>
-
-      // <div>
-      //   {this.props.exit}
-      //   <div>Edit Dish</div>
-      //   <div>
-      //     <form onSubmit={this.handleSubmit}>
-      //       <label>
-      //         <div>Dish Name:
-      //           <input type="text" name="dishName" value={this.state.dishName} onChange={this.handleChange}/>
-      //         </div>
-      //         <div>
-      //           Dish Description:
-      //           <input type="text" name="dishDescription" value={this.state.dishDescription} onChange={this.handleChange}/>
-      //         </div>
-      //         <div>
-      //           Dish Price:
-      //           <input type="text" name="defaultPrice" value={this.state.defaultPrice} onChange={this.handleChange}/>
-      //         </div>
-      //       </label>
-      //       <input type="submit" value="Submit"/>
-      //     </form>
-      //   </div>
-      // </div>
     )
 
   }
