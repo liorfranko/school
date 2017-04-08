@@ -12,6 +12,7 @@ import Restaurant from './components/restaurants/Restaurant';
 import Dishes from './components/Dishes/DishesManager';
 import RestMenu from './components/restMenu/restMenu'
 import RestSubMenu from './components/SubMenus/RestSubMenu'
+// import Login from './components/Login/Login'
 
 // import DishesManager
 //TODO Fix back button
@@ -37,6 +38,7 @@ export default class Routes extends Component {
           <IndexRoute component={Homepage}/>
           <Route path="rests" component={Restaurants}/>
           <Route path="dishes" component={Dishes}/>
+          {/*<Route path="login" component={Login}/>*/}
           <Route path=":restName" component={Restaurant}/>
           <Route path=":restName/:menuName" component={RestMenu}/>
           <Route path=":restName/:menuName/:subMenuName" component={RestSubMenu}/>

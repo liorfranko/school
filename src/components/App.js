@@ -4,18 +4,14 @@
 
 import React from 'react';
 import Menu from './menu/Menu';
-// import Homepage from './homepage/Homepage';
 import {Button} from 'react-bootstrap';
 import api from '../api/API'
 import 'react-super-select/lib/react-super-select.css';
 import update from 'immutability-helper';
 import {browserHistory} from 'react-router';
-// import FacebookLogin from 'react-facebook-login';
-// import FacebookLogout from 'react-facebook-login'
-import LoginHOC from 'react-facebook-login-hoc'
+import LoginHOC from 'react-facebook-login-hoc';
+import Login from './Login/Login'
 
-// import Login from './Login.js'
-// import FacebookButton from './FacebookButton';
 const configureLoginProps = {
   appId: '756445047848860',
   scope: 'public_profile, email',
@@ -32,12 +28,11 @@ class App extends React.Component {
     this.login = this.props.fb.login;
     this.logout = this.props.fb.logout;
     this.state = {
-      uid: '58e89d44680d8114243bd1af',
+      uid: null,
       status: 'unknown',
-      facebook_id: '',
-      token: '',
+      facebook_id: null,
+      token: null,
       data: {},
-      // loading: true
     };
 
     this.goBack = this.goBack.bind(this);
@@ -47,6 +42,7 @@ class App extends React.Component {
     this.updateDishes = this.updateDishes.bind(this);
     this.updateMenus = this.updateMenus.bind(this);
     this.updateSubMenus = this.updateSubMenus.bind(this);
+    this.updateLogin = this.updateLogin.bind(this);
 
     this.getRests = this.getRests.bind(this);
     this.getDishes = this.getDishes.bind(this);
@@ -80,10 +76,6 @@ class App extends React.Component {
 
   }
 
-  // componentDidMount() {
-  //   console.log('App | componentDidMount', this.state);
-  //
-  // }
 
   goBack() {
     browserHistory.goBack();
@@ -219,6 +211,21 @@ class App extends React.Component {
     //     data: Object.assign({}, this.state.data, {rests: newRestArray})
     //   });
     // }
+  }
+
+  updateLogin(data) {
+    // console.log('App | updateLogin data', data);
+    // const items = data.items || [];
+    if (data.status == 'Success') {
+      console.log('App | updateLogin Success');
+      this.setState({
+        uid: data.items._id
+      });
+    } else {
+      console.log('App | updateLogin Failed');
+      this.addUser()
+    }
+
   }
 
   getRests() {
@@ -385,7 +392,7 @@ class App extends React.Component {
       name: '',
       password: '',
     };
-    api.postRequest('addUser', data);
+    api.postRequest('addUser', data, this.checkFacebookID);
   }
 
   checkFacebookID() {
@@ -394,7 +401,7 @@ class App extends React.Component {
     let data = {
       facebook_Id: this.state.facebook_id
     };
-    api.postRequest('checkFacebookID', data);
+    api.postRequest('checkFacebookID', data, this.updateLogin);
   }
 
   getStatus(response) {
@@ -428,53 +435,133 @@ class App extends React.Component {
 
   logoutFacebook() {
     this.logout()
+    this.setState({
+      status: 'unknown',
+      facebook_id: null,
+      token: null,
+      uid: null,
+    });
   }
 
   render() {
     console.log('App | render | this.state', this.state);
-    return (
-      <div>
-        <nav className="navbar navbar-inverse navbar-fixed-top">
-          <div className="container">
-            <Menu menu={[
-              {name: 'homepage', path: ''}, {name: 'rests', path: 'rests'}, {name: 'dishes', path: 'dishes'}
-            ]}/>
-          </div>
-        </nav>
-        <div className="jumbotron">
-          <button onClick={ this.checkLoginState.bind(this) }>Get Facebook Login Status</button>
-          <button onClick={ this.loginFacebook.bind(this) }>Facebook Login</button>
-          <button onClick={ this.logoutFacebook.bind(this) }>Facebook Logout</button>
-          <button onClick={ this.checkFacebookID.bind(this) }>App login</button>
-          <button onClick={ this.addUser.bind(this) }>Add User</button>
-          <div className="container">
-            <h1>Header - Logo + Menu</h1>
-            {React.Children.map(this.props.children, (child) => React.cloneElement(child, {
-              appData: this.state,
-              getRests: this.getRests,
-              getDishes: this.getDishes,
-              getMenus: this.getMenus,
-              getSubMenus: this.getSubMenus,
-              addRest: this.addRest,
-              addDish: this.addDish,
-              addSubMenu: this.addSubMenu,
-              addRestMenu: this.addRestMenu,
-              editRest: this.editRest,
-              editDish: this.editDish,
-              editRestMenu: this.editRestMenu,
-              editSubMenu: this.editSubMenu,
-              deleteRest: this.deleteRest,
-              deleteDish: this.deleteDish,
-              deleteRestMenu: this.deleteRestMenu,
-              deleteSubMenu: this.deleteSubMenu,
-            }))}
-            <Button onClick={this.goBack}>Back</Button>
-            <Button onClick={this.goForward}>Forward</Button>
-            <footer>Footer - links, & other shit</footer>
+
+    if (this.state.uid != null) {
+      console.log('App | render | connected');
+      return (
+        <div>
+          <nav className="navbar navbar-inverse navbar-fixed-top">
+            <div className="container">
+              <Menu
+                menu={[
+                  {name: 'Homepage', path: ''},
+                  {name: 'Rests', path: 'rests'},
+                  {name: 'Dishes', path: 'dishes'},
+                ]}
+                uid={this.state.uid}
+                logout={this.logoutFacebook}
+
+              />
+            </div>
+          </nav>
+          <div className="jumbotron">
+            <div className="container">
+              <h1>Header - Logo + Menu</h1>
+              {React.Children.map(this.props.children, (child) => React.cloneElement(child, {
+                appData: this.state,
+                getRests: this.getRests,
+                getDishes: this.getDishes,
+                getMenus: this.getMenus,
+                getSubMenus: this.getSubMenus,
+                addRest: this.addRest,
+                addDish: this.addDish,
+                addSubMenu: this.addSubMenu,
+                addRestMenu: this.addRestMenu,
+                editRest: this.editRest,
+                editDish: this.editDish,
+                editRestMenu: this.editRestMenu,
+                editSubMenu: this.editSubMenu,
+                deleteRest: this.deleteRest,
+                deleteDish: this.deleteDish,
+                deleteRestMenu: this.deleteRestMenu,
+                deleteSubMenu: this.deleteSubMenu,
+              }))}
+              <Button onClick={this.goBack}>Back</Button>
+              <Button onClick={this.goForward}>Forward</Button>
+              <footer>Footer - links, & other shit</footer>
+            </div>
           </div>
         </div>
-      </div>
-    )
+      )
+    } else {
+      console.log('App | render | uid == null');
+      const styleDiv = {
+        fontSize: 30
+      };
+      const src = require("../Images/5.gif");
+      if (this.state.facebook_id == null) {
+        console.log('App | render | facebook_id == null');
+        return (
+          <div>
+            <nav className="navbar navbar-inverse navbar-fixed-top">
+              <div className="container">
+                <Menu menu={[
+                  {name: 'Homepage', path: ''},
+                  {name: 'Rests', path: 'rests'},
+                  {name: 'Dishes', path: 'dishes'},
+                ]}/>
+              </div>
+            </nav>
+            <div className="jumbotron">
+              <div className="container">
+                <h1>Header - Logo + Menu</h1>
+                <div id="rests" className="panel panel-default">
+                  <div className="panel-heading" style={styleDiv}>Login:</div>
+                  <div className="panel-body">
+                    <div>Please login using facebook:</div>
+                    {/*<button onClick={ this.checkLoginState.bind(this) }>Get Facebook Login Status</button>*/}
+                    <button onClick={ this.loginFacebook.bind(this) }>Facebook Login</button>
+                    {/*<button onClick={ this.logoutFacebook.bind(this) }>Facebook Logout</button>*/}
+                    {/*<button onClick={ this.checkFacebookID.bind(this) }>App login</button>*/}
+                    {/*<button onClick={ this.addUser.bind(this) }>Add User</button>*/}
+                  </div>
+                </div>
+                <Button onClick={this.goBack}>Back</Button>
+                <Button onClick={this.goForward}>Forward</Button>
+                <footer>Footer - links, & other shit</footer>
+              </div>
+            </div>
+          </div>
+        )
+      } else {
+        console.log('App | render | facebook_id != null');
+        this.checkFacebookID();
+        return (
+          <div>
+            <nav className="navbar navbar-inverse navbar-fixed-top">
+              <div className="container">
+                <Menu menu={[
+                  {name: 'Homepage', path: ''},
+                  {name: 'Rests', path: 'rests'},
+                  {name: 'Dishes', path: 'dishes'},
+                ]}/>
+              </div>
+            </nav>
+            <div className="jumbotron">
+              <div className="container">
+                <h1>Header - Logo + Menu</h1>
+                <div id="rests" className="panel panel-default">
+                  <div className="panel-heading" style={styleDiv}>Login:</div>
+                  <div className="panel-body">
+                    <img src={ src }/>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      }
+    }
   }
 
 }

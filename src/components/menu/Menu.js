@@ -5,25 +5,31 @@
 "use strict";
 
 import React from 'react';
-import {IndexLink} from 'react-router';
-import {Nav} from 'react-bootstrap';
+import {browserHistory} from 'react-router';
+import {Nav, Navbar, NavItem} from 'react-bootstrap';
 
-
-const Menu = (props) => {
-  // console.log('Menu | props', props);
-  function handleSelect(selectedKey) {
-    // alert('selected ' + selectedKey);
-  }
-
-  return (
-  <Nav bsStyle="pills" activeKey={0} onSelect={handleSelect}>
-    {props.menu.map((item, i) => {
-      return (
-        <li key={i}><IndexLink to={`/${item.path}`}>{item.name}</IndexLink></li>
-      )
-    })}
-  </Nav>
-  )
-};
-
+const Menu = (props) => (
+  <Navbar inverse collapseOnSelect>
+    <Navbar.Header>
+      <Navbar.Brand>
+        <a onClick={() => browserHistory.push(`/`) }>Homepage</a>
+      </Navbar.Brand>
+      <Navbar.Toggle />
+    </Navbar.Header>
+    <Navbar.Collapse>
+      <Nav>
+        {props.menu.map((item, i) => {
+          return (
+            <NavItem eventKey={i} onClick={() => browserHistory.push(`/${item.path}`) }>{item.path}</NavItem>
+          )
+        })}
+      </Nav>
+      {props.uid != null ?
+        <Nav bsStyle="pills" pullRight>
+          <NavItem onClick={props.logout}>Logout</NavItem>
+        </Nav> : null
+      }
+    </Navbar.Collapse>
+  </Navbar>
+);
 export default Menu;
