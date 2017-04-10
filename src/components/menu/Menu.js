@@ -14,7 +14,7 @@ const Menu = (props) => (
     <Navbar inverse collapseOnSelect fluid>
       <Navbar.Header>
         <Navbar.Brand>
-          <a onClick={() => browserHistory.push(`/`) }>Homepage</a>
+          <a onClick={() => browserHistory.push(`/`) } href="#">Homepage</a>
         </Navbar.Brand>
         <Navbar.Toggle />
       </Navbar.Header>

@@ -24,7 +24,11 @@ class Card extends Component {
 
     return connectDragSource(connectDropTarget(
       <div style={{style, opacity }}>
-        {card.text}
+        <li className="restItem list-group-item">
+          <div className="innerItem name">
+            {card.text}
+          </div>
+        </li>
       </div>
     ));
   }

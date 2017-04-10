@@ -56,23 +56,33 @@ class Container extends Component {
     };
 
     const backgroundColor = isActive ? 'lightgreen' : '#FFF';
+    // console.log('Container | render | cards', cards);
+    if (cards.length > 0) {
+      return connectDropTarget(
+        <div style={{style, backgroundColor}}>
+          <h3>{this.props.text}</h3>
+          {cards.map((card, i) => {
+            return (
+              <Card
+                key={card.id}
+                index={i}
+                listId={this.props.id}
+                card={card}
+                removeCard={this.removeCard.bind(this)}
+                moveCard={this.moveCard.bind(this)} />
+            );
+          })}
+        </div>
+      );
+    } else {
+      return connectDropTarget(
+        <div style={{style, backgroundColor}}>
+          <h3>{this.props.text}</h3>
+          <div>Empty</div>
+        </div>
+      );
+    }
 
-    return connectDropTarget(
-      <div style={{style, backgroundColor}}>
-        <div>{this.props.text}</div>
-        {cards.map((card, i) => {
-          return (
-            <Card
-              key={card.id}
-              index={i}
-              listId={this.props.id}
-              card={card}
-              removeCard={this.removeCard.bind(this)}
-              moveCard={this.moveCard.bind(this)} />
-          );
-        })}
-      </div>
-    );
   }
 }
 

@@ -20,7 +20,7 @@ class AddDish extends React.Component {
 
   handleChange(event) {
     // console.log('AddDish | handleChange', event.target.value);
-    if (event.target.name == 'defaultPrice') {
+    if (event.target.name === 'defaultPrice') {
       if (event.target.value == parseInt(event.target.value, 10)) {
         // console.log('AddDish | isInteger');
         this.setState({[event.target.name]: event.target.value});
@@ -41,7 +41,6 @@ class AddDish extends React.Component {
   }
 
   render() {
-    //FIXME - Change the submit button to be the same as the modal buttons
     return (
       <Modal show={this.props.show} onHide={this.props.exit}>
         <Modal.Header closeButton>
@@ -56,7 +55,7 @@ class AddDish extends React.Component {
               <div>
                 Dish Description:
                 <input type="text" name="dishDescription" value={this.state.dishDescription}
-                       onChange={this.handleChange} required/>
+                       onChange={this.handleChange} />
               </div>
               <div>
                 Dish Price:

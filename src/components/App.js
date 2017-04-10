@@ -154,9 +154,9 @@ class App extends React.Component {
 
   updateSubMenus(data) {
     const items = data.items || [];
-    console.log('App | updateSubMenus items', items);
-    console.log('App | updateSubMenus items.length()', items.length);
-    console.log('App | updateSubMenus this.state.data', this.state.data);
+    // console.log('App | updateSubMenus items', items);
+    // console.log('App | updateSubMenus items.length()', items.length);
+    // console.log('App | updateSubMenus this.state.data', this.state.data);
 
 
     var arrayVar = this.state.data.rests.slice();
@@ -223,10 +223,10 @@ class App extends React.Component {
   updateTables (data) {
     // Problem:
     // When loading menus and menus list is empty, How can I get the restaurant ID.
-    console.log('App | updateTables data', data);
-    console.log('App | updateTables this.state.data', this.state.data);
+    // console.log('App | updateTables data', data);
+    // console.log('App | updateTables this.state.data', this.state.data);
     const items = data.items || [];
-    console.log('App | updateTables items.length()', items.length);
+    // console.log('App | updateTables items.length()', items.length);
     let arrayVar = this.state.data.rests.slice();
     // var index;
     if (items.length > 0) {
@@ -295,7 +295,7 @@ class App extends React.Component {
   }
 
   getMenusLocal(restaurant_Id) {
-    console.log("App | getMenus, restaurant_Id", restaurant_Id);
+    // console.log("App | getMenus, restaurant_Id", restaurant_Id);
     // console.log("App | getMenus, this.restaurantId", this.restaurantId);
     //1.
     //  const that = this;
@@ -306,17 +306,17 @@ class App extends React.Component {
 
 
     return function () {
-      var data = {
+      let data = {
         restaurant_Id: restaurant_Id
       };
-      console.log("App | getMenus, data", data);
+      // console.log("App | getMenus, data", data);
       api.postRequest('getMenus', data, this.updateMenus);
     }.bind(this)
   }
 
   getMenus(restaurant_Id) {
     // console.log("App | getMenus, restaurant_Id", restaurant_Id);
-    var data = {
+    let data = {
       restaurant_Id: restaurant_Id
     };
     // console.log("App | getMenus, data", data);
@@ -324,7 +324,7 @@ class App extends React.Component {
   }
 
   getSubMenusLocal(menuId) {
-    console.log("App | getSubMenusLocal, menuId", menuId);
+    // console.log("App | getSubMenusLocal, menuId", menuId);
     // console.log("App | getMenus, this.restaurantId", this.restaurantId);
     //1.
     //  const that = this;
@@ -338,14 +338,14 @@ class App extends React.Component {
       let data = {
         menu_id: menuId
       };
-      console.log("App | getSubMenusLocal, data", data);
+      // console.log("App | getSubMenusLocal, data", data);
       api.postRequest('getSubMenus', data, this.updateSubMenus);
     }.bind(this)
   }
 
   getSubMenus(menuId) {
-    console.log('App | getSubMenus | menuId', menuId);
-    console.log('App | getSubMenus | this.state', this.state);
+    // console.log('App | getSubMenus | menuId', menuId);
+    // console.log('App | getSubMenus | this.state', this.state);
     const data = {
       menu_id: menuId
     };
@@ -353,7 +353,7 @@ class App extends React.Component {
   }
 
   getTables(restaurant_Id) {
-    console.log("App | getTables, restaurant_Id", restaurant_Id);
+    // console.log("App | getTables, restaurant_Id", restaurant_Id);
     let data = {
       restaurant_Id: restaurant_Id
     };
@@ -362,7 +362,7 @@ class App extends React.Component {
   }
 
   getTablesLocal(restaurant_Id) {
-    console.log("App | getTablesLocal, restaurant_Id", restaurant_Id);
+    // console.log("App | getTablesLocal, restaurant_Id", restaurant_Id);
     // console.log("App | getMenus, this.restaurantId", this.restaurantId);
     //1.
     //  const that = this;
@@ -376,7 +376,7 @@ class App extends React.Component {
       let data = {
         restaurant_Id: restaurant_Id
       };
-      console.log("App | getTablesLocal, data", data);
+      // console.log("App | getTablesLocal, data", data);
       api.postRequest('getTables', data, this.updateTables);
     }.bind(this)
   }
@@ -384,7 +384,7 @@ class App extends React.Component {
   deleteDish(dishNum) {
     // console.log('App | deleteDish', this.state.data.dishes);
     // this.setState({loading: true});
-    var postData = '&dish_Id=' + this.state.data.dishes[dishNum]._id + '&user_Id=' + this.state.uid;
+    let postData = '&dish_Id=' + this.state.data.dishes[dishNum]._id + '&user_Id=' + this.state.uid;
     api.postRequest('removeDish', postData, this.getDishes);
     // this.postDataToServer('removeDish', '&dish_Id=' + this.props['dishId'] + '&user_Id=5826fdc1680d800d2064d1da');
   }
@@ -392,32 +392,32 @@ class App extends React.Component {
   deleteRest(restNum) {
     // console.log('App | deleteRest', restNum);
     // this.setState({loading: true});
-    var postData = '&restaurant_Id=' + this.state.data.rests[restNum]._id + '&user_Id=' + this.state.uid;
+    let postData = '&restaurant_Id=' + this.state.data.rests[restNum]._id + '&user_Id=' + this.state.uid;
     api.postRequest('removeRestaurant', postData, this.getRests);
   }
 
   deleteRestMenu(data) {
-    console.log('App | deleteRestMenu', data);
-    var postData = '&restaurant_Id=' + data.restaurantId + '&menu_id=' + data._id;
+    // console.log('App | deleteRestMenu', data);
+    let postData = '&restaurant_Id=' + data.restaurantId + '&menu_id=' + data._id;
     api.postRequest('removeMenu', postData, this.getMenusLocal(data.restaurantId));
   }
 
   deleteSubMenu(data) {
-    console.log('App | deleteSubMenu', data);
+    // console.log('App | deleteSubMenu', data);
     let postData = '&subMenu_Id=' + data._id + '&menu_Id=' + data.menuId;
     api.postRequest('removeSubMenu', postData, this.getSubMenusLocal(data.menuId));
   }
 
   deleteTable(data) {
-    console.log('App | deleteTable', data);
+    // console.log('App | deleteTable', data);
     let postData = '&restaurant_Id=' + data.restaurantId + '&table_Id=' + data._id;
     api.postRequest('removeTable', postData, this.getTablesLocal(data.restaurantId));
   }
 
   addRest(data) {
-    console.log('App | addRest', data);
+    // console.log('App | addRest', data);
     // this.setState({loading: true});
-    var postData = '&name=' + data.resName + '&address=' + data.resAddress + '&user_Id=' + this.state.uid;
+    let postData = '&name=' + data.resName + '&address=' + data.resAddress + '&user_Id=' + this.state.uid;
     api.postRequest('addRestaurant', postData, this.getRests);
   }
 
@@ -425,26 +425,26 @@ class App extends React.Component {
     // console.log('App | addDish', data);
     // this.setState({loading: true});
     // this.postDataToServer('addDish', '&user_Id=5826fdc1680d800d2064d1da&name=' + this.state['dishName'] + '&description='+this.state['dishDescription'] + '&default_price='+this.state['defaultPrice'])
-    var postData = '&name=' + data.dishName + '&description=' + data.dishDescription + '&user_Id=' + this.state.uid + '&default_Price=' + data.defaultPrice;
+    let postData = '&name=' + data.dishName + '&description=' + data.dishDescription + '&user_Id=' + this.state.uid + '&default_Price=' + data.defaultPrice;
     api.postRequest('addDish', postData, this.getDishes);
   }
 
   addRestMenu(data, restId) {
-    console.log('App | addRestMenu', data, restId);
-    var postData = '&name=' + data.resMenuName + '&restaurant_Id=' + restId;
+    // console.log('App | addRestMenu', data, restId);
+    let postData = '&name=' + data.resMenuName + '&restaurant_Id=' + restId;
     api.postRequest('addMenu', postData, this.getMenusLocal(restId));
   }
 
   addSubMenu(menuId, menuName) {
-    console.log('App | menuId', menuId);
-    console.log('App | menuName', menuName);
+    // console.log('App | menuId', menuId);
+    // console.log('App | menuName', menuName);
     let postData = '&menu_Id=' + menuId + '&name=' + menuName;
     api.postRequest('addSubMenu', postData, this.getSubMenusLocal(menuId));
   }
 
   addTable(data) {
-    console.log('App | data', data[0]);
-    console.log('App | table_Num', data[1].tableNum);
+    // console.log('App | data', data[0]);
+    // console.log('App | table_Num', data[1].tableNum);
     let postData = '&restaurant_Id=' + data[0] + '&table_Num=' + data[1].tableNum;
     api.postRequest('addTable', postData, this.getTablesLocal(data[0]));
   }
@@ -452,27 +452,27 @@ class App extends React.Component {
   editRest(data) {
     // console.log('App | editRest', data);
     // this.setState({loading: true});
-    var postData = '&restaurant_Id=' + data.resId + '&name=' + data.resName + '&address=' + data.resAddress;
+    let postData = '&restaurant_Id=' + data.resId + '&name=' + data.resName + '&address=' + data.resAddress;
     api.postRequest('editRestaurant', postData, this.getRests);
   }
 
   editDish(data) {
     // console.log('App | editDish', data);
     // this.setState({loading: true});
-    var postData = '&dish_Id=' + data.dishId + '&name=' + data.dishName + '&description=' + data.dishDescription + '&default_Price=' + data.defaultPrice;
+    let postData = '&dish_Id=' + data.dishId + '&name=' + data.dishName + '&description=' + data.dishDescription + '&default_Price=' + data.defaultPrice;
     api.postRequest('editDish', postData, this.getDishes);
 
   }
 
   editRestMenu(data) {
-    console.log('App | editRestMenu, data.restaurantId', data.restaurantId);
-    var postData = '&menu_Id=' + data.restMenuId + '&name=' + data.restMenuName;
+    // console.log('App | editRestMenu, data.restaurantId', data.restaurantId);
+    let postData = '&menu_Id=' + data.restMenuId + '&name=' + data.restMenuName;
     this.restaurantId = data.restaurantId;
     api.postRequest('editMenu', postData, this.getMenus);
   }
 
   editSubMenu(data) {
-    console.log('App | editSubMenu, data', data);
+    // console.log('App | editSubMenu, data', data);
     api.postRequest('updateSubMenuDishes', data);
   }
 
@@ -493,8 +493,8 @@ class App extends React.Component {
   }
 
   checkFacebookID() {
-    console.log('App | checkFacebookID | facebook_Id', this.state.facebook_id);
-    console.log('App | checkFacebookID | facebook_Id', this.state.status);
+    // console.log('App | checkFacebookID | facebook_Id', this.state.facebook_id);
+    // console.log('App | checkFacebookID | facebook_Id', this.state.status);
     let data = {
       facebook_Id: this.state.facebook_id
     };
@@ -502,7 +502,7 @@ class App extends React.Component {
   }
 
   getStatus(response) {
-    console.log('App | getStatus | response', response);
+    // console.log('App | getStatus | response', response);
     if (response.authResponse) {
       this.responseApi.call(this, response)
     } else {
@@ -511,10 +511,10 @@ class App extends React.Component {
   }
 
   responseApi(res) {
-    console.log('res:', res);
-    console.log('token:', res.authResponse.accessToken);
-    console.log('status:', res.status);
-    console.log('userID:', res.authResponse.userID);
+    // console.log('res:', res);
+    // console.log('token:', res.authResponse.accessToken);
+    // console.log('status:', res.status);
+    // console.log('userID:', res.authResponse.userID);
     this.setState({
       status: res.status,
       facebook_id: res.authResponse.userID,
@@ -531,7 +531,7 @@ class App extends React.Component {
   }
 
   logoutFacebook() {
-    this.logout()
+    this.logout();
     this.setState({
       status: 'unknown',
       facebook_id: null,
@@ -541,29 +541,26 @@ class App extends React.Component {
   }
 
   render() {
-    console.log('App | render | this.state', this.state);
-    const header = require("../Images/food.jpg");
-    if (this.state.uid != null) {
-      console.log('App | render | connected');
+    // console.log('App | render | this.state', this.state);
+    // const header = require("../Images/food.jpg");
+    if (this.state.uid !== null) {
+      // console.log('App | render | connected');
       return (
         <div>
           <nav className="navbar navbar-inverse navbar-fixed-top">
             <div className="container">
               <Menu
                 menu={[
-                  {name: 'Homepage', path: ''},
-                  {name: 'Rests', path: 'rests'},
-                  {name: 'Dishes', path: 'dishes'},
+                  {name: 'Rests', path: 'Restaurants'},
+                  {name: 'Dishes', path: 'Dishes'},
                 ]}
                 uid={this.state.uid}
                 logout={this.logoutFacebook}
-
               />
             </div>
           </nav>
           <div className="jumbotron">
             <div className="container">
-              {/*<img src={ header }/>*/}
               <h1>Header - Logo + Menu</h1>
               {React.Children.map(this.props.children, (child) => React.cloneElement(child, {
                 appData: this.state,
@@ -588,30 +585,29 @@ class App extends React.Component {
                 deleteSubMenu: this.deleteSubMenu,
                 deleteTable: this.deleteTable,
               }))}
-              {/*<Button onClick={this.goBack}>Back</Button>*/}
-              {/*<Button onClick={this.goForward}>Forward</Button>*/}
+              <Button onClick={this.goBack}>Back</Button>
+              <Button onClick={this.goForward}>Forward</Button>
               <footer>Footer - links, & other shit</footer>
             </div>
           </div>
         </div>
       )
     } else {
-      console.log('App | render | uid == null');
+      // console.log('App | render | uid == null');
       const styleDiv = {
         fontSize: 30
       };
       const src = require("../Images/5.gif");
       if (this.state.facebook_id == null) {
-        console.log('App | render | facebook_id == null');
+        // console.log('App | render | facebook_id == null');
         return (
           <div>
             <nav className="navbar navbar-inverse navbar-fixed-top">
               <div className="container">
-                <Menu menu={[
-                  {name: 'Homepage', path: ''},
-                  {name: 'Rests', path: 'Rests'},
-                  {name: 'Dishes', path: 'Dishes'},
-                ]}/>
+                {/*<Menu menu={[*/}
+                  {/*{name: 'Rests', path: 'Restaurants'},*/}
+                  {/*{name: 'Dishes', path: 'Dishes'},*/}
+                {/*]}/>*/}
               </div>
             </nav>
             <div className="jumbotron">
@@ -624,8 +620,6 @@ class App extends React.Component {
                     <button onClick={ this.loginFacebook.bind(this) }>Facebook Login</button>
                   </div>
                 </div>
-                {/*<Button onClick={this.goBack}>Back</Button>*/}
-                {/*<Button onClick={this.goForward}>Forward</Button>*/}
                 <footer>Footer - links, & other shit</footer>
               </div>
             </div>
@@ -638,11 +632,11 @@ class App extends React.Component {
           <div>
             <nav className="navbar navbar-inverse navbar-fixed-top">
               <div className="container">
-                <Menu menu={[
-                  {name: 'Homepage', path: ''},
-                  {name: 'Rests', path: 'Rests'},
-                  {name: 'Dishes', path: 'Dishes'},
-                ]}/>
+                {/*<Menu menu={[*/}
+                  {/*{name: 'Homepage', path: ''},*/}
+                  {/*{name: 'Rests', path: 'Rests'},*/}
+                  {/*{name: 'Dishes', path: 'Dishes'},*/}
+                {/*]}/>*/}
               </div>
             </nav>
             <div className="jumbotron">

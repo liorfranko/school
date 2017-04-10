@@ -22,7 +22,7 @@ export default class Routes extends Component {
       <Router history={browserHistory}>
         <Route path="/" component={App}>
           <IndexRoute component={Homepage}/>
-          <Route path="Rests" component={Restaurants}/>
+          <Route path="Restaurants" component={Restaurants}/>
           <Route path="Dishes" component={Dishes}/>
           <Route path=":restName" component={Restaurant}/>
           <Route path=":restName/:menuName" component={RestMenu}/>
