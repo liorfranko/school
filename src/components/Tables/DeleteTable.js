@@ -6,7 +6,7 @@ import {Modal, Button} from 'react-bootstrap';
 
 class DeleteTable extends React.Component {
   constructor(props) {
-    console.log('DeleteTable | constructor');
+    // console.log('DeleteTable | constructor');
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -18,7 +18,7 @@ class DeleteTable extends React.Component {
 
 
   render() {
-    console.log('DeleteTable | render', this.props);
+    // console.log('DeleteTable | render', this.props);
     if (!this.props.chosenTable) {
       return (
         <div></div>

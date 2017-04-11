@@ -13,7 +13,7 @@ class Popup extends React.Component {
   }
   render() {
     const deleteSrc = require('../../Images/delete_small.png');
-    var style = {
+    let style = {
       position: 'fixed',
       fontFamily: 'Arial, Helvetica, sans-serif',
       top: '0px',
@@ -23,7 +23,7 @@ class Popup extends React.Component {
       background: 'black',
       opacity: '0.9',
     };
-    var styleDiv = {
+    let styleDiv = {
       position: 'relative',
       opacity: '1',
       top: '5%',
@@ -35,7 +35,7 @@ class Popup extends React.Component {
       padding: '5px 20px 13px 20px',
       borderRadius: '12px',
     };
-    var closeStyle = {
+    let closeStyle = {
       position: 'relative',
       top: '1%',
       left: '98%',

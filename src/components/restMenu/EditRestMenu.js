@@ -5,7 +5,7 @@ import React from 'react';
 
 class EditRestMenu extends React.Component {
   constructor(props) {
-    console.log('EditRestMenu | constructor, props', props);
+    // console.log('EditRestMenu | constructor, props', props);
     super(props);
     this.state = {
       restMenuName: this.props.rest.name,
@@ -18,7 +18,7 @@ class EditRestMenu extends React.Component {
   }
 
   handleChange(event) {
-    console.log('EditRestMenu | handleChange', event.target.value);
+    // console.log('EditRestMenu | handleChange', event.target.value);
     this.setState({[event.target.name]: event.target.value})
   }
 
@@ -28,7 +28,7 @@ class EditRestMenu extends React.Component {
   }
 
   render() {
-    console.log('EditRestMenu | render');
+    // console.log('EditRestMenu | render');
     return (
       <div>
         {this.props.exit}

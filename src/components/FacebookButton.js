@@ -24,11 +24,11 @@ export default class FacebookButton extends React.Component {
 
   onStatusChange(response) {
     console.log( response );
-    var self = this;
+    let self = this;
 
     if( response.status === "connected" ) {
       this.FB.api('/me', function(response) {
-        var message = "Welcome " + response.name;
+        let message = "Welcome " + response.name;
         self.setState({
           message: message
         });

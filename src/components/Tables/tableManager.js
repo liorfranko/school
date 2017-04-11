@@ -11,7 +11,7 @@ import {Button} from 'react-bootstrap';
 
 class TableManager extends React.Component {
   constructor(props) {
-    console.log('TableManager | constructor', props);
+    // console.log('TableManager | constructor', props);
     super(props);
     this.exitPopup = this.exitPopup.bind(this);
     this.addTable = this.addTable.bind(this);
@@ -54,7 +54,7 @@ class TableManager extends React.Component {
   };
 
   handleAddClick(...data) {
-    console.log('TableManager | handleAddClick data', data);
+    // console.log('TableManager | handleAddClick data', data);
     this.props.addTable(data);
     this.setState({
       showAddModal: false
@@ -62,7 +62,7 @@ class TableManager extends React.Component {
   }
 
   handleDeleteClick(...data) {
-    console.log('restMenuManager | handleDeleteClick this.props', data);
+    // console.log('restMenuManager | handleDeleteClick this.props', data);
     this.props.deleteTable(...data);
     this.setState({
       selectedTable: 0,
@@ -71,7 +71,7 @@ class TableManager extends React.Component {
   }
 
   handleEditClick(data) {
-    console.log('TableManager | handleEditClick', this.state);
+    // console.log('TableManager | handleEditClick', this.state);
     this.props.editTable(data);
     this.setState({
       showEditModal: false,
@@ -80,7 +80,7 @@ class TableManager extends React.Component {
   }
 
   openEditDish(data) {
-    console.log('TableManager | openEditDish', data);
+    // console.log('TableManager | openEditDish', data);
     this.setState({
       selectedTable: data,
       showEditModal: true
@@ -88,7 +88,7 @@ class TableManager extends React.Component {
   }
 
   render() {
-    console.log('tableManager | props', this.props);
+    // console.log('tableManager | props', this.props);
     // console.log('restMenuManager | this.state', this.state);
     let styleDiv = {
       fontSize: 30

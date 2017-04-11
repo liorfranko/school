@@ -4,60 +4,9 @@
 import React from 'react';
 import {Modal, Button} from 'react-bootstrap';
 
-// class EditTable extends React.Component {
-//   constructor(props) {
-//     console.log('EditTable | constructor, props', props);
-//     super(props);
-//     this.state = {
-//       tableNum: this.props.chosenTable.tableNum,
-//       tableId: this.props.chosenTable._id,
-//       restaurantId: this.props.chosenTable.restaurantId
-//     };
-//     this.handleChange = this.handleChange.bind(this);
-//     this.handleSubmit = this.handleSubmit.bind(this);
-//
-//   }
-//
-//   handleChange(event) {
-//     console.log('EditTable | handleChange', event.target.value);
-//     this.setState({[event.target.name]: event.target.value})
-//   }
-//
-//   handleSubmit(event) {
-//     event.preventDefault();
-//     this.props.handleClick(this.state);
-//   }
-//
-//   render() {
-//     console.log('EditTable | render');
-//     return (
-//       <div>
-//         {this.props.exit}
-//         <div>
-//           Edit Table
-//         </div>
-//         <div>
-//           <form onSubmit={this.handleSubmit}>
-//             <label>
-//               <div>Table Number:
-//                 <input type="text" name="restMenuName" value={this.state.tableNum} onChange={this.handleChange}/>
-//               </div>
-//             </label>
-//             <input type="submit" value="Submit"/>
-//           </form>
-//         </div>
-//       </div>
-//
-//     )
-//
-//   }
-// }
-// export default EditTable;
-
-
 class EditTable extends React.Component {
   constructor(props) {
-    console.log('EditTable | constructor | props', props);
+    // console.log('EditTable | constructor | props', props);
     super(props);
     if (! props.chosenTable) {
       this.state = {
@@ -77,8 +26,8 @@ class EditTable extends React.Component {
     this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
   }
   componentWillReceiveProps (nextProps) {
-    console.log('EditDish | componentWillReceiveProps | nextProps', nextProps);
-    console.log('EditDish | componentWillReceiveProps | this.props', this.props);
+    // console.log('EditDish | componentWillReceiveProps | nextProps', nextProps);
+    // console.log('EditDish | componentWillReceiveProps | this.props', this.props);
     if (! nextProps.chosenTable) {
       this.state = {
         tableNum: '',
@@ -118,7 +67,7 @@ class EditTable extends React.Component {
   }
 
   render() {
-    console.log('EditTable | render | props', this.props);
+    // console.log('EditTable | render | props', this.props);
     return (
       <Modal show={this.props.show} onHide={this.props.exit}>
         <Modal.Header closeButton>

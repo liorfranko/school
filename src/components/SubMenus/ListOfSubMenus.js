@@ -5,7 +5,7 @@ import React from 'react';
 import SubMenuListItem from './SubMenuListItem';
 
 const ListOfSubMenus = (props) => {
-  console.log('ListOfSubMenus |', props);
+  // console.log('ListOfSubMenus |', props);
   return (
     <ul className="restSubMenuList list-group">
       {

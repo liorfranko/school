@@ -6,7 +6,7 @@ import {Modal, Button} from 'react-bootstrap';
 
 class DeleteDish extends React.Component {
   constructor(props) {
-    console.log('DeleteDish | constructor | props', props);
+    // console.log('DeleteDish | constructor | props', props);
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -18,7 +18,7 @@ class DeleteDish extends React.Component {
 
 
   render() {
-    console.log('DeleteDish | render', this.props);
+    // console.log('DeleteDish | render', this.props);
     if (! this.props.dish) {
       return (null)
     } else {

@@ -8,7 +8,7 @@ import React from 'react';
 import TableListItem from './tableListItem';
 
 const ListOfTables = (props) => {
-  console.log('ListOfTables |', props);
+  // console.log('ListOfTables |', props);
   return (
     <ul className="restMenuList list-group">
       {

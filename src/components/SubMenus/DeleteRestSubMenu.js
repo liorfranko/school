@@ -18,7 +18,7 @@ class DeleteRestSubMenu extends React.Component {
 
 
   render() {
-    console.log('DeleteRestSubMenu | render', this.props);
+    // console.log('DeleteRestSubMenu | render', this.props);
     if (!this.props.chosenSubMenu) {
       return (
         <div></div>

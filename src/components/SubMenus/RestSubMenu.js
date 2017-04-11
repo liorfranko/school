@@ -2,7 +2,6 @@
  * Created by liorf on 12/10/16.
  */
 import React, {Component} from 'react';
-import {render} from 'react-dom';
 import {DragDropContext} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import Container from './Container';
@@ -36,10 +35,10 @@ class RestSubMenu extends Component {
     // console.log('RestSubMenu | submitRestSubMenu | menu', menu);
     let submenu = this.props.appData.data.rests[rest].menus[menu].subMenus.findIndex(x => x.name == this.props.params.subMenuName);
     // console.log('RestSubMenu | submitRestSubMenu | subMenu', submenu);
-    let subMenu_Id_ = this.props.appData.data.rests[rest].menus[menu].subMenus[submenu]['_id'];
+    let subMenu_Id = this.props.appData.data.rests[rest].menus[menu].subMenus[submenu]['_id'];
     // console.log('RestSubMenu | submitRestSubMenu | subMenu_Id', subMenu_Id);
     //"5838c967680d800f0c5d83eb"
-    let subMenu_Id = {"subMenu_Id": subMenu_Id_, "items": [{"Id": "5838c967680d800f0c5d83eb"}]};
+    // let subMenu_Id = {"subMenu_Id": subMenu_Id_, "items": [{"Id": "5838c967680d800f0c5d83eb"}]};
     this.props.editSubMenu({subMenu_Id: subMenu_Id})
   };
 

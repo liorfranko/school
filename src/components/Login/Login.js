@@ -2,7 +2,7 @@
  * Created by liorf on 4/8/17.
  */
 import React from 'react';
-import LoginHOC from 'react-facebook-login-hoc';
+// import LoginHOC from 'react-facebook-login-hoc';
 
 const configureLoginProps = {
   appId: '756445047848860',

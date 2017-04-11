@@ -6,14 +6,14 @@ import React from 'react';
 import {Link} from 'react-router';
 
 const SubMenuListItem = (props) => {
-  console.log("SubMenuListItem | props", props);
+  // console.log("SubMenuListItem | props", props);
   function onEditClick() {
-    console.log('SubMenuListItem | onEditClick');
+    // console.log('SubMenuListItem | onEditClick');
     props.editSubMenu(props)
   }
 
   function onDeleteClick() {
-    console.log('SubMenuListItem | onDeleteClick | props', props);
+    // console.log('SubMenuListItem | onDeleteClick | props', props);
     props.delSubMenu(props.subMenuNum)
   }
   return (

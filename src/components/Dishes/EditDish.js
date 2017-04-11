@@ -6,7 +6,7 @@ import {Modal, Button} from 'react-bootstrap';
 
 class EditDish extends React.Component {
   constructor(props) {
-    console.log('EditDish | constructor | props', props);
+    // console.log('EditDish | constructor | props', props);
     super(props);
     if (! props.dish) {
       this.state = {

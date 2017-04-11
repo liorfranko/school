@@ -20,11 +20,11 @@ class HoverImage extends React.Component{
 
   render () {
     // console.log(this.props);
-    var imageStyle = {
+    let imageStyle = {
       opacity: '1',
       cursor: 'pointer'
     };
-    var src = this.props.img;
+    let src = this.props.img;
     if (this.state.hover) {
       imageStyle = {
         opacity: '0.6',

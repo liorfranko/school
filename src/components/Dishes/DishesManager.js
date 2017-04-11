@@ -69,7 +69,7 @@ class DishesManager extends React.Component {
   }
 
   openEditDish(data) {
-    console.log('DishesManager | editDish', data);
+    // console.log('DishesManager | editDish', data);
     this.setState({
       selectedDish: data,
       showEditModal: true
@@ -77,7 +77,7 @@ class DishesManager extends React.Component {
   }
 
   openDeleteDish(data) {
-    console.log('DishesManager | deleteDish', data);
+    // console.log('DishesManager | deleteDish', data);
     this.setState({
       selectedDish: data,
       showDeleteModal: true
@@ -92,8 +92,8 @@ class DishesManager extends React.Component {
   }
 
   render() {
-    console.log('DishesManager | render', this.state);
-    console.log('DishesManager | this.props.appData.data.dishes', this.props.appData.data.dishes);
+    // console.log('DishesManager | render', this.state);
+    // console.log('DishesManager | this.props.appData.data.dishes', this.props.appData.data.dishes);
     const src = require("../../Images/5.gif");
     const styleDiv = {
       fontSize: 30

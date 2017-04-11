@@ -7,7 +7,7 @@ import {Modal, Button} from 'react-bootstrap';
 
 class AddRestSubMenu extends React.Component {
   constructor(props) {
-    console.log('AddRestSubMenu | constructor props', props);
+    // console.log('AddRestSubMenu | constructor props', props);
     super(props);
     this.state = {
       resSubMenuName: '',
@@ -24,7 +24,7 @@ class AddRestSubMenu extends React.Component {
   }
 
   // updateDishes(data) {
-  //   var newArray = this.state.dishes.slice();
+  //   let newArray = this.state.dishes.slice();
   //   newArray.push(data);
   //   this.setState({
   //     dishes: newArray
@@ -35,7 +35,7 @@ class AddRestSubMenu extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log('AddRestMenu | handleSubmit', this.props);
+    // console.log('AddRestMenu | handleSubmit', this.props);
     this.props.handleClick(this.props.menu._id, this.state.resSubMenuName);
 
   }
@@ -63,20 +63,6 @@ class AddRestSubMenu extends React.Component {
         {/*<Button type="submit" onClick={this.handleSubmit} form="AddDishForm">Submit</Button>*/}
       </Modal.Footer>
     </Modal>
-      // <div>
-      //   {this.props.exit}
-      //   <div>Adding new Menu</div>
-      //   <div>
-      //     <form onSubmit={this.handleSubmit}>
-      //       <label>
-      //         <div>Menu Name:
-      //           <input type="text" name="resMenuName" value={this.state.resMenuName} onChange={this.handleChange} required/>
-      //         </div>
-      //       </label>
-      //       <input type="submit" value="Submit"/>
-      //     </form>
-      //   </div>
-      // </div>
     )
   }
 }

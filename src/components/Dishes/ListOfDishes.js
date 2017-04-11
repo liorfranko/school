@@ -7,11 +7,11 @@ import ReactSuperSelect from 'react-super-select'
 
 const ListOfDishes = (props) => {
   // console.log('ListOfDishes | props', props);
-  var handlerExample = function (options) {
+  let handlerExample = function (options) {
     console.log('ListOfDishes | options', options);
     // props.updateDishes(options)
   };
-  var testData = [];
+  let testData = [];
   props.dishes.map((dish) => {
     // console.log('ListOfDishes | dishes.map | ', i, dish);
     testData.push({

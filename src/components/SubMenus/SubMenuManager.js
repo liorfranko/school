@@ -10,7 +10,7 @@ import './subMenu.styl';
 
 class subMenuManager extends React.Component {
   constructor(props) {
-    console.log('subMenuManager | constructor', props);
+    // console.log('subMenuManager | constructor', props);
     super(props);
     this.exitPopup = this.exitPopup.bind(this);
     this.addRestSubMenu = this.addRestSubMenu.bind(this);
@@ -40,7 +40,7 @@ class subMenuManager extends React.Component {
   };
 
   deleteRestSubMenu(data) {
-    console.log('subMenuManager | deleteRestSubMenu | data', data);
+    // console.log('subMenuManager | deleteRestSubMenu | data', data);
     this.setState({
       showDeleteModal: true,
       selectedSubMenu: data
@@ -56,7 +56,7 @@ class subMenuManager extends React.Component {
   }
 
   handleDeleteClick(...data) {
-    console.log('subMenuManager | handleDeleteClick this.props', data);
+    // console.log('subMenuManager | handleDeleteClick this.props', data);
     this.props.delSubMenu(...data);
     this.setState({
       selectedSubMenu: 0,
@@ -65,8 +65,8 @@ class subMenuManager extends React.Component {
   }
 
   render() {
-    console.log('subMenuManager | render | this.props', this.props);
-    console.log('subMenuManager | render | this.state', this.state);
+    // console.log('subMenuManager | render | this.props', this.props);
+    // console.log('subMenuManager | render | this.state', this.state);
     const styleDiv = {
       fontSize: 30
     };
