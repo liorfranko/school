@@ -26,7 +26,10 @@ class Card extends Component {
       <div style={{style, opacity }}>
         <li className="restItem list-group-item">
           <div className="innerItem name">
-            {card.text}
+            Name: {card.dish.name}
+          </div>
+          <div className="innerItem delete">
+            Price: {card.dish.defaultPrice}
           </div>
         </li>
       </div>

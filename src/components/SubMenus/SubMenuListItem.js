@@ -8,7 +8,7 @@ import {Link} from 'react-router';
 const SubMenuListItem = (props) => {
   // console.log("SubMenuListItem | props", props);
   function onEditClick() {
-    // console.log('SubMenuListItem | onEditClick');
+    console.log('SubMenuListItem | onEditClick');
     props.editSubMenu(props)
   }
 

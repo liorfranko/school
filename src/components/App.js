@@ -442,9 +442,10 @@ class App extends React.Component {
     api.postRequest('editMenu', postData, this.getMenus);
   }
 
-  editSubMenu(data) {
-    // console.log('App | editSubMenu, data', data);
-    api.postRequest('updateSubMenuDishes', data);
+  editSubMenu(data, menuId) {
+    console.log('App | editSubMenu, data', data);
+    console.log('App | editSubMenu, menuId', menuId);
+    api.postRequest('updateSubMenuDishes', data, this.getSubMenusLocal(menuId));
   }
 
   editTable(data) {

@@ -38,14 +38,14 @@ class TableManager extends React.Component {
   };
 
   addTable() {
-    // console.log('restMenuManager | addRestMenu');
+    // console.log('restMenuManager | addTable');
     this.setState({
       showAddModal: true
     });
   };
 
   deleteTable(data) {
-    // console.log('restMenuManager | deleteRestMenu | data', data);
+    // console.log('restMenuManager | deleteTable | data', data);
     this.setState({
       showDeleteModal: true,
       selectedTable: data
