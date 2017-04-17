@@ -22,14 +22,14 @@ class uRestaurantsManager extends React.Component {
   }
 
   render() {
-    console.log('uRestaurants Manager | this.props', this.props);
-    console.log('uRestaurants Manager | this.state', this.state);
+    // console.log('uRestaurants Manager | this.props', this.props);
+    // console.log('uRestaurants Manager | this.state', this.state);
     const src = require("../../Images/5.gif");
     const styleDiv = {
       fontSize: 30
     };
     if (!this.props.appData.data.rests) {
-      console.log('uRestaurantsManager | loading');
+      // console.log('uRestaurantsManager | loading');
       return (
         <div id="rests" className="panel panel-default">
           <div className="panel-heading" style={styleDiv}>Restaurants:</div>

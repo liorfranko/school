@@ -20,21 +20,21 @@ class uTableManager extends React.Component {
 
 
   render() {
-    // console.log('tableManager | props', this.props);
+    console.log('uTableManager | props', this.props);
     // console.log('restMenuManager | this.state', this.state);
-    // let styleDiv = {
-    //   fontSize: 30
-    // };
+    let styleDiv = {
+      fontSize: 30
+    };
     return (
       <div id="restMenu" className="panel panel-default">
-        {/*<div className="panel-heading" style={styleDiv}>{this.props.rest.name}</div>*/}
+        <div className="panel-heading" style={styleDiv}>Tables:</div>
         <div className="panel-body">
-          Tables:
           <ListOfTables
             tables={this.props.tables}
             rest={this.props.rest}
-            deleteTable={this.deleteTable}
-            editTable={this.openEditDish}
+            // deleteTable={this.deleteTable}
+            // editTable={this.openEditDish}
+            addOrder={this.props.addOrder}
           />
         </div>
       </div>

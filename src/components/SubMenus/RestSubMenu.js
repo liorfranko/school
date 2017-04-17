@@ -86,7 +86,6 @@ class RestSubMenu extends Component {
       this.props.getRests();
     } else {
       let rest = this.props.appData.data.rests.findIndex(x => x.name === this.props.params.restName);
-
       // let rest = this.props.appData.data.rests.findIndex(x => x.name === this.props.params.restName);
       // console.log('RestSubMenu | componentWillReceiveProps | rest', rest);
       if (!this.props.appData.data.rests[rest].menus) {

@@ -97,7 +97,6 @@ class TableManager extends React.Component {
       <div id="restMenu" className="panel panel-default">
         {/*<div className="panel-heading" style={styleDiv}>{this.props.rest.name}</div>*/}
         <div className="panel-body">
-          Tables:
           <ListOfTables
             tables={this.props.tables}
             rest={this.props.rest}

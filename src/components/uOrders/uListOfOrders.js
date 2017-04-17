@@ -7,7 +7,7 @@
 import React from 'react';
 import TableListItem from './utableListItem';
 
-const uListOfTables = (props) => {
+const uListOfOrders = (props) => {
   console.log('uListOfTables |', props);
   return (
     <ul className="restMenuList list-group">
@@ -17,8 +17,8 @@ const uListOfTables = (props) => {
             <TableListItem
               key={i}
               item={table}
-              // deleteTable={props.deleteTable}
-              addOrder={props.addOrder}
+              deleteTable={props.deleteTable}
+              editTable={props.editTable}
               rest={props.rest}
               tableNum={i}
             />
@@ -29,4 +29,4 @@ const uListOfTables = (props) => {
   )
 };
 
-export default uListOfTables;
+export default uListOfOrders;

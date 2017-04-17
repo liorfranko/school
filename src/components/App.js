@@ -46,6 +46,7 @@ class App extends React.Component {
     this.updateTables = this.updateTables.bind(this);
     this.updateLogin = this.updateLogin.bind(this);
     this.updateAllRests = this.updateAllRests.bind(this);
+    this.updateOrders = this.updateOrders.bind(this);
 
     this.getRests = this.getRests.bind(this);
     this.getDishes = this.getDishes.bind(this);
@@ -57,6 +58,7 @@ class App extends React.Component {
     this.getTables = this.getTables.bind(this);
     this.getTablesLocal = this.getTablesLocal.bind(this);
     this.getAllRests = this.getAllRests.bind(this);
+    this.getOrdersByTableId = this.getOrdersByTableId.bind(this);
 
 
     this.deleteRest = this.deleteRest.bind(this);
@@ -70,6 +72,7 @@ class App extends React.Component {
     this.addRestMenu = this.addRestMenu.bind(this);
     this.addSubMenu = this.addSubMenu.bind(this);
     this.addTable = this.addTable.bind(this);
+    this.addOrder = this.addOrder.bind(this);
 
     this.editDish = this.editDish.bind(this);
     this.editRest = this.editRest.bind(this);
@@ -259,8 +262,91 @@ class App extends React.Component {
     console.log('App | updateAllRests', items);
     this.setState({
       data: Object.assign({}, this.state.data, {rests: items}),
-      // loading: false
     });
+  }
+
+  updateOrders (data) {
+    // Problem:
+    // When loading menus and menus list is empty, How can I get the restaurant ID.
+    console.log('App | updateOrders data', data);
+    console.log('App | updateOrders this.state.data', this.state.data);
+    const items = data.items || [];
+    console.log('App | updateOrders items.length()', items.length);
+    let arrayVar = this.state.data.rests.slice();
+    if (items.length > 0) {
+      arrayVar.map((rest, restIndex) => {
+        console.log('App |  updateOrders | rest', rest);
+        if (rest.tables) {
+          let arrayTables = rest.tables.slice();
+          arrayTables.map((table, tableIndex) => {
+            console.log('App |  updateOrders | table', table);
+            if (table._id == items[0].tableId) {
+              console.log('App | updateOrders | table._id', table._id);
+              let curTablesArray = this.state.data.rests[restIndex].tables[tableIndex];
+              curTablesArray.orders = items;
+              let curRestArray = this.state.data.rests[restIndex];
+              let newRestArray = update(this.state.data.rests, {
+                [restIndex]: {$set: curRestArray}
+              });
+              this.setState({
+                data: Object.assign({}, this.state.data, {rests: newRestArray})
+              });
+            }
+          });
+        }
+      });
+    } else {
+      let tableId = data.reason;
+      console.log('App | updateOrders | tableId', tableId);
+      arrayVar.map((rest, restIndex) => {
+        console.log('App | updateOrders | rest', rest);
+        if (rest.tables) {
+          let arrayTables = rest.tables.slice();
+          arrayTables.map((table, tableIndex) => {
+            console.log('App |  updateOrders | table', table);
+            if (tableId === table._id) {
+              let curTablesArray = this.state.data.rests[restIndex].tables[tableIndex];
+              curTablesArray.orders = items;
+              let curRestArray = this.state.data.rests[restIndex];
+              let newRestArray = update(this.state.data.rests, {
+                [restIndex]: {$set: curRestArray}
+              });
+              this.setState({
+                data: Object.assign({}, this.state.data, {rests: newRestArray})
+              });
+            }
+          });
+        }
+      });
+    }
+    //   arrayVar.map((rest, i) => {
+    //     if (rest._id === items[0].restaurantId) {
+    //       // index = i;
+    //       let curRestArray = this.state.data.rests[i];
+    //       curRestArray.tables = items;
+    //       let newRestArray = update(this.state.data.rests, {
+    //         [i]: {$set: curRestArray}
+    //       });
+    //       this.setState({
+    //         data: Object.assign({}, this.state.data, {rests: newRestArray})
+    //       });
+    //     }
+    //   });
+    // } else {
+    //   let restId = data.reason;
+    //   // console.log('App | updateMenus restId', restId);
+    //   // console.log('App | updateMenus this.state.data.rests', this.state.data.rests);
+    //   let index = this.state.data.rests.findIndex(x => x._id == restId);
+    //   // console.log('App | updateMenus index', index);
+    //   let curRestArray = this.state.data.rests[index];
+    //   curRestArray.tables = items;
+    //   let newRestArray = update(this.state.data.rests, {
+    //     [index]: {$set: curRestArray}
+    //   });
+    //   this.setState({
+    //     data: Object.assign({}, this.state.data, {rests: newRestArray})
+    //   });
+    // }
   }
 
   getRests() {
@@ -282,7 +368,7 @@ class App extends React.Component {
   }
 
   getDishesUid(user_Id) {
-    // console.log("App | getDishes");
+    console.log("App | getDishesUid");
     // this.setState({loading: true});
     let data = {
       user_Id: user_Id
@@ -374,13 +460,33 @@ class App extends React.Component {
       };
       // console.log("App | getTablesLocal, data", data);
       api.postRequest('getTables', data, this.updateTables);
-    }.bind(this)
+    }.bind(this);
   }
 
   getAllRests() {
     console.log("App | getAllRests");
     api.postRequest('getAllRestaurants', {}, this.updateAllRests);
   }
+
+  getOrdersByTableId(table_Id) {
+    console.log("App | getOrdersByTableId | table_Id", table_Id);
+    let data = {
+      table_Id: table_Id
+    };
+    api.postRequest('getOrdersByTableId', data, this.updateOrders);
+  }
+
+  getOrdersByTableIdLocal(table_Id) {
+    console.log("App | getOrdersByTableIdLocal | table_Id", table_Id);
+    return function () {
+      let data = {
+        table_Id: table_Id
+      };
+      // console.log("App | getTablesLocal, data", data);
+      api.postRequest('getOrdersByTableId', data, this.updateOrders);
+    }.bind(this);
+  }
+
   deleteDish(dishNum) {
     // console.log('App | deleteDish', this.state.data.dishes);
     // this.setState({loading: true});
@@ -447,6 +553,14 @@ class App extends React.Component {
     // console.log('App | table_Num', data[1].tableNum);
     let postData = '&restaurant_Id=' + data[0] + '&table_Num=' + data[1].tableNum;
     api.postRequest('addTable', postData, this.getTablesLocal(data[0]));
+  }
+
+  addOrder(table_Id) {
+    console.log('App | addOrder | ', table_Id);
+    let data = {
+      table_Id: table_Id
+    };
+    api.postRequest('addOrder', data, this.getOrdersByTableIdLocal(table_Id));
   }
 
   editRest(data) {
@@ -584,6 +698,9 @@ class App extends React.Component {
                   getSubMenus: this.getSubMenus,
                   getTables: this.getTables,
                   getAllRests: this.getAllRests,
+                  getOrdersByTableId: this.getOrdersByTableId,
+                  addOrder: this.addOrder,
+
                 }))}
                 <Button onClick={this.goBack}>Back</Button>
                 <Button onClick={this.goForward}>Forward</Button>
