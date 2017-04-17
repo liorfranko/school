@@ -45,9 +45,11 @@ class App extends React.Component {
     this.updateSubMenus = this.updateSubMenus.bind(this);
     this.updateTables = this.updateTables.bind(this);
     this.updateLogin = this.updateLogin.bind(this);
+    this.updateAllRests = this.updateAllRests.bind(this);
 
     this.getRests = this.getRests.bind(this);
     this.getDishes = this.getDishes.bind(this);
+    this.getDishesUid = this.getDishesUid.bind(this);
     this.getMenus = this.getMenus.bind(this);
     this.getMenusLocal = this.getMenusLocal.bind(this);
     this.getSubMenus = this.getSubMenus.bind(this);
@@ -154,6 +156,7 @@ class App extends React.Component {
   }
 
   updateSubMenus(data) {
+    //FIXME
     const items = data.items || [];
     // console.log('App | updateSubMenus items', items);
     // console.log('App | updateSubMenus items.length()', items.length);
@@ -162,31 +165,38 @@ class App extends React.Component {
 
     let arrayVar = this.state.data.rests.slice();
     if (items.length > 0) {
+      let menuId = items[0].menuId;
+      // console.log('App | menuId', menuId);
       arrayVar.map((rest, restIndex) => {
         // console.log('App | updateSubMenus rest', rest);
         if (rest.menus) {
           rest.menus.map((menu, menuIndex) => {
             // console.log('App | updateSubMenus menu', menu);
-            let curMenusArray = this.state.data.rests[restIndex].menus[menuIndex];
-            // console.log('App | updateSubMenus curMenusArray', curMenusArray);
-            curMenusArray.subMenus = items;
-            // console.log('App | updateSubMenus curMenusArray', curMenusArray);
-            let newMenusArray = update(this.state.data.rests[restIndex], {
-              [menuIndex]: {$set: curMenusArray}
-            });
-            // console.log('App | updateSubMenus newMenusArray', newMenusArray);
-            let curRestArray = this.state.data.rests[restIndex];
-            let newRestArray = update(this.state.data.rests, {
-              [restIndex]: {$set: curRestArray}
-            });
-            // console.log('App | updateSubMenus newRestArray', newRestArray);
-            this.setState({
-              data: Object.assign({}, this.state.data, {rests: newRestArray})
-            });
+            if (menu._id === menuId) {
+              let curMenusArray = this.state.data.rests[restIndex].menus[menuIndex];
+              // console.log('App | updateSubMenus curMenusArray', curMenusArray);
+              curMenusArray.subMenus = items;
+              // console.log('App | updateSubMenus curMenusArray', curMenusArray);
+              // FIXME need to check why newMenusArray is not is use!!!!
+              // let newMenusArray = update(this.state.data.rests[restIndex], {
+              //   [menuIndex]: {$set: curMenusArray}
+              // });
+              // console.log('App | updateSubMenus newMenusArray', newMenusArray);
+              let curRestArray = this.state.data.rests[restIndex];
+              let newRestArray = update(this.state.data.rests, {
+                [restIndex]: {$set: curRestArray}
+              });
+              // console.log('App | updateSubMenus newMenusArray', newMenusArray);
+              // console.log('App | updateSubMenus newRestArray', newRestArray);
+              this.setState({
+                data: Object.assign({}, this.state.data, {rests: newRestArray})
+              });
+            }
           })
         }
       });
     }
+    // console.log('App | updateSubMenus this.state.data', this.state.data);
   }
 
   updateTables (data) {
@@ -243,6 +253,16 @@ class App extends React.Component {
 
   }
 
+  updateAllRests(data) {
+    console.log('App | updateAllRests data', data.items);
+    const items = data.items || [];
+    console.log('App | updateAllRests', items);
+    this.setState({
+      data: Object.assign({}, this.state.data, {rests: items}),
+      // loading: false
+    });
+  }
+
   getRests() {
     console.log("App | getRests", this.state);
     // this.setState({loading: true});
@@ -257,6 +277,15 @@ class App extends React.Component {
     // this.setState({loading: true});
     let data = {
       user_Id: this.state.uid
+    };
+    api.postRequest('getDishes', data, this.updateDishes);
+  }
+
+  getDishesUid(user_Id) {
+    // console.log("App | getDishes");
+    // this.setState({loading: true});
+    let data = {
+      user_Id: user_Id
     };
     api.postRequest('getDishes', data, this.updateDishes);
   }
@@ -311,8 +340,8 @@ class App extends React.Component {
   }
 
   getSubMenus(menuId) {
-    // console.log('App | getSubMenus | menuId', menuId);
-    // console.log('App | getSubMenus | this.state', this.state);
+    console.log('App | getSubMenus | menuId', menuId);
+    console.log('App | getSubMenus | this.state', this.state);
     const data = {
       menu_id: menuId
     };
@@ -350,7 +379,7 @@ class App extends React.Component {
 
   getAllRests() {
     console.log("App | getAllRests");
-
+    api.postRequest('getAllRestaurants', {}, this.updateAllRests);
   }
   deleteDish(dishNum) {
     // console.log('App | deleteDish', this.state.data.dishes);
@@ -503,12 +532,15 @@ class App extends React.Component {
   }
 
   logoutFacebook() {
+    browserHistory.push(`/`);
     this.logout();
+
     this.setState({
       status: 'unknown',
       facebook_id: null,
       token: null,
       uid: null,
+      data: {},
     });
   }
 
@@ -534,9 +566,10 @@ class App extends React.Component {
             <nav className="navbar navbar-inverse navbar-fixed-top">
               <div className="container">
                 <Menu
-                  menu={[]}
+                  menu={[{name: 'Restaurants', path: 'uRestaurants'}]}
                   uid={this.state.uid}
                   logout={this.logoutFacebook}
+
                 />
               </div>
             </nav>
@@ -546,7 +579,7 @@ class App extends React.Component {
                 {React.Children.map(this.props.children, (child) => React.cloneElement(child, {
                   appData: this.state,
                   getRests: this.getRests,
-                  getDishes: this.getDishes,
+                  getDishesUid: this.getDishesUid,
                   getMenus: this.getMenus,
                   getSubMenus: this.getSubMenus,
                   getTables: this.getTables,
@@ -566,7 +599,7 @@ class App extends React.Component {
               <div className="container">
                 <Menu
                   menu={[
-                    {name: 'Rests', path: 'Restaurants'},
+                    {name: 'Restaurants', path: 'Restaurants'},
                     {name: 'Dishes', path: 'Dishes'},
                   ]}
                   uid={this.state.uid}
@@ -615,7 +648,7 @@ class App extends React.Component {
         fontSize: 30
       };
       const src = require("../Images/5.gif");
-      if (this.state.facebook_id == null) {
+      if (this.state.facebook_id === null) {
         // console.log('App | render | facebook_id == null');
         return (
           <div>

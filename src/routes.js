@@ -8,10 +8,14 @@ import {Router, Route, browserHistory, IndexRoute} from 'react-router';
 import App from './components/App';
 import Homepage from './components/homepage/Homepage';
 import Restaurants from './components/restaurants/RestaurantsManager';
+import uRestaurants from './components/uRestaurants/uRestaurantsManager';
 import Restaurant from './components/restaurants/Restaurant';
+import uRestaurant from './components/uRestaurants/uRestaurant';
 import Dishes from './components/Dishes/DishesManager';
 import RestMenu from './components/restMenu/restMenu'
 import RestSubMenu from './components/SubMenus/RestSubMenu'
+import uTable from './components/uTables/uTable'
+
 // import Login from './components/Login/Login'
 
 // import DishesManager
@@ -22,11 +26,14 @@ export default class Routes extends Component {
       <Router history={browserHistory}>
         <Route path="/" component={App}>
           <IndexRoute component={Homepage}/>
-          <Route path="Restaurants" component={Restaurants}/>
-          <Route path="Dishes" component={Dishes}/>
-          <Route path=":restName" component={Restaurant}/>
-          <Route path=":restName/:menuName" component={RestMenu}/>
-          <Route path=":restName/:menuName/:subMenuName" component={RestSubMenu}/>
+          <Route path="/Restaurants" component={Restaurants}/>
+          <Route path="/uRestaurants" component={uRestaurants}/>
+          <Route path="/Dishes" component={Dishes}/>
+          <Route path="/Restaurants/:restName" component={Restaurant}/>
+          <Route path="/uRestaurants/:restName" component={uRestaurant}/>
+          <Route path="/Restaurants/:restName/Menus/:menuName" component={RestMenu}/>
+          <Route path="/uRestaurants/:restName/Tables/:tableName" component={uTable}/>
+          <Route path="/Restaurants/:restName/Menus/:menuName/Submenus/:subMenuName" component={RestSubMenu}/>
         </Route>
       </ Router>
     );

@@ -14,100 +14,134 @@ import * as $ from 'jquery';
 
 class RestSubMenu extends Component {
   constructor(props) {
-    console.log('RestSubMenu | constructor | props', props);
+    // console.log('RestSubMenu | constructor | props', props);
     super(props);
-    let available_dishes = [];
-    let selected_dishes = [];
-    let rest = this.props.appData.data.rests.findIndex(x => x.name === this.props.params.restName);
-    // console.log('RestSubMenu | constructor | rest', rest);
-    let menu = this.props.appData.data.rests[rest].menus.findIndex(x => x.name === this.props.params.menuName);
-    // console.log('RestSubMenu | constructor | menu', menu);
-    let menuId = this.props.appData.data.rests[rest].menus[menu]._id;
-    // console.log('RestSubMenu | constructor | menuId', menuId);
-    let submenu = this.props.appData.data.rests[rest].menus[menu].subMenus.findIndex(x => x.name === this.props.params.subMenuName);
-    // console.log('RestSubMenu | constructor | subMenu', submenu);
-    let subMenu_Id = this.props.appData.data.rests[rest].menus[menu].subMenus[submenu]['_id'];
-    // console.log('RestSubMenu | constructor | subMenu_Id', subMenu_Id);
-    let dishArray = this.props.appData.data.rests[rest].menus[menu].subMenus[submenu]['dishArray'];
-    // console.log('RestSubMenu | constructor | dishArray', dishArray);
-    this.props.appData.data.dishes.map((dish, i) => {
-      // console.log('RestSubMenu | constructor | dish', dish);
-      // console.log('check if dish exists', $.inArray(dish._id, dishArray));
-      if ($.inArray(dish._id, dishArray) === -1) {
-        // console.log('Dish exists');
-        available_dishes.push({id: i, dish: dish})
-      }
-    });
-    if (dishArray) {
-      dishArray.map((dish, i) => {
-        // console.log('dishArray | dish', dish);
-        if (dish !== "") {
-          // console.log('dishArray | dish', dish);
-          let dishIndex = this.props.appData.data.dishes.findIndex(x => x._id === dish);
-          // console.log('dishArray | dishIndex', dishIndex);
-          let fullDish = this.props.appData.data.dishes[dishIndex];
-          // console.log('dishArray | dishIndex', fullDish);
-          selected_dishes.push({id: i, dish: fullDish})
-        }
-      });
-    }
-    // console.log('RestSubMenu | available_dishes ', available_dishes);
-
-    this.state = {
-      available_dishes: available_dishes,
-      selected_dishes: selected_dishes
-    };
     this.submitRestSubMenu = this.submitRestSubMenu.bind(this);
     this.cancelRestSubMenu = this.cancelRestSubMenu.bind(this);
     this.addToAvailable = this.addToAvailable.bind(this);
     this.addToSelected = this.addToSelected.bind(this);
     this.removeFromAvailable = this.removeFromAvailable.bind(this);
     this.removeFromSelected = this.removeFromSelected.bind(this);
-    // this.componentDidMount = this.componentDidMount.bind(this);
-    this.contains = this.contains.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
+    this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
   }
 
 
-  contains(needle) {
-    // Per spec, the way to identify NaN is that it is not equal to itself
-    let findNaN = needle !== needle;
-    let indexOf;
-
-    if (!findNaN && typeof Array.prototype.indexOf === 'function') {
-      indexOf = Array.prototype.indexOf;
+  componentDidMount() {
+    // console.log('RestSubMenu | componentDidMount | this.props', this.props);
+    // console.log('RestSubMenu | componentDidMount | this.state', this.state);
+    if (!this.props.appData.data.rests) {
+      // console.log('RestSubMenu | componentWillReceiveProps | getRests()');
+      this.props.getRests();
     } else {
-      indexOf = function (needle) {
-        let i = -1, index = -1;
-
-        for (i = 0; i < this.length; i++) {
-          let item = this[i];
-
-          if ((findNaN && item !== item) || item === needle) {
-            index = i;
-            break;
-          }
+      let available_dishes = [];
+      let selected_dishes = [];
+      let rest = this.props.appData.data.rests.findIndex(x => x.name === this.props.params.restName);
+      // console.log('RestSubMenu | componentDidMount | rest', rest);
+      let menu = this.props.appData.data.rests[rest].menus.findIndex(x => x.name === this.props.params.menuName);
+      // console.log('RestSubMenu | componentDidMount | menu', menu);
+      // let menuId = this.props.appData.data.rests[rest].menus[menu]._id;
+      // console.log('RestSubMenu | componentDidMount | menuId', menuId);
+      let submenu = this.props.appData.data.rests[rest].menus[menu].subMenus.findIndex(x => x.name === this.props.params.subMenuName);
+      // console.log('RestSubMenu | componentDidMount | subMenu', submenu);
+      // let subMenu_Id = this.props.appData.data.rests[rest].menus[menu].subMenus[submenu]['_id'];
+      // console.log('RestSubMenu | componentDidMount | subMenu_Id', subMenu_Id);
+      let dishArray = this.props.appData.data.rests[rest].menus[menu].subMenus[submenu]['dishArray'];
+      // console.log('RestSubMenu | componentDidMount | dishArray', dishArray);
+      this.props.appData.data.dishes.map((dish, i) => {
+        // console.log('RestSubMenu | componentDidMount | dish', dish);
+        // console.log('RestSubMenu | componentDidMount |check if dish exists', $.inArray(dish._id, dishArray));
+        if ($.inArray(dish._id, dishArray) === -1) {
+          // console.log('Dish exists');
+          available_dishes.push({id: i, dish: dish})
         }
-
-        return index;
-      };
+      });
+      if (dishArray) {
+        dishArray.map((dish, i) => {
+          // console.log('dishArray | dish', dish);
+          if (dish !== "") {
+            // console.log('dishArray | dish', dish);
+            let dishIndex = this.props.appData.data.dishes.findIndex(x => x._id === dish);
+            // console.log('dishArray | dishIndex', dishIndex);
+            let fullDish = this.props.appData.data.dishes[dishIndex];
+            // console.log('dishArray | dishIndex', fullDish);
+            selected_dishes.push({id: i+100, dish: fullDish})
+          }
+        });
+      }
+      this.setState({
+        available_dishes: available_dishes,
+        selected_dishes: selected_dishes
+      });
     }
+  }
 
-    return indexOf.call(this, needle) > -1;
-  };
-  // componentDidMount() {
-  //   console.log('RestSubMenu | submitRestSubMenu | this.props', this.props);
-  //   console.log('RestSubMenu | submitRestSubMenu | this.state', this.state);
-  //   let rest = this.props.appData.data.rests.findIndex(x => x.name == this.props.params.restName);
-  //   console.log('RestSubMenu | submitRestSubMenu | rest', rest);
-  //   let menu = this.props.appData.data.rests[rest].menus.findIndex(x => x.name == this.props.params.menuName);
-  //   console.log('RestSubMenu | submitRestSubMenu | menu', menu);
-  //   let menuId = this.props.appData.data.rests[rest].menus[menu]._id;
-  //   console.log('RestSubMenu | submitRestSubMenu | menuId', menuId);
-  //   let submenu = this.props.appData.data.rests[rest].menus[menu].subMenus.findIndex(x => x.name == this.props.params.subMenuName);
-  //   console.log('RestSubMenu | submitRestSubMenu | subMenu', submenu);
-  //   let subMenu_Id = this.props.appData.data.rests[rest].menus[menu].subMenus[submenu]['_id'];
-  //   console.log('RestSubMenu | submitRestSubMenu | subMenu_Id', subMenu_Id);
-  // }
+  componentWillReceiveProps(nextProps) {
+    // console.log('RestSubMenu | componentWillReceiveProps | nextProps', nextProps);
+    // console.log('RestSubMenu | componentWillReceiveProps | this.props', this.props);
+    let available_dishes = [];
+    let selected_dishes = [];
+    if (!this.props.appData.data.rests) {
+      // console.log('RestSubMenu | componentWillReceiveProps | getRests()');
+      this.props.getRests();
+    } else {
+      let rest = this.props.appData.data.rests.findIndex(x => x.name === this.props.params.restName);
+
+      // let rest = this.props.appData.data.rests.findIndex(x => x.name === this.props.params.restName);
+      // console.log('RestSubMenu | componentWillReceiveProps | rest', rest);
+      if (!this.props.appData.data.rests[rest].menus) {
+        // console.log('RestSubMenu | componentWillReceiveProps | getMenus()');
+        this.props.getMenus(this.props.appData.data.rests[rest]._id);
+      } else if (!this.props.appData.data.dishes) {
+        // console.log('RestSubMenu | componentWillReceiveProps | getDishes()');
+        this.props.getDishes();
+      } else {
+        let menu = this.props.appData.data.rests[rest].menus.findIndex(x => x.name === this.props.params.menuName);
+        // console.log('RestSubMenu | componentWillReceiveProps | menu', menu);
+        if (!this.props.appData.data.rests[rest].menus[menu].subMenus) {
+          // console.log('RestSubMenu | componentWillReceiveProps | getSubMenus()');
+          this.props.getSubMenus(this.props.appData.data.rests[rest].menus[menu]._id);
+        } else {
+          // let menuId = this.props.appData.data.rests[rest].menus[menu]._id;
+          // console.log('RestSubMenu | constructor | menuId', menuId);
+          let submenu = this.props.appData.data.rests[rest].menus[menu].subMenus.findIndex(x => x.name === this.props.params.subMenuName);
+          // console.log('RestSubMenu | componentWillReceiveProps | subMenu', submenu);
+          // let subMenu_Id = this.props.appData.data.rests[rest].menus[menu].subMenus[submenu]['_id'];
+          // console.log('RestSubMenu | componentWillReceiveProps | subMenu_Id', subMenu_Id);
+          let dishArray = this.props.appData.data.rests[rest].menus[menu].subMenus[submenu]['dishArray'];
+          // console.log('RestSubMenu | componentWillReceiveProps | dishArray', dishArray);
+          this.props.appData.data.dishes.map((dish, i) => {
+            // console.log('RestSubMenu | componentWillReceiveProps | dish', dish);
+            // console.log('RestSubMenu | componentWillReceiveProps |check if dish exists', $.inArray(dish._id, dishArray));
+            if ($.inArray(dish._id, dishArray) === -1) {
+              // console.log('Dish exists');
+              available_dishes.push({id: i, dish: dish})
+            }
+          });
+          if (dishArray) {
+            dishArray.map((dish, i) => {
+              // console.log('dishArray | dish', dish);
+              if (dish !== "") {
+                // console.log('dishArray | dish', dish);
+                let dishIndex = this.props.appData.data.dishes.findIndex(x => x._id === dish);
+                // console.log('dishArray | dishIndex', dishIndex);
+                let fullDish = this.props.appData.data.dishes[dishIndex];
+                // console.log('dishArray | dishIndex', fullDish);
+                selected_dishes.push({id: i+100, dish: fullDish})
+              }
+            });
+          }
+          // console.log('RestSubMenu | componentWillReceiveProps | available_dishes', available_dishes);
+          // console.log('RestSubMenu | componentWillReceiveProps | selected_dishes', selected_dishes);
+          this.setState({
+            available_dishes: available_dishes,
+            selected_dishes: selected_dishes
+          });
+        }
+      }
+    }
+  }
+
   addToAvailable(card) {
     // console.log('RestSubMenu | addToAvailable | card', card);
     // console.log('RestSubMenu | addToAvailable | this.state', this.state);
@@ -157,25 +191,18 @@ class RestSubMenu extends Component {
   }
 
   submitRestSubMenu() {
-    console.log('RestSubMenu | submitRestSubMenu | this.props', this.props);
-    console.log('RestSubMenu | submitRestSubMenu | this.state', this.state);
+    // console.log('RestSubMenu | submitRestSubMenu | this.props', this.props);
+    // console.log('RestSubMenu | submitRestSubMenu | this.state', this.state);
     let rest = this.props.appData.data.rests.findIndex(x => x.name === this.props.params.restName);
-    console.log('RestSubMenu | submitRestSubMenu | rest', rest);
+    // console.log('RestSubMenu | submitRestSubMenu | rest', rest);
     let menu = this.props.appData.data.rests[rest].menus.findIndex(x => x.name === this.props.params.menuName);
-    console.log('RestSubMenu | submitRestSubMenu | menu', menu);
+    // console.log('RestSubMenu | submitRestSubMenu | menu', menu);
     let menuId = this.props.appData.data.rests[rest].menus[menu]._id;
-    console.log('RestSubMenu | submitRestSubMenu | menuId', menuId);
+    // console.log('RestSubMenu | submitRestSubMenu | menuId', menuId);
     let submenu = this.props.appData.data.rests[rest].menus[menu].subMenus.findIndex(x => x.name === this.props.params.subMenuName);
-    console.log('RestSubMenu | submitRestSubMenu | subMenu', submenu);
+    // console.log('RestSubMenu | submitRestSubMenu | subMenu', submenu);
     let subMenu_Id = this.props.appData.data.rests[rest].menus[menu].subMenus[submenu]['_id'];
-    console.log('RestSubMenu | submitRestSubMenu | subMenu_Id', subMenu_Id);
-    //"5838c967680d800f0c5d83eb"
-    // let subMenu_Id = {"subMenu_Id": subMenu_Id_, "items": [{"Id": "5838c967680d800f0c5d83eb"}]};
-    // let postData = {};
-    // this.state.selected_dishes.map((dish, i) => {
-    //
-    //   available_dishes.push({id: i, text: dish.name, price: dish.defaultPrice})
-    // });
+    // console.log('RestSubMenu | submitRestSubMenu | subMenu_Id', subMenu_Id);
     let postData = {};
     let count;
     for (count = 1; count <= 20; count++) {
@@ -191,67 +218,66 @@ class RestSubMenu extends Component {
     // console.log('postData', postData);
     postData['subMenu_Id'] = subMenu_Id;
     this.props.editSubMenu(postData, menuId);
-    browserHistory.push(`/${this.props.appData.data.rests[rest].name}/${this.props.appData.data.rests[rest].menus[menu].name}`)
+    browserHistory.push(`/Restaurants/${this.props.appData.data.rests[rest].name}/Menus/${this.props.appData.data.rests[rest].menus[menu].name}`)
   };
 
   cancelRestSubMenu() {
     // console.log('RestSubMenu | cancelRestSubMenu');
     // console.log('RestSubMenu | submitRestSubMenu | this.props', this.props);
-    let rest = this.props.appData.data.rests.findIndex(x => x.name == this.props.params.restName);
+    let rest = this.props.appData.data.rests.findIndex(x => x.name === this.props.params.restName);
     // console.log('RestSubMenu | submitRestSubMenu | rest', rest);
-    let menu = this.props.appData.data.rests[rest].menus.findIndex(x => x.name == this.props.params.menuName);
+    let menu = this.props.appData.data.rests[rest].menus.findIndex(x => x.name === this.props.params.menuName);
     // console.log('RestSubMenu | submitRestSubMenu | menu', menu);
     // let submenu = this.props.appData.data.rests[rest].menus[menu].subMenus.findIndex(x => x.name==this.props.params.subMenuName);
     // console.log('RestSubMenu | submitRestSubMenu | subMenu', submenu);
     // let subMenu_Id = this.props.appData.data.rests[rest].menus[menu].subMenus[submenu]['_id'];
     // console.log('RestSubMenu | submitRestSubMenu | subMenu_Id', subMenu_Id);
     //{`/${props.rest.name}/${props.menu.name}/${props.item.name}`}
-    browserHistory.push(`/${this.props.appData.data.rests[rest].name}/${this.props.appData.data.rests[rest].menus[menu].name}`)
+    browserHistory.push(`/Restaurants/${this.props.appData.data.rests[rest].name}/Menus/${this.props.appData.data.rests[rest].menus[menu].name}`)
   }
 
   render() {
-    // const style = {
-    //   display: "flex",
-    //   justifyContent: "space-around",
-    //   paddingTop: "20px"
-    // };
-    // let listOne = [];
-    // this.state.available_dishes.map((dish, i) => {
-    //   // console.log('dish ', dish);
-    //   listOne.push({id: i, text: dish.name, price: dish.defaultPrice})
-    // });
-    // let listTwo = [];
-    // this.state.selected_dishes.map((dish, i) => {
-    //   listTwo.push({id: i, text: dish.name, price: dish.defaultPrice})
-    // });
+    // console.log('RestSubMenu | render | this.props', this.props);
+    const src = require("../../Images/5.gif");
     let styleDiv = {
       fontSize: 30
     };
-    return (
-      <div>
+    if (!this.state || !this.state['available_dishes'] || !this.state['selected_dishes']) {
+      return (
         <div id="subMenusubMenuManager" className="panel panel-default">
-          <div className="panel-heading" style={styleDiv}>{this.props.params.subMenuName}</div>
+          <div className="panel-heading" style={styleDiv}>Restaurants:</div>
           <div className="panel-body">
-            <Container id={1} list={this.state.available_dishes} text="Available Items"
-                       addToAvailable={this.addToAvailable.bind(this)}
-                       removeFromAvailable={this.removeFromAvailable.bind(this)}/>
-          </div>
-          <div className="panel-body">
+            <img src={ src }/>
           </div>
         </div>
-        <div id="subMenusubMenuManager" className="panel panel-default">
-          <div className="panel-body">
-            <Container id={2} list={this.state.selected_dishes} text="Selected Items"
-                       addToSelected={this.addToSelected.bind(this)}
-                       removeFromSelected={this.removeFromSelected.bind(this)}/>
+      )
+    } else {
+      return (
+        <div>
+          <div id="subMenusubMenuManager" className="panel panel-default">
+            <div className="panel-heading" style={styleDiv}>{this.props.params.subMenuName}</div>
+            <div className="panel-body">
+              <Container id={1} list={this.state.available_dishes} text="Available Items"
+                         addToAvailable={this.addToAvailable.bind(this)}
+                         removeFromAvailable={this.removeFromAvailable.bind(this)}/>
+            </div>
+            <div className="panel-body">
+            </div>
           </div>
-          <div className="panel-body">
-            <Button onClick={this.submitRestSubMenu}>Submit</Button>
-            <Button onClick={this.cancelRestSubMenu}>Cancel</Button>
+          <div id="subMenusubMenuManager" className="panel panel-default">
+            <div className="panel-body">
+              <Container id={2} list={this.state.selected_dishes} text="Selected Items"
+                         addToSelected={this.addToSelected.bind(this)}
+                         removeFromSelected={this.removeFromSelected.bind(this)}/>
+            </div>
+            <div className="panel-body">
+              <Button onClick={this.submitRestSubMenu}>Submit</Button>
+              <Button onClick={this.cancelRestSubMenu}>Cancel</Button>
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
 }
 

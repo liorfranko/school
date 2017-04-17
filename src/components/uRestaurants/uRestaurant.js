@@ -4,21 +4,18 @@
 
 
 import React from 'react';
-import RestMenuManager from '../restMenu/restMenuManager'
-import TableManager from '../Tables/tableManager'
+import TableManager from '../uTables/utableManager';
 
-class Restaurant extends React.Component {
+class uRestaurant extends React.Component {
   constructor(props) {
-    // console.log('Restaurant | constructor | this.props', props);
+    console.log('uRestaurant | constructor | this.props', props);
     super(props);
     this.componentDidMount = this.componentDidMount.bind(this);
-    this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
   }
 
   componentDidMount() {
-    console.log('Restaurant | componentDidMount', this.props);
+    console.log('uRestaurant | componentDidMount', this.props);
     // let rest = this.props.appData.data.rests.findIndex(x => x.name == this.props.params.restName);
-
     // console.log('Restaurant | componentDidMount | rest', rest);
     // console.log('Restaurant | componentDidMount | this.props.appData.data.rests[rest].menus', this.props.appData.data.rests[rest]);
     if (!this.props.appData.data.rests) {
@@ -35,27 +32,8 @@ class Restaurant extends React.Component {
 
   }
 
-  componentWillReceiveProps (nextProps) {
-    // console.log('Restaurant | componentWillReceiveProps | nextProps', nextProps);
-    // console.log('Restaurant | componentWillReceiveProps | this.props', this.props);
-    if (!this.props.appData.data.rests) {
-      this.props.getRests();
-      this.forceUpdate()
-    } else {
-      let rest = this.props.appData.data.rests.findIndex(x => x.name===this.props.params.restName);
-      if (!this.props.appData.data.rests[rest].menus) {
-        this.props.getMenus(this.props.appData.data.rests[rest]._id);
-        this.forceUpdate()
-      }
-      if (!this.props.appData.data.rests[rest].tables) {
-        this.props.getTables(this.props.appData.data.rests[rest]._id);
-        this.forceUpdate()
-      }
-    }
-  }
-
   render() {
-    console.log('Restaurant | render |this.props', this.props);
+    console.log('uRestaurant | render |this.props', this.props);
     const src = require("../../Images/5.gif");
     const styleDiv = {
       fontSize: 30
@@ -81,13 +59,9 @@ class Restaurant extends React.Component {
           </div>
         )
       } else {
+        console.log('uRestaurant | render | Loading page', this.props);
         return (
           <div>
-            <RestMenuManager rest={this.props.appData.data.rests[rest]}
-                             menus={this.props.appData.data.rests[rest].menus}
-                             addRestMenu={this.props.addRestMenu}
-                             deleteRestMenu={this.props.deleteRestMenu}
-            />
             <TableManager
               rest={this.props.appData.data.rests[rest]}
               tables={this.props.appData.data.rests[rest].tables}
@@ -102,4 +76,4 @@ class Restaurant extends React.Component {
   }
 }
 
-export default Restaurant;
+export default uRestaurant;

@@ -26,7 +26,7 @@
     "react-facebook-login-hoc": "^1.1.1",
     "react-native": "0.26.2",
     "react-redux": "4.4.5",
-    "react-router": "^2.4.0",
+    "react-router": "^2.8.1",
     "react-router-redux": "4.0.4",
     "react-style": "^0.5.5",
     "react-super-select": "^0.5.7",

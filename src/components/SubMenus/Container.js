@@ -12,12 +12,10 @@ class Container extends Component {
   constructor(props) {
     super(props);
     this.state = { cards: props.list };
-    console.log('Container | constructor props.list', props)
   }
-
   pushCard(card) {
-    console.log('Container | pushCard | card', card);
-    console.log('Container | pushCard | this.state', this.state);
+    // console.log('Container | pushCard | card', card);
+    // console.log('Container | pushCard | this.state', this.state);
     this.setState(update(this.state, {
       cards: {
         $push: [ card ]
@@ -28,12 +26,12 @@ class Container extends Component {
     } else if (this.props.addToSelected) {
       this.props.addToSelected(card);
     }
-    console.log('Container | pushCard | this.state', this.state);
+    // console.log('Container | pushCard | this.state', this.state);
   }
 
   removeCard(index) {
-    console.log('Container | removeCard | card', index);
-    console.log('Container | removeCard | this.state', this.state);
+    // console.log('Container | removeCard | card', index);
+    // console.log('Container | removeCard | this.state', this.state);
     this.setState(update(this.state, {
       cards: {
         $splice: [
@@ -46,8 +44,7 @@ class Container extends Component {
     } else if (this.props.removeFromSelected) {
       this.props.removeFromSelected(index);
     }
-    // this.props.removeFromAvailable(index);
-    console.log('Container | removeCard | this.state', this.state);
+    // console.log('Container | removeCard | this.state', this.state);
   }
 
   moveCard(dragIndex, hoverIndex) {

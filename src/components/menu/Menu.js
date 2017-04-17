@@ -6,6 +6,7 @@
 
 import React from 'react';
 import {browserHistory} from 'react-router';
+// import {Nav, Navbar, NavItem, Breadcrumb} from 'react-bootstrap';
 import {Nav, Navbar, NavItem, Breadcrumb} from 'react-bootstrap';
 // import breadcrumbInstance from '../Breadcrumb'
 
@@ -22,11 +23,11 @@ const Menu = (props) => (
         <Nav>
           {props.menu.map((item, i) => {
             return (
-              <NavItem key={i} eventKey={i} onClick={() => browserHistory.push(`/${item.path}`) }>{item.path}</NavItem>
+              <NavItem key={i} eventKey={i} onClick={() => browserHistory.push(`/${item.path}`) }>{item.name}</NavItem>
             )
           })}
         </Nav>
-        {props.uid != null ?
+        {props.uid !== null ?
           <Nav bsStyle="pills" pullRight>
             <NavItem onClick={props.logout}>Logout</NavItem>
           </Nav> : null

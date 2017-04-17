@@ -2,8 +2,8 @@
  * Created by liorf on 12/10/16.
  */
 import React from 'react';
-// import Example from './test'
 import SubMenuManager from '../SubMenus/SubMenuManager'
+// FIXME fix loading submenus when moving between menus.
 
 class RestMenu extends React.Component {
   constructor(props) {
@@ -13,30 +13,66 @@ class RestMenu extends React.Component {
     this.editSubMenu = this.editSubMenu.bind(this);
     this.deleteSubMenu = this.deleteSubMenu.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
+    this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
   }
 
   componentDidMount() {
-    // let rest = this.props.appData.data.rests.findIndex(x => x.name==this.props.params.restName);
-    // console.log('RestMenu | componentDidMount | this.props.appData', this.props.appData);
-    const rest = this.props.appData.data.rests.findIndex(x => x.name == this.props.params.restName);
-    // console.log('RestMenu | componentDidMount | rest', rest);
-    const menu = this.props.appData.data.rests[rest].menus.findIndex(x => x.name == this.props.params.menuName);
-    // console.log('RestMenu | componentDidMount | menu', menu);
-    if (!this.props.appData.data.rests[rest].menus[menu].subMenus) {
-      this.props.getSubMenus(this.props.appData.data.rests[rest].menus[menu]._id);
+    // console.log('RestMenu | componentDidMount | this.props', this.props);
+    if (!this.props.appData.data.rests) {
+      this.props.getRests();
+    } else {
+      const rest = this.props.appData.data.rests.findIndex(x => x.name === this.props.params.restName);
+      // console.log('RestMenu | componentDidMount | rest', rest);
+      if (!this.props.appData.data.rests[rest].menus) {
+        this.props.getMenus(this.props.appData.data.rests[rest]._id);
+      } else {
+        const menu = this.props.appData.data.rests[rest].menus.findIndex(x => x.name === this.props.params.menuName);
+        // console.log('RestMenu | componentDidMount | menu', menu);
+        if (!this.props.appData.data.rests[rest].menus[menu].subMenus) {
+          // console.log('RestMenu | componentDidMount | getSubMenus()');
+          this.props.getSubMenus(this.props.appData.data.rests[rest].menus[menu]._id);
+        }
+        if (!this.props.appData.data.dishes) {
+          // console.log('RestMenu | componentDidMount | getDishes()');
+          this.props.getDishes();
+        }
+      }
     }
-    if (!this.props.appData.data.dishes) {
-      this.props.getDishes();
+  }
+
+  componentWillReceiveProps (nextProps) {
+    // console.log('RestMenu | componentWillReceiveProps | nextProps', nextProps);
+    // console.log('RestMenu | componentWillReceiveProps | this.props', this.props);
+    if (!this.props.appData.data.rests) {
+      this.props.getRests();
+    } else {
+      const rest = this.props.appData.data.rests.findIndex(x => x.name === this.props.params.restName);
+      // console.log('RestMenu | componentDidMount | rest', rest);
+      if (!this.props.appData.data.rests[rest].menus) {
+        this.props.getMenus(this.props.appData.data.rests[rest]._id);
+      } else {
+        const menu = this.props.appData.data.rests[rest].menus.findIndex(x => x.name === this.props.params.menuName);
+        // console.log('RestMenu | componentDidMount | menu', menu);
+        if (!this.props.appData.data.rests[rest].menus[menu].subMenus) {
+          // console.log('RestMenu | componentDidMount | getSubMenus()');
+          this.props.getSubMenus(this.props.appData.data.rests[rest].menus[menu]._id);
+        }
+        if (!this.props.appData.data.dishes) {
+          // console.log('RestMenu | componentDidMount | getDishes()');
+          this.props.getDishes();
+        }
+      }
     }
+    this.forceUpdate()
   }
 
   addSubMenu() {
     // console.log('RestMenu | addSubmenu | this.props', this.props);
     // let rest = this.props.appData.data.rests.findIndex(x => x.name==this.props.params.restName);
     // console.log('RestMenu | addSubmenu | this.props.appData', this.props.appData);
-    const rest = this.props.appData.data.rests.findIndex(x => x.name == this.props.params.restName);
+    const rest = this.props.appData.data.rests.findIndex(x => x.name === this.props.params.restName);
     // console.log('RestMenu | addSubmenu | rest', rest);
-    const menu = this.props.appData.data.rests[rest].menus.findIndex(x => x.name == this.props.params.menuName);
+    const menu = this.props.appData.data.rests[rest].menus.findIndex(x => x.name === this.props.params.menuName);
     // console.log('RestMenu | addSubmenu | menu', menu);
     this.props.addSubMenu(this.props.appData.data.rests[rest].menus[menu]._id, 'test');
 
@@ -50,22 +86,15 @@ class RestMenu extends React.Component {
   deleteSubMenu() {
     // console.log('RestMenu | deleteSubMenu | this.props', this.props);
     // console.log('RestMenu | deleteSubMenu | this.props.appData', this.props.appData);
-    const rest = this.props.appData.data.rests.findIndex(x => x.name == this.props.params.restName);
+    // const rest = this.props.appData.data.rests.findIndex(x => x.name === this.props.params.restName);
     // console.log('RestMenu | deleteSubMenu | rest', rest);
-    const menu = this.props.appData.data.rests[rest].menus.findIndex(x => x.name == this.props.params.menuName);
+    // const menu = this.props.appData.data.rests[rest].menus.findIndex(x => x.name === this.props.params.menuName);
     // console.log('RestMenu | deleteSubMenu | menu', menu);
     // this.props.addSubMenu(this.props.appData.data.rests[rest].menus[menu]._id, 'test');
   }
 
   render() {
-    // console.log('RestMenu | render | this.props.appData', this.props.appData);
-    // console.log('RestMenu | render | this.props.params', this.props.params);
-    // console.log('RestMenu | render | this.props.appData.data.dishes', this.props.appData.data.dishes);
-    const rest = this.props.appData.data.rests.findIndex(x => x.name == this.props.params.restName);
-    // console.log('RestMenu | componentDidMount | rest', rest);
-    const menu = this.props.appData.data.rests[rest].menus.findIndex(x => x.name == this.props.params.menuName);
-    // console.log('RestMenu | render | menu', menu);
-    // console.log('RestMenu | render | this.props.appData.data.rests[rest].menus[menu].subMenus', this.props.appData.data.rests[rest].menus[menu]);
+
     const src = require("../../Images/5.gif");
     const styleDiv = {
       fontSize: 30
@@ -80,6 +109,14 @@ class RestMenu extends React.Component {
         </div>
       )
     } else {
+      // console.log('RestMenu | render | this.props.appData', this.props.appData);
+      // console.log('RestMenu | render | this.props.params', this.props.params);
+      // console.log('RestMenu | render | this.props.appData.data.dishes', this.props.appData.data.dishes);
+      const rest = this.props.appData.data.rests.findIndex(x => x.name === this.props.params.restName);
+      // console.log('RestMenu | componentDidMount | rest', rest);
+      const menu = this.props.appData.data.rests[rest].menus.findIndex(x => x.name === this.props.params.menuName);
+      // console.log('RestMenu | render | menu', menu);
+      // console.log('RestMenu | render | this.props.appData.data.rests[rest].menus[menu].subMenus', this.props.appData.data.rests[rest].menus[menu]);
       let subMenus = this.props.appData.data.rests[rest].menus[menu].subMenus;
       if (!subMenus) {
         let subMenus = [];
