@@ -5,6 +5,7 @@ import React from 'react';
 // import SubMenuManager from '../SubMenus/SubMenuManager';
 import update from 'react/lib/update';
 import * as $ from 'jquery';
+import {Button} from 'react-bootstrap';
 
 //FIXME - Fix loading of dishes per submenu.
 
@@ -15,44 +16,13 @@ class uRestMenu extends React.Component {
     this.componentDidMount = this.componentDidMount.bind(this);
     this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
     this.componentInit = this.componentInit.bind(this);
-    this.arrDiff = this.arrDiff.bind(this);
-    // this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
+    this.addDishToCart = this.addDishToCart.bind(this);
+    this.removeDishToCart = this.removeDishToCart.bind(this);
     this.state = {
-      available_dishes: []
+      available_dishes: [],
     };
-    // this.test = []
   }
 
-  // shouldComponentUpdate(nextState) {
-  //   console.log('uRestMenu | shouldComponentUpdate | this.state', this.state);
-  //   console.log('uRestMenu | shouldComponentUpdate | nextState', nextState);
-  //   return this.state.available_dishes !== nextState.available_dishes;
-  //
-  // }
-  arrDiff(a1, a2) {
-    console.log('uRestMenu | arrDiff | a1', a1);
-    console.log('uRestMenu | arrDiff | a2', a2);
-
-    var a = [], diff = [];
-
-    for (var i = 0; i < a1.length; i++) {
-      a[a1[i]] = true;
-    }
-
-    for (var i = 0; i < a2.length; i++) {
-      if (a[a2[i]]) {
-        delete a[a2[i]];
-      } else {
-        a[a2[i]] = true;
-      }
-    }
-
-    for (var k in a) {
-      diff.push(k);
-    }
-
-    return diff;
-  }
   componentInit() {
     // console.log('uRestMenu | componentInit | this.props', this.props);
     if (!this.props.appData.data.rests) {
@@ -81,6 +51,7 @@ class uRestMenu extends React.Component {
             }
             // console.log('uRestMenu | componentInit | this.state', this.state.available_dishes);
             let available_dishes = [];
+            let updated_dishes = [];
             // console.log('uRestMenu | componentInit | available_dishes', available_dishes);
             // console.log('uRestMenu | componentInit | available_dishes.length', available_dishes.length);
             subMenus.map((submenu, i) => {
@@ -95,26 +66,36 @@ class uRestMenu extends React.Component {
                     let fullDish = this.props.appData.data.dishes[dishIndex];
                     // console.log('uRestMenu | componentInit | fullDish', fullDish);
                     // console.log('uRestMenu | componentInit | i', i);
-                    if ($.inArray(fullDish, available_dishes) === -1) {
-                      // console.log('uRestMenu | componentInit | fullDish not exists in available_dishes', fullDish);
-                      available_dishes.push(fullDish)
+                    let updated = false;
+                    available_dishes.map((available_dish, i) => {
+                      // console.log('uRestMenu | componentInit | available_dish', available_dish);
+                      if (available_dish.dish === fullDish) {
+                        // console.log('uRestMenu | componentInit | dish already exists in available_dish', available_dish);
+                        updated = true;
+                      } else {
+                        // console.log('uRestMenu | componentInit | dish not exists in available_dish', available_dish);
+                        updated_dishes.push({available_dish});
+                        updated = true;
+                      }
+                    });
+                    if (!updated) {
+                      updated_dishes.push({dish: fullDish, count: 0});
                     }
                   }
                 });
 
               }
             });
-            // console.log('uRestMenu | componentInit | setState | available_dishes', available_dishes);
-            // console.log('uRestMenu | componentInit | this.state.available_dishes', this.state);
+            // console.log('uRestMenu | componentInit | updated_dishes', updated_dishes);
             this.setState({
-              available_dishes: available_dishes
+              available_dishes: updated_dishes
             });
           }
-
         }
       }
     }
   }
+
   componentDidMount() {
     console.log('uRestMenu | componentDidMount | this.props', this.props);
     this.componentInit();
@@ -262,14 +243,54 @@ class uRestMenu extends React.Component {
     // this.forceUpdate()
   }
 
+  addDishToCart(dish) {
+    // console.log('uRestMenu | addDishToCart | dish', dish);
+    // console.log('uRestMenu | addDishToCart | this.state.available_dishes', this.state.available_dishes);
+    let updated = false;
+    this.state.available_dishes.map((available_dish, i) => {
+      // console.log('uRestMenu | addDishToCart | available_dish', available_dish);
+      if (available_dish.dish === dish) {
+        // console.log('uRestMenu | addDishToCart | dish exists in available_dish', available_dish);
+        let temp_available_dishes = this.state.available_dishes.slice();
+        temp_available_dishes[i].count++;
+        this.setState({
+          available_dishes: temp_available_dishes
+        });
+        updated = true;
+      }
+    });
+    if (!updated) {
+      this.setState(update(this.state, {
+        available_dishes: {
+          $push: [{dish: dish, count: 0}]
+        }
+      }));
+    }
+  }
+
+  removeDishToCart(dish) {
+    // console.log('uRestMenu | removeDishToCart | dish', dish);
+    this.state.available_dishes.map((available_dish, i) => {
+      // console.log('uRestMenu | removeDishToCart | available_dish', available_dish);
+      if (available_dish.dish === dish) {
+        // console.log('uRestMenu | removeDishToCart | dish exists in available_dish', available_dish);
+        let temp_available_dishes = this.state.available_dishes.slice();
+        temp_available_dishes[i].count--;
+        this.setState({
+          available_dishes: temp_available_dishes
+        });
+      }
+    });
+  }
+
   render() {
-    console.log('uRestMenu | render | this.props', this.props);
-    console.log('uRestMenu | render | this.state', this.state);
+    // console.log('uRestMenu | render | this.props', this.props);
+    // console.log('uRestMenu | render | this.state', this.state);
     const src = require("../../Images/5.gif");
     const styleDiv = {
       fontSize: 30
     };
-    if (!this.props.appData.data.dishes || !this.state || !this.state.available_dishes ) {
+    if (!this.props.appData.data.dishes || !this.state || !this.state.available_dishes) {
       return (
         <div id="restMenu" className="panel panel-default">
           <div className="panel-heading" style={styleDiv}>Restaurants:</div>
@@ -323,23 +344,38 @@ class uRestMenu extends React.Component {
                     <div className="innerItem name">
                       Dish Price
                     </div>
+                    <div className="innerItem name">
+                      Orders
+                    </div>
+                    <div className="innerItem name">
+
+                    </div>
+                    <div className="innerItem name">
+
+                    </div>
                   </li>
                   {
-                    this.state.available_dishes.map((dish, i) => {
+                    this.state.available_dishes.map((available_dish, i) => {
+                      {/*console.log('RestMenu | render | available_dish.count', available_dish.count);*/}
                       return (
                         <li className="menuItem list-group-item" key={i}>
                           <div className="innerItem name">
-                            {dish.name}
+                            {available_dish.dish.name}
                           </div>
                           <div className="innerItem name">
-                            {dish.defaultPrice}
+                            {available_dish.dish.defaultPrice}
                           </div>
-                          <div className="innerItem description">
-                            Add
+                          <div className="innerItem name">
+                            {available_dish.count}
                           </div>
-                          <div className="innerItem Price">
-                            Remove
-                          </div>
+                          <Button onClick={() => this.addDishToCart(available_dish.dish)}>Add to order</Button>
+                          {available_dish.count > 0 ?
+                            (
+                              <Button onClick={() => this.removeDishToCart(available_dish.dish)}>Remove from order</Button>
+                            ) : (
+                              <Button onClick={() => this.removeDishToCart(available_dish.dish)} disabled>Remove from order</Button>
+                            )
+                          }
                         </li>
                       )
                     })
@@ -353,5 +389,4 @@ class uRestMenu extends React.Component {
     }
   }
 }
-
 export default uRestMenu;
