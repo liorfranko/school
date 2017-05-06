@@ -17,7 +17,6 @@ const uListOfTables = (props) => {
             <TableListItem
               key={i}
               item={table}
-              // deleteTable={props.deleteTable}
               addOrder={props.addOrder}
               rest={props.rest}
               tableNum={i}

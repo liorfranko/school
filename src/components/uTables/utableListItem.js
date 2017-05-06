@@ -6,7 +6,7 @@ import React from 'react';
 import {Link} from 'react-router';
 
 const uTableListItem = (props) => {
-  // console.log('uTableListItem | props', props);
+  console.log('uTableListItem | props', props);
   // function onEditClick() {
   //   // console.log('DishesListItem | onEditClick');
   //   props.editTable(props.tableNum)

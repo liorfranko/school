@@ -81,6 +81,7 @@ class uRestaurant extends React.Component {
               rest={this.props.appData.data.rests[rest]}
               tables={this.props.appData.data.rests[rest].tables}
               addOrder={this.props.addOrder}
+              getOrdersByTableId={this.props.getOrdersByTableId}
               // deleteTable={this.props.deleteTable}
               // editTable={this.props.editTable}
             />
