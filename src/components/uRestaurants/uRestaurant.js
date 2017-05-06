@@ -8,7 +8,7 @@ import TableManager from '../uTables/utableManager';
 
 class uRestaurant extends React.Component {
   constructor(props) {
-    console.log('uRestaurant | constructor | this.props', props);
+    // console.log('uRestaurant | constructor | this.props', props);
     super(props);
     this.componentDidMount = this.componentDidMount.bind(this);
     this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
@@ -48,7 +48,7 @@ class uRestaurant extends React.Component {
     }
   }
   render() {
-    console.log('uRestaurant | render |this.props', this.props);
+    // console.log('uRestaurant | render |this.props', this.props);
     const src = require("../../Images/5.gif");
     const styleDiv = {
       fontSize: 30
@@ -74,7 +74,7 @@ class uRestaurant extends React.Component {
           </div>
         )
       } else {
-        console.log('uRestaurant | render | Loading page', this.props);
+        // console.log('uRestaurant | render | Loading page', this.props);
         return (
           <div>
             <TableManager

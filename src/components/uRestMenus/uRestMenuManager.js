@@ -7,7 +7,7 @@ import './restMenu.styl';
 
 class uRestMenuManager extends React.Component {
   constructor(props) {
-    console.log('uRestMenuManager | constructor', props);
+    // console.log('uRestMenuManager | constructor', props);
     super(props);
     this.exitPopup = this.exitPopup.bind(this);
     this.state = {
@@ -22,8 +22,8 @@ class uRestMenuManager extends React.Component {
   };
 
   render() {
-    console.log('uRestMenuManager | props', this.props);
-    console.log('uRestMenuManager | this.state', this.state);
+    // console.log('uRestMenuManager | props', this.props);
+    // console.log('uRestMenuManager | this.state', this.state);
     let styleDiv = {
       fontSize: 30
     };
@@ -34,6 +34,9 @@ class uRestMenuManager extends React.Component {
           Menus:
           <ListOfRestMenus menus={this.props.menus}
                            rest={this.props.rest}
+                           order={this.props.order}
+                           table={this.props.table}
+
           />
         </div>
       </div>

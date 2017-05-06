@@ -36,7 +36,7 @@ export default class Routes extends Component {
           <Route path="/uRestaurants/:restName" component={uRestaurant}/>
 
           <Route path="/Restaurants/:restName/Menus/:menuName" component={RestMenu}/>
-          <Route path="/uRestaurants/:restName/Menus/:menuName" component={uRestMenu}/>
+          <Route path="/uRestaurants/:restName/Menus/:menuName/Table/:tableNum/Order/:orderId" component={uRestMenu}/>
           <Route path="/uRestaurants/:restName/Tables/:tableName" component={uTable}/>
           <Route path="/Restaurants/:restName/Menus/:menuName/Submenus/:subMenuName" component={RestSubMenu}/>
         </Route>

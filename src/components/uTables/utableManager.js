@@ -8,7 +8,7 @@ import ListOfTables from './uListOfTables';
 
 class uTableManager extends React.Component {
   constructor(props) {
-    console.log('uTableManager | constructor', props);
+    // console.log('uTableManager | constructor', props);
     super(props);
     this.state = {
       showAddModal: false,
@@ -20,7 +20,7 @@ class uTableManager extends React.Component {
 
 
   render() {
-    console.log('uTableManager | props', this.props);
+    // console.log('uTableManager | props', this.props);
     // console.log('restMenuManager | this.state', this.state);
     let styleDiv = {
       fontSize: 30

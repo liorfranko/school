@@ -162,7 +162,7 @@ class uTable extends React.Component {
 
   render() {
     // console.log('uTable | render | this.props', this.props);
-    // console.log('uTable | render | this.state', this.state);
+    console.log('uTable | render | this.state', this.state);
     const src = require("../../Images/5.gif");
     const styleDiv = {
       fontSize: 30
@@ -180,11 +180,13 @@ class uTable extends React.Component {
       //FIXME Need to add: check if there is open order if so go to this order, if not create new order for that table.
       let rest = this.props.appData.data.rests.findIndex(x => x.name === this.props.params.restName);
       let table = this.props.appData.data.rests[rest].tables.findIndex(x => x.tableNum == this.props.params.tableName);
-      // console.log('uTable | render | this.props.appData.data.rests[rest].tables[table].orders', this.props.appData.data.rests[rest].tables[table].orders);
+      console.log('uTable | render | this.props.appData.data.rests[rest].tables[table].orders', this.props.appData.data.rests[rest].tables[table].orders);
       return (
       <RestMenuManager
         rest={this.props.appData.data.rests[rest]}
         menus ={this.state.menus}
+        order={this.state.activeOrder}
+        table={this.props.appData.data.rests[rest].tables[table].tableNum}
       />
       );
     }

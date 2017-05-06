@@ -8,7 +8,7 @@ import React from 'react';
 import RestMenuListItem from './uRestMenuListItem';
 
 const uListOfRestMenus = (props) => {
-  // console.log('ListOfRestMenus |', props);
+  console.log('ListOfRestMenus |', props);
   return (
     <ul className="restMenuList list-group">
       {
@@ -17,8 +17,10 @@ const uListOfRestMenus = (props) => {
             <RestMenuListItem
               key={i}
               item={menu}
-              deleteRestMenu={props.deleteRestMenu}
+              // deleteRestMenu={props.deleteRestMenu}
               rest={props.rest}
+              order={props.order}
+              table={props.table}
               menuNum={i}/>
           );
         })
