@@ -22,7 +22,8 @@ const uTableListItem = (props) => {
   return (
     <li className="menuItem list-group-item">
       <div className="innerItem name">
-        <Link to={`/uRestaurants/${props.rest.name}/Tables/${props.item.tableNum}`} onClick={() => props.addOrder(props.item._id)}>{props.item.tableNum}</Link>
+        {/*<Link to={`/uRestaurants/${props.rest.name}/Tables/${props.item.tableNum}`} onClick={() => props.addOrder(props.item._id)}>{props.item.tableNum}</Link>*/}
+        <Link to={`/uRestaurants/${props.rest.name}/Tables/${props.item.tableNum}`} >{props.item.tableNum}</Link>
       </div>
     </li>
   );

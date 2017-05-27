@@ -78,6 +78,8 @@ class App extends React.Component {
     this.editRest = this.editRest.bind(this);
     this.editRestMenu = this.editRestMenu.bind(this);
     this.editSubMenu = this.editSubMenu.bind(this);
+    this.editOrderDishes = this.editOrderDishes.bind(this);
+    this.editOrderSumPaid = this.editOrderSumPaid.bind(this);
     this.editTable = this.editTable.bind(this);
 
     this.checkFacebookID = this.checkFacebookID.bind(this);
@@ -266,22 +268,23 @@ class App extends React.Component {
   }
 
   updateOrders (data) {
+    // FIXME ->
     // Problem:
     // When loading menus and menus list is empty, How can I get the restaurant ID.
-    console.log('App | updateOrders data', data);
-    console.log('App | updateOrders this.state.data', this.state.data);
+    // console.log('App | updateOrders data', data);
+    // console.log('App | updateOrders this.state.data', this.state.data);
     const items = data.items || [];
-    console.log('App | updateOrders items.length()', items.length);
+    // console.log('App | updateOrders items.length()', items.length);
     let arrayVar = this.state.data.rests.slice();
     if (items.length > 0) {
       arrayVar.map((rest, restIndex) => {
-        console.log('App |  updateOrders | rest', rest);
+        // console.log('App |  updateOrders | rest', rest);
         if (rest.tables) {
           let arrayTables = rest.tables.slice();
           arrayTables.map((table, tableIndex) => {
-            console.log('App |  updateOrders | table', table);
+            // console.log('App |  updateOrders | table', table);
             if (table._id == items[0].tableId) {
-              console.log('App | updateOrders | table._id', table._id);
+              // console.log('App | updateOrders | table._id', table._id);
               let curTablesArray = this.state.data.rests[restIndex].tables[tableIndex];
               curTablesArray.orders = items;
               let curRestArray = this.state.data.rests[restIndex];
@@ -297,13 +300,13 @@ class App extends React.Component {
       });
     } else {
       let tableId = data.reason;
-      console.log('App | updateOrders | tableId', tableId);
+      // console.log('App | updateOrders | tableId', tableId);
       arrayVar.map((rest, restIndex) => {
-        console.log('App | updateOrders | rest', rest);
+        // console.log('App | updateOrders | rest', rest);
         if (rest.tables) {
           let arrayTables = rest.tables.slice();
           arrayTables.map((table, tableIndex) => {
-            console.log('App |  updateOrders | table', table);
+            // console.log('App |  updateOrders | table', table);
             if (tableId === table._id) {
               let curTablesArray = this.state.data.rests[restIndex].tables[tableIndex];
               curTablesArray.orders = items;
@@ -469,7 +472,7 @@ class App extends React.Component {
   }
 
   getOrdersByTableId(table_Id) {
-    console.log("App | getOrdersByTableId | table_Id", table_Id);
+    // console.log("App | getOrdersByTableId | table_Id", table_Id);
     let data = {
       table_Id: table_Id
     };
@@ -477,7 +480,7 @@ class App extends React.Component {
   }
 
   getOrdersByTableIdLocal(table_Id) {
-    console.log("App | getOrdersByTableIdLocal | table_Id", table_Id);
+    // console.log("App | getOrdersByTableIdLocal | table_Id", table_Id);
     return function () {
       let data = {
         table_Id: table_Id
@@ -586,11 +589,35 @@ class App extends React.Component {
   }
 
   editSubMenu(data, menuId) {
-    console.log('App | editSubMenu, data', data);
-    console.log('App | editSubMenu, menuId', menuId);
+    // console.log('App | editSubMenu, data', data);
+    // console.log('App | editSubMenu, menuId', menuId);
     api.postRequest('updateSubMenuDishes', data, this.getSubMenusLocal(menuId));
   }
 
+  editOrderDishes (data) {
+    // console.log('App | editOrderDishes | data', data);
+    let postData = '&order_Id=' + data._id;
+    // let dishArray = [19];
+    // console.log('App | editOrderDishes | data.dishArray', data.dishArray);
+    for (let i = 0; i < 20; i++) {
+      // console.log('App | editOrderDishes | i', i);
+      // console.log('App | editOrderDishes | data.dishArray[i]', data.dishArray[i]);
+      if (data.dishArray[i]) {
+        // console.log('App | editOrderDishes | Exist');
+        postData = postData + '&d' + (i+1) + '=' + data.dishArray[i]
+      } else {
+        postData = postData + '&d' + (i+1) + '=' + ""
+      }
+    }
+    // console.log('App | editOrderDishes | postData', postData);
+    api.postRequest('updateOrderDishes', postData, this.updateOrders);
+  }
+
+  editOrderSumPaid(data) {
+    // console.log('App | editOrderSumPaid | data', data);
+    let postData = '&order_Id=' + data._id + '&sum_Paid=' + data.sumPaid;
+    api.postRequest('updateOrderSumPaid', postData, this.updateOrders);
+  }
   editTable(data) {
     console.log('App | editTable, data', data);
     // let postData = '&table_Id=' + data.restMenuId + '&table_Num=' + data.restMenuName + '&table_Available=' + data.restMenuName;
@@ -700,7 +727,8 @@ class App extends React.Component {
                   getAllRests: this.getAllRests,
                   getOrdersByTableId: this.getOrdersByTableId,
                   addOrder: this.addOrder,
-
+                  editOrderDishes: this.editOrderDishes,
+                  editOrderSumPaid: this.editOrderSumPaid,
                 }))}
                 <Button onClick={this.goBack}>Back</Button>
                 <Button onClick={this.goForward}>Forward</Button>

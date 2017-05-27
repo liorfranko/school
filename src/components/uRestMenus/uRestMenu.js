@@ -8,16 +8,16 @@ import {Button} from 'react-bootstrap';
 
 class uRestMenu extends React.Component {
   constructor(props) {
-    console.log('uRestMenu | constructor | this.props', props);
+    // console.log('uRestMenu | constructor | this.props', props);
     super(props);
     this.componentDidMount = this.componentDidMount.bind(this);
     this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
     this.componentInit = this.componentInit.bind(this);
     this.addDishToCart = this.addDishToCart.bind(this);
-    this.removeDishToCart = this.removeDishToCart.bind(this);
+    this.removeDishFromCart = this.removeDishFromCart.bind(this);
     this.updateOrder = this.updateOrder.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.state = {
-      available_dishes: [],
       subMenus: null,
       order: null,
     };
@@ -105,12 +105,12 @@ class uRestMenu extends React.Component {
     }));
   }
 
-  removeDishToCart(dish) {
-    // console.log('uRestMenu | removeDishToCart | dish', dish);
+  removeDishFromCart(dish) {
+    // console.log('uRestMenu | removeDishFromCart | dish', dish);
     this.state.order.dishArray.map((selected_dish, i) => {
-      // console.log('uRestMenu | removeDishToCart | selected_dish', selected_dish);
+      // console.log('uRestMenu | removeDishFromCart | selected_dish', selected_dish);
       if (selected_dish === dish) {
-        // console.log('uRestMenu | removeDishToCart | dish exists in state.order.dishArray', selected_dish);
+        // console.log('uRestMenu | removeDishFromCart | dish exists in state.order.dishArray', selected_dish);
         let dishIndex = this.props.appData.data.dishes.findIndex(x => x._id === dish);
         let fullDishe = this.props.appData.data.dishes[dishIndex];
         let total_price = this.state.order.orderSum - fullDishe.defaultPrice;
@@ -126,14 +126,32 @@ class uRestMenu extends React.Component {
             }
           }
         }));
-
       }
     });
   }
 
   updateOrder() {
-    console.log('uRestMenu | updateOrder | this.state', this.state);
+    // console.log('uRestMenu | updateOrder | this.state.order.dishArray', this.state.order);
+    this.props.editOrderDishes(this.state.order);
+    this.props.editOrderSumPaid(this.state.order);
+  }
 
+  handleChange(event) {
+    // console.log('uRestMenu | handleChange', event.target.value);
+    if (event.target.name === 'sumPaid') {
+      // console.log('uRestMenu | handleChange | this.state.order.orderSum)', this.state.order.orderSum);
+      if (event.target.value > this.state.order.orderSum) {
+        alert('You cannot pay more the the total price')
+      } else {
+        this.setState(update(this.state, {
+          order: {
+            sumPaid: {
+              $set: event.target.value
+            }
+          }
+        }));
+      }
+    }
   }
 
   render() {
@@ -143,10 +161,9 @@ class uRestMenu extends React.Component {
     const styleDiv = {
       fontSize: 30
     };
-    if (!this.props.appData.data.dishes || !this.state.available_dishes || !this.state.subMenus) {
+    if (!this.props.appData.data.dishes) {
       return (
         <div id="restMenu" className="panel panel-default">
-          <div className="panel-heading" style={styleDiv}>Restaurants:</div>
           <div className="panel-body">
             <img src={ src }/>
           </div>
@@ -165,46 +182,33 @@ class uRestMenu extends React.Component {
       if (!this.state.subMenus) {
         // let subMenus = [];
         return (
-          <div> No subMenus</div>
+        <div id="restMenu" className="panel panel-default">
+          <div className="panel-body">
+            <div> No subMenus</div>
+          </div>
+        </div>
         )
       } else {
         // let total_price = 0;
         return (
           <div>
-            {/*<div id="restMenu" className="panel panel-default">*/}
-            {/*<div className="panel-heading" style={styleDiv}>Order Summary:</div>*/}
-            {/*<div className="panel-body">*/}
-            {/*<div>*/}
-            {/*{this.state.activeOrder.date}*/}
-            {/*</div>*/}
-            {/*<div>*/}
-            {/*{this.state.activeOrder.orderSum}*/}
-            {/*</div>*/}
-            {/*<div>*/}
-            {/*{this.state.activeOrder.sumPaid}*/}
-            {/*</div>*/}
-            {/*<div>*/}
-            {/*{this.state.activeOrder.tableId}*/}
-            {/*</div>*/}
-            {/*</div>*/}
-            {/*</div>*/}
             <div id="restMenu" className="panel panel-default">
               {this.state.subMenus.map((subMenu, i) => {
                 let counts = {};
                 {/*console.log('uRestMenu | render | this.state.order', this.state.order);*/
                 }
-                $.each(this.state.order.dishArray, function (key, value) {
-                  if (!counts.hasOwnProperty(value)) {
-                    counts[value] = 1;
-                  } else {
-                    counts[value]++;
-                  }
-                });
-                {/*console.log('uRestMenu | render | counts', counts);*/
+                {
+                  this.state.order.dishArray.map((dish, i) => {
+                    if (!counts.hasOwnProperty(dish)) {
+                      counts[dish] = 1;
+                    } else {
+                      counts[dish]++;
+                    }
+                  });
                 }
                 return (
-                  <div>
-                    <div className="panel-heading" style={styleDiv} key={i}>{subMenu.name}</div>
+                  <div key={i}>
+                    <div className="panel-heading" style={styleDiv}>{subMenu.name}</div>
                     <div className="panel-body">
                       <ul className="restMenuList list-group">
                         <li className="menuItem list-group-item">
@@ -226,13 +230,6 @@ class uRestMenu extends React.Component {
                           let dishIndex = this.props.appData.data.dishes.findIndex(x => x._id === dish_id);
                           if (dishIndex > -1) {
                             let fullDishe = this.props.appData.data.dishes[dishIndex];
-                            {/*console.log('uRestMenu | render | total_price', total_price);*/
-                            }
-                            {/*if (counts[dish_id]) {*/}
-                              {/*total_price = total_price + counts[dish_id] * fullDishe.defaultPrice;*/}
-                            {/*}*/}
-                            {/*console.log('uRestMenu | render | total_price', total_price);*/
-                            }
                             return (
                               <li className="menuItem list-group-item" key={t}>
                                 <div className="innerItem name">
@@ -253,10 +250,10 @@ class uRestMenu extends React.Component {
                                 <Button onClick={() => this.addDishToCart(dish_id)}>Add to order</Button>
                                 {counts[dish_id] > 0 ?
                                   (
-                                    <Button onClick={() => this.removeDishToCart(dish_id)}>Remove from
+                                    <Button onClick={() => this.removeDishFromCart(dish_id)}>Remove from
                                       order</Button>
                                   ) : (
-                                    <Button onClick={() => this.removeDishToCart(dish_id)} disabled>Remove from
+                                    <Button onClick={() => this.removeDishFromCart(dish_id)} disabled>Remove from
                                       order</Button>
                                   )
                                 }
@@ -272,8 +269,14 @@ class uRestMenu extends React.Component {
               <div className="panel-body" style={styleDiv}>
                 Total price: {this.state.order.orderSum}
                 <div>
-                  <Button onClick={this.updateOrder}>Submit</Button>
+                  Paid:
+                  <input type="number" name="sumPaid" value={this.state.order.sumPaid} onChange={this.handleChange}
+                         required/>
                 </div>
+                <div>
+                  Left to pay: {this.state.order.orderSum - this.state.order.sumPaid}
+                </div>
+                <Button onClick={this.updateOrder}>Submit</Button>
               </div>
             </div>
           </div>

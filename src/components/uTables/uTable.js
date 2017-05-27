@@ -7,6 +7,7 @@ import {DragDropContext} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import RestMenuManager from '../uRestMenus/uRestMenuManager'
 // import Container from './Container';
+//FIXME Need to add: check if there is open order if so go to this order, if not create new order for that table.
 
 class uTable extends React.Component {
   constructor(props) {
@@ -103,7 +104,7 @@ class uTable extends React.Component {
         let tableId = this.props.appData.data.rests[rest].tables[table]._id;
         // console.log('uTable | componentWillReceiveProps | tableId', tableId);
         if (!this.props.appData.data.rests[rest].tables[table].orders) {
-          console.log('uTable | componentWillReceiveProps | getOrdersByTableId');
+          // console.log('uTable | componentWillReceiveProps | getOrdersByTableId');
           // this.props.getOrdersByTableId(tableId);
         } else {
           let maxDate = new Date('1970/01/01');
@@ -177,10 +178,10 @@ class uTable extends React.Component {
         </div>
       )
     } else {
-      //FIXME Need to add: check if there is open order if so go to this order, if not create new order for that table.
+
       let rest = this.props.appData.data.rests.findIndex(x => x.name === this.props.params.restName);
       let table = this.props.appData.data.rests[rest].tables.findIndex(x => x.tableNum == this.props.params.tableName);
-      console.log('uTable | render | this.props.appData.data.rests[rest].tables[table].orders', this.props.appData.data.rests[rest].tables[table].orders);
+      // console.log('uTable | render | this.props.appData.data.rests[rest].tables[table].orders', this.props.appData.data.rests[rest].tables[table].orders);
       return (
       <RestMenuManager
         rest={this.props.appData.data.rests[rest]}
