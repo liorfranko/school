@@ -34,7 +34,7 @@ class uRestMenuManager extends React.Component {
           Menus:
           <ListOfRestMenus menus={this.props.menus}
                            rest={this.props.rest}
-                           order={this.props.order}
+                           // order={this.props.order}
                            table={this.props.table}
 
           />

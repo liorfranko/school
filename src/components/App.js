@@ -429,8 +429,8 @@ class App extends React.Component {
   }
 
   getSubMenus(menuId) {
-    console.log('App | getSubMenus | menuId', menuId);
-    console.log('App | getSubMenus | this.state', this.state);
+    // console.log('App | getSubMenus | menuId', menuId);
+    // console.log('App | getSubMenus | this.state', this.state);
     const data = {
       menu_id: menuId
     };
@@ -618,6 +618,7 @@ class App extends React.Component {
     let postData = '&order_Id=' + data._id + '&sum_Paid=' + data.sumPaid;
     api.postRequest('updateOrderSumPaid', postData, this.updateOrders);
   }
+
   editTable(data) {
     console.log('App | editTable, data', data);
     // let postData = '&table_Id=' + data.restMenuId + '&table_Num=' + data.restMenuName + '&table_Available=' + data.restMenuName;

@@ -5,6 +5,7 @@ import React from 'react';
 import update from 'react/lib/update';
 import * as $ from 'jquery';
 import {Button} from 'react-bootstrap';
+// TODO set max dishes to 20 and enforce it with alert
 
 class uRestMenu extends React.Component {
   constructor(props) {
@@ -20,7 +21,10 @@ class uRestMenu extends React.Component {
     this.state = {
       subMenus: null,
       order: null,
+      orderSum: 0,
+      addedOrder: false
     };
+    this.addedOrder = false;
   }
 
   componentInit() {
@@ -59,16 +63,67 @@ class uRestMenu extends React.Component {
               // console.log('uRestMenu | componentInit | getOrdersByTableId');
               this.props.getOrdersByTableId(tableId);
             } else {
+              // let maxDate = new Date('1970/01/01');
+              let activeOrder = {};
+              let found = false;
               this.props.appData.data.rests[rest].tables[table].orders.map((order, i) => {
-                if (order._id === this.props.params.orderId) {
-                  if (!order.dishArray) {
-                    order.dishArray = [];
-                  }
-                  this.setState({
-                    order: order
+                // console.log('uRestMenu | componentInit | order', order);
+                // let date = Date.parse(order['date']);
+                // console.log('uRestMenu | componentInit | maxDate', maxDate);
+                // console.log('uRestMenu | componentInit | date', date);
+                // FIXME update the why of getting the activeOrder, Change it to be when the order has been paid.
+                let OrderSum = 0;
+                if (order.dishArray) {
+                  order.dishArray.map((dish) => {
+                    let dishIndex = this.props.appData.data.dishes.findIndex(x => x._id === dish);
+                    if (dishIndex >= 0) {
+                      // console.log('uRestMenu | componentInit | dishIndex', dishIndex);
+                      let fullDishe = this.props.appData.data.dishes[dishIndex];
+                      // console.log('uRestMenu | componentInit | fullDishe', fullDishe);
+                      OrderSum = OrderSum + fullDishe.defaultPrice;
+                    }
                   });
+                  if (OrderSum !== order.sumPaid) {
+                    // console.log('uRestMenu | componentInit | not equal');
+                    activeOrder = order;
+                    found = true;
+                  } else {
+                    // console.log('uRestMenu | componentInit | equal');
+                  }
+                } else {
+                  order.dishArray = [];
+                  activeOrder = order;
+                  found = true;
                 }
               });
+              // console.log('uRestMenu | componentInit | found', found);
+              if (!found) {
+                // console.log('uRestMenu | componentInit | addOrder | addedOrder', this.addedOrder);
+                if (!this.addedOrder) {
+                  this.props.addOrder(tableId);
+                  this.addedOrder = true;
+                }
+                // console.log('uRestMenu | componentInit | addOrder | addedOrder', this.addedOrder);
+              } else {
+                // console.log('uRestMenu | componentInit | activeOrder', activeOrder);
+
+                this.setState({
+                  order: activeOrder,
+                });
+                let newOrderSum = 0;
+                activeOrder.dishArray.map((dish) => {
+                  let dishIndex = this.props.appData.data.dishes.findIndex(x => x._id === dish);
+                  if (dishIndex >= 0) {
+                    // console.log('uRestMenu | componentInit | dishIndex', dishIndex);
+                    let fullDishe = this.props.appData.data.dishes[dishIndex];
+                    // console.log('uRestMenu | componentInit | fullDishe', fullDishe);
+                    newOrderSum = newOrderSum + fullDishe.defaultPrice;
+                  }
+                });
+                this.setState({
+                  orderSum: newOrderSum
+                });
+              }
             }
           }
         }
@@ -87,20 +142,41 @@ class uRestMenu extends React.Component {
     this.componentInit();
   }
 
-  addDishToCart(dish) {
+  addDishToCart(newDish) {
     // console.log('uRestMenu | addDishToCart | dish', dish);
     // console.log('uRestMenu | addDishToCart | this.state.order', this.state.order);
-    let dishIndex = this.props.appData.data.dishes.findIndex(x => x._id === dish);
+    let dishIndex = this.props.appData.data.dishes.findIndex(x => x._id === newDish);
     let fullDishe = this.props.appData.data.dishes[dishIndex];
-    let total_price = this.state.order.orderSum + fullDishe.defaultPrice;
+    let total_price = this.state.orderSum + fullDishe.defaultPrice;
+    let newDishArray = [];
+    let done = false;
+    this.state.order.dishArray.map((dish, i) => {
+      // console.log('uRestMenu | addDishToCart | dish', dish);
+      if (!done) {
+        if (dish === "") {
+          // console.log('uRestMenu | addDishToCart | dish is empty');
+          newDishArray.push(newDish);
+          done = true;
+        } else {
+          newDishArray.push(dish)
+        }
+      }
+    });
+    // console.log('uRestMenu | addDishToCart | newDishArray', newDishArray);
+    for (let i = 0; i < 20; i++) {
+      if (!newDishArray[i]) {
+        newDishArray[i] = "";
+      }
+    }
+    // console.log('uRestMenu | addDishToCart | newDishArray', newDishArray);
     this.setState(update(this.state, {
       order: {
         dishArray: {
-          $push: [dish]
-        },
-        orderSum: {
-          $set: total_price
+          $set: newDishArray
         }
+      },
+      orderSum: {
+        $set: total_price
       }
     }));
   }
@@ -113,17 +189,17 @@ class uRestMenu extends React.Component {
         // console.log('uRestMenu | removeDishFromCart | dish exists in state.order.dishArray', selected_dish);
         let dishIndex = this.props.appData.data.dishes.findIndex(x => x._id === dish);
         let fullDishe = this.props.appData.data.dishes[dishIndex];
-        let total_price = this.state.order.orderSum - fullDishe.defaultPrice;
+        let total_price = this.state.orderSum - fullDishe.defaultPrice;
         this.setState(update(this.state, {
           order: {
             dishArray: {
               $splice: [
                 [i, 1]
               ]
-            },
-            orderSum: {
-              $set: total_price
             }
+          },
+          orderSum: {
+            $set: total_price
           }
         }));
       }
@@ -140,7 +216,7 @@ class uRestMenu extends React.Component {
     // console.log('uRestMenu | handleChange', event.target.value);
     if (event.target.name === 'sumPaid') {
       // console.log('uRestMenu | handleChange | this.state.order.orderSum)', this.state.order.orderSum);
-      if (event.target.value > this.state.order.orderSum) {
+      if (event.target.value > this.state.orderSum) {
         alert('You cannot pay more the the total price')
       } else {
         this.setState(update(this.state, {
@@ -161,7 +237,7 @@ class uRestMenu extends React.Component {
     const styleDiv = {
       fontSize: 30
     };
-    if (!this.props.appData.data.dishes) {
+    if (!this.props.appData.data.dishes || !this.state.order) {
       return (
         <div id="restMenu" className="panel panel-default">
           <div className="panel-body">
@@ -170,23 +246,13 @@ class uRestMenu extends React.Component {
         </div>
       )
     } else {
-      // console.log('RestMenu | render | this.props.appData', this.props.appData);
-      // console.log('RestMenu | render | this.props.params', this.props.params);
-      // console.log('RestMenu | render | this.props.appData.data.dishes', this.props.appData.data.dishes);
-      // const rest = this.props.appData.data.rests.findIndex(x => x.name === this.props.params.restName);
-      // console.log('RestMenu | componentDidMount | rest', rest);
-      // const menu = this.props.appData.data.rests[rest].menus.findIndex(x => x.name === this.props.params.menuName);
-      // console.log('RestMenu | render | menu', menu);
-      // console.log('RestMenu | render | this.props.appData.data.rests[rest].menus[menu].subMenus', this.props.appData.data.rests[rest].menus[menu]);
-      // let subMenus = this.props.appData.data.rests[rest].menus[menu].subMenus;
       if (!this.state.subMenus) {
-        // let subMenus = [];
         return (
-        <div id="restMenu" className="panel panel-default">
-          <div className="panel-body">
-            <div> No subMenus</div>
+          <div id="restMenu" className="panel panel-default">
+            <div className="panel-body">
+              <div> No subMenus</div>
+            </div>
           </div>
-        </div>
         )
       } else {
         // let total_price = 0;
@@ -195,8 +261,6 @@ class uRestMenu extends React.Component {
             <div id="restMenu" className="panel panel-default">
               {this.state.subMenus.map((subMenu, i) => {
                 let counts = {};
-                {/*console.log('uRestMenu | render | this.state.order', this.state.order);*/
-                }
                 {
                   this.state.order.dishArray.map((dish, i) => {
                     if (!counts.hasOwnProperty(dish)) {
@@ -267,14 +331,14 @@ class uRestMenu extends React.Component {
                 )
               })}
               <div className="panel-body" style={styleDiv}>
-                Total price: {this.state.order.orderSum}
+                Total price: {this.state.orderSum}
                 <div>
                   Paid:
                   <input type="number" name="sumPaid" value={this.state.order.sumPaid} onChange={this.handleChange}
                          required/>
                 </div>
                 <div>
-                  Left to pay: {this.state.order.orderSum - this.state.order.sumPaid}
+                  Left to pay: {this.state.orderSum - this.state.order.sumPaid}
                 </div>
                 <Button onClick={this.updateOrder}>Submit</Button>
               </div>

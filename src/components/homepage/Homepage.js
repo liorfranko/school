@@ -6,12 +6,12 @@ import React, {Component} from 'react';
 
 class Homepage extends Component {
   constructor(props) {
-    console.log('Homepage | constructor | props', props);
+    // console.log('Homepage | constructor | props', props);
     super(props);
   }
 
   componentDidMount() {
-    console.log('Homepage | componentDidMount', this.props);
+    // console.log('Homepage | componentDidMount', this.props);
     if (this.props.getAllRests) {
       if (!this.props.appData.data.rests) {
         this.props.getAllRests();
@@ -20,7 +20,7 @@ class Homepage extends Component {
   }
 
   render() {
-    console.log('Homepage | render', this.props);
+    // console.log('Homepage | render', this.props);
     let styleDiv = {
       fontSize: 30
     };

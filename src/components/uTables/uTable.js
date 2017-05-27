@@ -11,7 +11,7 @@ import RestMenuManager from '../uRestMenus/uRestMenuManager'
 
 class uTable extends React.Component {
   constructor(props) {
-    console.log('uTable | constructor | this.props', props);
+    // console.log('uTable | constructor | this.props', props);
     super(props);
     this.componentDidMount = this.componentDidMount.bind(this);
     this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
@@ -19,7 +19,7 @@ class uTable extends React.Component {
   }
 
   componentDidMount() {
-    console.log('uTable | componentDidMount', this.props);
+    // console.log('uTable | componentDidMount', this.props);
     if (!this.props.appData.data.rests) {
       this.props.getAllRests();
     } else {
@@ -163,7 +163,7 @@ class uTable extends React.Component {
 
   render() {
     // console.log('uTable | render | this.props', this.props);
-    console.log('uTable | render | this.state', this.state);
+    // console.log('uTable | render | this.state', this.state);
     const src = require("../../Images/5.gif");
     const styleDiv = {
       fontSize: 30
@@ -186,7 +186,7 @@ class uTable extends React.Component {
       <RestMenuManager
         rest={this.props.appData.data.rests[rest]}
         menus ={this.state.menus}
-        order={this.state.activeOrder}
+        // order={this.state.activeOrder}
         table={this.props.appData.data.rests[rest].tables[table].tableNum}
       />
       );

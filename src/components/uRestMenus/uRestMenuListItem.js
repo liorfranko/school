@@ -10,7 +10,7 @@ const uRestMenuListItem = (props) => {
   return (
     <li className="menuItem list-group-item">
       <div className="innerItem name">
-        <Link to={`/uRestaurants/${props.rest.name}/Menus/${props.item.name}/Table/${props.table}/Order/${props.order._id}`}>{props.item.name}</Link>
+        <Link to={`/uRestaurants/${props.rest.name}/Menus/${props.item.name}/Table/${props.table}`}>{props.item.name}</Link>
       </div>
     </li>
   );
