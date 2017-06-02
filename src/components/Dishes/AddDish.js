@@ -20,18 +20,19 @@ class AddDish extends React.Component {
 
   handleChange(event) {
     // console.log('AddDish | handleChange', event.target.value);
-    if (event.target.name === 'defaultPrice') {
-      if (event.target.value == parseInt(event.target.value, 10)) {
-        // console.log('AddDish | isInteger');
-        this.setState({[event.target.name]: event.target.value});
-      }
-      else {
-        // console.log('AddDish | not Integer');
-        alert('The price can be only numbers')
-      }
-    } else {
-      this.setState({[event.target.name]: event.target.value});
-    }
+    this.setState({[event.target.name]: event.target.value});
+    // if (event.target.name === 'defaultPrice') {
+    //   if (event.target.value == parseInt(event.target.value, 10)) {
+    //     // console.log('AddDish | isInteger');
+    //     this.setState({[event.target.name]: event.target.value});
+    //   }
+    //   else {
+    //     // console.log('AddDish | not Integer');
+    //     alert('The price can be only numbers')
+    //   }
+    // } else {
+    //   this.setState({[event.target.name]: event.target.value});
+    // }
   }
 
 
@@ -59,7 +60,7 @@ class AddDish extends React.Component {
               </div>
               <div>
                 Dish Price:
-                <input type="text" name="defaultPrice" value={this.state.defaultPrice} onChange={this.handleChange}
+                <input type="number" name="defaultPrice" value={this.state.defaultPrice} onChange={this.handleChange}
                        required/>
               </div>
             </label>
