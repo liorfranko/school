@@ -27,18 +27,17 @@ export default class Routes extends Component {
       <Router history={browserHistory}>
         <Route path="/" component={App}>
           <IndexRoute component={Homepage}/>
-          <Route path="/Dishes" component={Dishes}/>
+          <Route path="/Admin" component={App}/>
+          <Route path="/Admin/Dishes" component={Dishes}/>
+          <Route path="/Admin/Restaurants" component={Restaurants}/>
+          <Route path="/Admin/Restaurants/:restName" component={Restaurant}/>
+          <Route path="/Admin/Restaurants/:restName/Menus/:menuName" component={RestMenu}/>
+          <Route path="/Admin/Restaurants/:restName/Menus/:menuName/Submenus/:subMenuName" component={RestSubMenu}/>
 
-          <Route path="/Restaurants" component={Restaurants}/>
           <Route path="/uRestaurants" component={uRestaurants}/>
-
-          <Route path="/Restaurants/:restName" component={Restaurant}/>
           <Route path="/uRestaurants/:restName" component={uRestaurant}/>
-
-          <Route path="/Restaurants/:restName/Menus/:menuName" component={RestMenu}/>
           <Route path="/uRestaurants/:restName/Menus/:menuName/Table/:tableNum" component={uRestMenu}/>
           <Route path="/uRestaurants/:restName/Tables/:tableName" component={uTable}/>
-          <Route path="/Restaurants/:restName/Menus/:menuName/Submenus/:subMenuName" component={RestSubMenu}/>
         </Route>
       </ Router>
     );

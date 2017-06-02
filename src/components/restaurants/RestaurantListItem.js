@@ -22,7 +22,7 @@ const RestaurantListItem = (props) => {
   return (
     <li className="restItem list-group-item">
       <div className="innerItem name">
-        <Link to={`/Restaurants/${props.item.name}`}>{props.item.name}</Link>
+        <Link to={`/Admin/Restaurants/${props.item.name}`}>{props.item.name}</Link>
       </div>
       <div className="innerItem address">
         {props.item.address}

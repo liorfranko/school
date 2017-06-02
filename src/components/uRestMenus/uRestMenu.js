@@ -22,7 +22,6 @@ class uRestMenu extends React.Component {
       subMenus: null,
       order: null,
       orderSum: 0,
-      addedOrder: false
     };
     this.addedOrder = false;
   }
@@ -66,14 +65,14 @@ class uRestMenu extends React.Component {
               // let maxDate = new Date('1970/01/01');
               let activeOrder = {};
               let found = false;
+              console.log('uRestMenu | componentInit | orders', this.props.appData.data.rests[rest].tables[table].orders);
               this.props.appData.data.rests[rest].tables[table].orders.map((order, i) => {
-                // console.log('uRestMenu | componentInit | order', order);
-                // let date = Date.parse(order['date']);
-                // console.log('uRestMenu | componentInit | maxDate', maxDate);
-                // console.log('uRestMenu | componentInit | date', date);
-                // FIXME update the why of getting the activeOrder, Change it to be when the order has been paid.
+                console.log('uRestMenu | componentInit | order', order);
+                // FIXME update the why of getting the activeOrder, Change it to be when the order has been paid. - Done need to check it works
                 let OrderSum = 0;
+                console.log('uRestMenu | componentInit | order.dishArray', order.dishArray);
                 if (order.dishArray) {
+                  console.log('uRestMenu | componentInit | order.dishArray exists');
                   order.dishArray.map((dish) => {
                     let dishIndex = this.props.appData.data.dishes.findIndex(x => x._id === dish);
                     if (dishIndex >= 0) {
@@ -91,14 +90,15 @@ class uRestMenu extends React.Component {
                     // console.log('uRestMenu | componentInit | equal');
                   }
                 } else {
+                  console.log('uRestMenu | componentInit | order.dishArray NOT exists');
                   order.dishArray = [];
                   activeOrder = order;
                   found = true;
                 }
               });
-              // console.log('uRestMenu | componentInit | found', found);
+              console.log('uRestMenu | componentInit | found', found);
               if (!found) {
-                // console.log('uRestMenu | componentInit | addOrder | addedOrder', this.addedOrder);
+                console.log('uRestMenu | componentInit | addOrder | addedOrder', this.addedOrder);
                 if (!this.addedOrder) {
                   this.props.addOrder(tableId);
                   this.addedOrder = true;

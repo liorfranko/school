@@ -19,7 +19,7 @@ const SubMenuListItem = (props) => {
   return (
     <li className="subMenuItem list-group-item">
       <div className="innerItem name">
-        <Link to={`/Restaurants/${props.rest.name}/Menus/${props.menu.name}/Submenus/${props.item.name}`}>{props.item.name}</Link>
+        <Link to={`/Admin/Restaurants/${props.rest.name}/Menus/${props.menu.name}/Submenus/${props.item.name}`}>{props.item.name}</Link>
       </div>
       <a className="innerItem delete" onClick={onDeleteClick.bind(this)}>
         del

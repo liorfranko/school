@@ -10,9 +10,10 @@ import 'react-super-select/lib/react-super-select.css';
 import update from 'immutability-helper';
 import {browserHistory} from 'react-router';
 import LoginHOC from 'react-facebook-login-hoc';
+
 // import Login from './Login/Login'
 // import {setPId} from 'react-pstate'
-
+// TODO Change the default loading page to be with userId 99999 and move the management interface to /admin
 const configureLoginProps = {
   appId: '756445047848860',
   scope: 'public_profile, email',
@@ -29,6 +30,7 @@ class App extends React.Component {
     this.login = this.props.fb.login;
     this.logout = this.props.fb.logout;
     this.state = {
+      priv: 'user',
       uid: null,
       status: 'unknown',
       facebook_id: null,
@@ -204,7 +206,7 @@ class App extends React.Component {
     // console.log('App | updateSubMenus this.state.data', this.state.data);
   }
 
-  updateTables (data) {
+  updateTables(data) {
     // Problem:
     // When loading menus and menus list is empty, How can I get the restaurant ID.
     // console.log('App | updateTables data', data);
@@ -244,7 +246,7 @@ class App extends React.Component {
   }
 
   updateLogin(data) {
-    // console.log('App | updateLogin data', data);
+    console.log('App | updateLogin data', data);
     // const items = data.items || [];
     if (data.status == 'Success') {
       console.log('App | updateLogin Success');
@@ -267,7 +269,7 @@ class App extends React.Component {
     });
   }
 
-  updateOrders (data) {
+  updateOrders(data) {
     // FIXME ->
     // Problem:
     // When loading menus and menus list is empty, How can I get the restaurant ID.
@@ -594,7 +596,7 @@ class App extends React.Component {
     api.postRequest('updateSubMenuDishes', data, this.getSubMenusLocal(menuId));
   }
 
-  editOrderDishes (data) {
+  editOrderDishes(data) {
     // console.log('App | editOrderDishes | data', data);
     let postData = '&order_Id=' + data._id;
     // let dishArray = [19];
@@ -604,9 +606,9 @@ class App extends React.Component {
       // console.log('App | editOrderDishes | data.dishArray[i]', data.dishArray[i]);
       if (data.dishArray[i]) {
         // console.log('App | editOrderDishes | Exist');
-        postData = postData + '&d' + (i+1) + '=' + data.dishArray[i]
+        postData = postData + '&d' + (i + 1) + '=' + data.dishArray[i]
       } else {
-        postData = postData + '&d' + (i+1) + '=' + ""
+        postData = postData + '&d' + (i + 1) + '=' + ""
       }
     }
     // console.log('App | editOrderDishes | postData', postData);
@@ -645,7 +647,7 @@ class App extends React.Component {
   }
 
   getStatus(response) {
-    // console.log('App | getStatus | response', response);
+    console.log('App | getStatus | response', response);
     if (response.authResponse) {
       this.responseApi.call(this, response)
     } else {
@@ -654,14 +656,15 @@ class App extends React.Component {
   }
 
   responseApi(res) {
-    // console.log('res:', res);
-    // console.log('token:', res.authResponse.accessToken);
-    // console.log('status:', res.status);
-    // console.log('userID:', res.authResponse.userID);
+    console.log('res:', res);
+    console.log('token:', res.authResponse.accessToken);
+    console.log('status:', res.status);
+    console.log('userID:', res.authResponse.userID);
     this.setState({
       status: res.status,
       facebook_id: res.authResponse.userID,
       token: res.authResponse.accessToken,
+      priv: 'admin'
     });
   }
 
@@ -670,7 +673,11 @@ class App extends React.Component {
   };
 
   loginFacebook() {
-    this.login(this.getStatus.bind(this))
+    browserHistory.push(`/`);
+    this.login(this.getStatus.bind(this));
+    this.setState({
+      data: {},
+    });
   }
 
   logoutFacebook() {
@@ -683,6 +690,7 @@ class App extends React.Component {
       token: null,
       uid: null,
       data: {},
+      priv: 'user'
     });
   }
 
@@ -697,162 +705,256 @@ class App extends React.Component {
   }
 
   render() {
-    // console.log('App | render | this.state', this.state);
-    // const header = require("../Images/food.jpg");
-    if (this.state.uid !== null) {
-      // console.log('App | render | connected');
-      // console.log('App | render | this.state.uid ', this.state.uid);
-      if (this.state.uid === userUid) {
-        return (
-          <div>
-            <nav className="navbar navbar-inverse navbar-fixed-top">
-              <div className="container">
-                <Menu
-                  menu={[{name: 'Restaurants', path: 'uRestaurants'}]}
-                  uid={this.state.uid}
-                  logout={this.logoutFacebook}
-
-                />
-              </div>
-            </nav>
-            <div className="jumbotron">
-              <div className="container">
-                <h1>Header - Logo + Menu</h1>
-                {React.Children.map(this.props.children, (child) => React.cloneElement(child, {
-                  appData: this.state,
-                  getRests: this.getRests,
-                  getDishesUid: this.getDishesUid,
-                  getMenus: this.getMenus,
-                  getSubMenus: this.getSubMenus,
-                  getTables: this.getTables,
-                  getAllRests: this.getAllRests,
-                  getOrdersByTableId: this.getOrdersByTableId,
-                  addOrder: this.addOrder,
-                  editOrderDishes: this.editOrderDishes,
-                  editOrderSumPaid: this.editOrderSumPaid,
-                }))}
-                <Button onClick={this.goBack}>Back</Button>
-                <Button onClick={this.goForward}>Forward</Button>
-                <footer>Footer - links, & other shit</footer>
-              </div>
+    console.log('App | render | this.state', this.state);
+    if (this.state.priv === 'user') {
+      console.log('App | render | User');
+      return (
+        <div>
+          <nav className="navbar navbar-inverse navbar-fixed-top">
+            <div className="container">
+              <Menu
+                menu={[{name: 'Restaurants', path: 'uRestaurants'}]}
+                uid={userUid}
+                login={this.loginFacebook}
+                priv={this.state.priv}
+              />
+            </div>
+          </nav>
+          <div className="jumbotron">
+            <div className="container">
+              <h1>Header - Logo + Menu</h1>
+              {React.Children.map(this.props.children, (child) => React.cloneElement(child, {
+                appData: this.state,
+                getRests: this.getRests,
+                getDishesUid: this.getDishesUid,
+                getMenus: this.getMenus,
+                getSubMenus: this.getSubMenus,
+                getTables: this.getTables,
+                getAllRests: this.getAllRests,
+                getOrdersByTableId: this.getOrdersByTableId,
+                addOrder: this.addOrder,
+                editOrderDishes: this.editOrderDishes,
+                editOrderSumPaid: this.editOrderSumPaid,
+              }))}
+              <Button onClick={this.goBack}>Back</Button>
+              <Button onClick={this.goForward}>Forward</Button>
+              <footer>Footer - links, & other shit</footer>
             </div>
           </div>
-        );
-      } else {
-        return (
-          <div>
-            <nav className="navbar navbar-inverse navbar-fixed-top">
-              <div className="container">
-                <Menu
-                  menu={[
-                    {name: 'Restaurants', path: 'Restaurants'},
-                    {name: 'Dishes', path: 'Dishes'},
-                  ]}
-                  uid={this.state.uid}
-                  logout={this.logoutFacebook}
-                />
-              </div>
-            </nav>
-            <div className="jumbotron">
-              <div className="container">
-                <h1>Header - Logo + Menu</h1>
-                {React.Children.map(this.props.children, (child) => React.cloneElement(child, {
-                  appData: this.state,
-                  getRests: this.getRests,
-                  getDishes: this.getDishes,
-                  getMenus: this.getMenus,
-                  getSubMenus: this.getSubMenus,
-                  getTables: this.getTables,
-                  addRest: this.addRest,
-                  addDish: this.addDish,
-                  addSubMenu: this.addSubMenu,
-                  addRestMenu: this.addRestMenu,
-                  addTable: this.addTable,
-                  editRest: this.editRest,
-                  editDish: this.editDish,
-                  editRestMenu: this.editRestMenu,
-                  editSubMenu: this.editSubMenu,
-                  editTable: this.editTable,
-                  deleteRest: this.deleteRest,
-                  deleteDish: this.deleteDish,
-                  deleteRestMenu: this.deleteRestMenu,
-                  deleteSubMenu: this.deleteSubMenu,
-                  deleteTable: this.deleteTable,
-                }))}
-                <Button onClick={this.goBack}>Back</Button>
-                <Button onClick={this.goForward}>Forward</Button>
-                <footer>Footer - links, & other shit</footer>
-              </div>
-            </div>
-          </div>
-        )
-      }
-
+        </div>
+      );
     } else {
-      // console.log('App | render | uid == null');
-      const styleDiv = {
-        fontSize: 30
-      };
-      const src = require("../Images/5.gif");
-      if (this.state.facebook_id === null) {
-        // console.log('App | render | facebook_id == null');
-        return (
-          <div>
-            <nav className="navbar navbar-inverse navbar-fixed-top">
-              <div className="container">
-                {/*<Menu menu={[*/}
-                  {/*{name: 'Rests', path: 'Restaurants'},*/}
-                  {/*{name: 'Dishes', path: 'Dishes'},*/}
-                {/*]}/>*/}
-              </div>
-            </nav>
-            <div className="jumbotron">
-              <div className="container">
-                <h1>Header - Logo + Menu</h1>
-                <div id="rests" className="panel panel-default">
-                  <div className="panel-heading" style={styleDiv}>Welcome:</div>
-                  <div className="panel-body">
-                    <div>To manage your restaurants, please login using facebook.</div>
-                    <button onClick={ this.loginFacebook.bind(this) }>Facebook Login</button>
-                    <div>
-                      <button onClick={this.userLogin.bind(this) }>User access click here</button>
-                    </div>
-                  </div>
-                </div>
-                <footer>Footer - links, & other shit</footer>
-              </div>
-            </div>
-          </div>
-        )
-      } else {
-        console.log('App | render | facebook_id != null');
+      console.log('App | render | Admin | this.state', this.state);
+      if (this.state.uid === null) {
         this.checkFacebookID();
-        return (
-          <div>
-            <nav className="navbar navbar-inverse navbar-fixed-top">
-              <div className="container">
-                {/*<Menu menu={[*/}
-                  {/*{name: 'Homepage', path: ''},*/}
-                  {/*{name: 'Rests', path: 'Rests'},*/}
-                  {/*{name: 'Dishes', path: 'Dishes'},*/}
-                {/*]}/>*/}
-              </div>
-            </nav>
-            <div className="jumbotron">
-              <div className="container">
-                <h1>Header - Logo + Menu</h1>
-                <div id="rests" className="panel panel-default">
-                  <div className="panel-heading" style={styleDiv}>Login:</div>
-                  <div className="panel-body">
-                    <img src={ src }/>
-                  </div>
-                </div>
-              </div>
+      }
+      return (
+        <div>
+          <nav className="navbar navbar-inverse navbar-fixed-top">
+            <div className="container">
+              <Menu
+                menu={[
+                  {name: 'Your Restaurants', path: 'Admin/Restaurants'},
+                  {name: 'Your Dishes', path: 'Admin/Dishes'},
+                ]}
+                uid={this.state.uid}
+                logout={this.logoutFacebook}
+                priv={this.state.priv}
+              />
+            </div>
+          </nav>
+          <div className="jumbotron">
+            <div className="container">
+              <h1>Header - Logo + Menu</h1>
+              {React.Children.map(this.props.children, (child) => React.cloneElement(child, {
+                appData: this.state,
+                getRests: this.getRests,
+                getDishes: this.getDishes,
+                getMenus: this.getMenus,
+                getSubMenus: this.getSubMenus,
+                getTables: this.getTables,
+                addRest: this.addRest,
+                addDish: this.addDish,
+                addSubMenu: this.addSubMenu,
+                addRestMenu: this.addRestMenu,
+                addTable: this.addTable,
+                editRest: this.editRest,
+                editDish: this.editDish,
+                editRestMenu: this.editRestMenu,
+                editSubMenu: this.editSubMenu,
+                editTable: this.editTable,
+                deleteRest: this.deleteRest,
+                deleteDish: this.deleteDish,
+                deleteRestMenu: this.deleteRestMenu,
+                deleteSubMenu: this.deleteSubMenu,
+                deleteTable: this.deleteTable,
+              }))}
+              <Button onClick={this.goBack}>Back</Button>
+              <Button onClick={this.goForward}>Forward</Button>
+              <footer>Footer - links, & other shit</footer>
             </div>
           </div>
-        );
-      }
+        </div>
+      )
     }
+    // if (this.state.uid !== null) {
+    //   // console.log('App | render | connected');
+    //   // console.log('App | render | this.state.uid ', this.state.uid);
+    //   if (this.state.uid === userUid) {
+    //     console.log('App | render | User access');
+    //     return (
+    //       <div>
+    //         <nav className="navbar navbar-inverse navbar-fixed-top">
+    //           <div className="container">
+    //             <Menu
+    //               menu={[{name: 'Restaurants', path: 'uRestaurants'}]}
+    //               uid={this.state.uid}
+    //               logout={this.logoutFacebook}
+    //             />
+    //           </div>
+    //         </nav>
+    //         <div className="jumbotron">
+    //           <div className="container">
+    //             <h1>Header - Logo + Menu</h1>
+    //             {React.Children.map(this.props.children, (child) => React.cloneElement(child, {
+    //               appData: this.state,
+    //               getRests: this.getRests,
+    //               getDishesUid: this.getDishesUid,
+    //               getMenus: this.getMenus,
+    //               getSubMenus: this.getSubMenus,
+    //               getTables: this.getTables,
+    //               getAllRests: this.getAllRests,
+    //               getOrdersByTableId: this.getOrdersByTableId,
+    //               addOrder: this.addOrder,
+    //               editOrderDishes: this.editOrderDishes,
+    //               editOrderSumPaid: this.editOrderSumPaid,
+    //             }))}
+    //             <Button onClick={this.goBack}>Back</Button>
+    //             <Button onClick={this.goForward}>Forward</Button>
+    //             <footer>Footer - links, & other shit</footer>
+    //           </div>
+    //         </div>
+    //       </div>
+    //     );
+    //   } else {
+    //     console.log('App | render | Admin access');
+    //     return (
+    //       <div>
+    //         <nav className="navbar navbar-inverse navbar-fixed-top">
+    //           <div className="container">
+    //             <Menu
+    //               menu={[
+    //                 {name: 'Restaurants', path: 'Admin/Restaurants'},
+    //                 {name: 'Dishes', path: 'Admin/Dishes'},
+    //               ]}
+    //               uid={this.state.uid}
+    //               logout={this.logoutFacebook}
+    //             />
+    //           </div>
+    //         </nav>
+    //         <div className="jumbotron">
+    //           <div className="container">
+    //             <h1>Header - Logo + Menu</h1>
+    //             {React.Children.map(this.props.children, (child) => React.cloneElement(child, {
+    //               appData: this.state,
+    //               getRests: this.getRests,
+    //               getDishes: this.getDishes,
+    //               getMenus: this.getMenus,
+    //               getSubMenus: this.getSubMenus,
+    //               getTables: this.getTables,
+    //               addRest: this.addRest,
+    //               addDish: this.addDish,
+    //               addSubMenu: this.addSubMenu,
+    //               addRestMenu: this.addRestMenu,
+    //               addTable: this.addTable,
+    //               editRest: this.editRest,
+    //               editDish: this.editDish,
+    //               editRestMenu: this.editRestMenu,
+    //               editSubMenu: this.editSubMenu,
+    //               editTable: this.editTable,
+    //               deleteRest: this.deleteRest,
+    //               deleteDish: this.deleteDish,
+    //               deleteRestMenu: this.deleteRestMenu,
+    //               deleteSubMenu: this.deleteSubMenu,
+    //               deleteTable: this.deleteTable,
+    //             }))}
+    //             <Button onClick={this.goBack}>Back</Button>
+    //             <Button onClick={this.goForward}>Forward</Button>
+    //             <footer>Footer - links, & other shit</footer>
+    //           </div>
+    //         </div>
+    //       </div>
+    //     )
+    //   }
+    //
+    // } else {
+    //   // console.log('App | render | uid == null');
+    //   // this.userLogin();
+    //   const styleDiv = {
+    //     fontSize: 30
+    //   };
+    //   const src = require("../Images/5.gif");
+    //   // const login = require("../Images/facebook-sign-in-button-png-26.png");
+    //   if (this.state.facebook_id === null) {
+    //     // console.log('App | render | facebook_id == null');
+    //     return (
+    //       <div>
+    //         <nav className="navbar navbar-inverse navbar-fixed-top">
+    //           <div className="container">
+    //             <Menu
+    //               menu={[]}
+    //               uid={null}
+    //               login={this.loginFacebook}
+    //             />
+    //           </div>
+    //         </nav>
+    //         <div className="jumbotron">
+    //           <div className="container">
+    //             <h1>Header - Logo + Menu</h1>
+    //             <div id="rests" className="panel panel-default">
+    //               <div className="panel-heading" style={styleDiv}>Welcome:</div>
+    //               <div className="panel-body">
+    //                 <div>To manage your restaurants, please login using facebook.</div>
+    //                 <button onClick={ this.loginFacebook.bind(this) }>Facebook Login</button>
+    //                 <div>
+    //                   <button onClick={this.userLogin.bind(this) }>User access click here</button>
+    //                 </div>
+    //               </div>
+    //             </div>
+    //             <footer>Footer - links, & other shit</footer>
+    //           </div>
+    //         </div>
+    //       </div>
+    //     )
+    //   } else {
+    //     console.log('App | render | facebook_id != null');
+    //     this.checkFacebookID();
+    //     return (
+    //       <div>
+    //         <nav className="navbar navbar-inverse navbar-fixed-top">
+    //           <div className="container">
+    //             {/*<Menu menu={[*/}
+    //               {/*{name: 'Homepage', path: ''},*/}
+    //               {/*{name: 'Rests', path: 'Rests'},*/}
+    //               {/*{name: 'Dishes', path: 'Dishes'},*/}
+    //             {/*]}/>*/}
+    //           </div>
+    //         </nav>
+    //         <div className="jumbotron">
+    //           <div className="container">
+    //             <h1>Header - Logo + Menu</h1>
+    //             <div id="rests" className="panel panel-default">
+    //               <div className="panel-heading" style={styleDiv}>Login:</div>
+    //               <div className="panel-body">
+    //                 <img src={ src }/>
+    //               </div>
+    //             </div>
+    //           </div>
+    //         </div>
+    //       </div>
+    //     );
+    //   }
+    // }
   }
 
 }

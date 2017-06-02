@@ -11,7 +11,9 @@ import {Nav, Navbar, NavItem, Breadcrumb} from 'react-bootstrap';
 // import breadcrumbInstance from '../Breadcrumb'
 
 const Menu = (props) => (
+
   <div>
+    {console.log('Menu | props', props)}
     <Navbar inverse collapseOnSelect fluid>
       <Navbar.Header>
         <Navbar.Brand>
@@ -27,10 +29,13 @@ const Menu = (props) => (
             )
           })}
         </Nav>
-        {props.uid !== null ?
+        {props.priv === 'user' ?
+          <Nav bsStyle="pills" pullRight>
+            <NavItem onClick={props.login}>Admin Login</NavItem>
+          </Nav> :
           <Nav bsStyle="pills" pullRight>
             <NavItem onClick={props.logout}>Logout</NavItem>
-          </Nav> : null
+          </Nav>
         }
       </Navbar.Collapse>
     </Navbar>
