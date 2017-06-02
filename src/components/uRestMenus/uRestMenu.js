@@ -6,7 +6,7 @@ import update from 'react/lib/update';
 import * as $ from 'jquery';
 import {Button} from 'react-bootstrap';
 // TODO set max dishes to 20 and enforce it with alert
-
+// TODO Rebuild this page, load all menus and submenus.
 class uRestMenu extends React.Component {
   constructor(props) {
     // console.log('uRestMenu | constructor | this.props', props);
@@ -65,14 +65,14 @@ class uRestMenu extends React.Component {
               // let maxDate = new Date('1970/01/01');
               let activeOrder = {};
               let found = false;
-              console.log('uRestMenu | componentInit | orders', this.props.appData.data.rests[rest].tables[table].orders);
+              // console.log('uRestMenu | componentInit | orders', this.props.appData.data.rests[rest].tables[table].orders);
               this.props.appData.data.rests[rest].tables[table].orders.map((order, i) => {
-                console.log('uRestMenu | componentInit | order', order);
+                // console.log('uRestMenu | componentInit | order', order);
                 // FIXME update the why of getting the activeOrder, Change it to be when the order has been paid. - Done need to check it works
                 let OrderSum = 0;
-                console.log('uRestMenu | componentInit | order.dishArray', order.dishArray);
+                // console.log('uRestMenu | componentInit | order.dishArray', order.dishArray);
                 if (order.dishArray) {
-                  console.log('uRestMenu | componentInit | order.dishArray exists');
+                  // console.log('uRestMenu | componentInit | order.dishArray exists');
                   order.dishArray.map((dish) => {
                     let dishIndex = this.props.appData.data.dishes.findIndex(x => x._id === dish);
                     if (dishIndex >= 0) {
@@ -90,15 +90,20 @@ class uRestMenu extends React.Component {
                     // console.log('uRestMenu | componentInit | equal');
                   }
                 } else {
-                  console.log('uRestMenu | componentInit | order.dishArray NOT exists');
+                  // console.log('uRestMenu | componentInit | order.dishArray NOT exists');
                   order.dishArray = [];
+                  for (let i = 0; i < 20; i++) {
+                    if (!order.dishArray[i]) {
+                      order.dishArray[i] = "";
+                    }
+                  }
                   activeOrder = order;
                   found = true;
                 }
               });
-              console.log('uRestMenu | componentInit | found', found);
+              // console.log('uRestMenu | componentInit | found', found);
               if (!found) {
-                console.log('uRestMenu | componentInit | addOrder | addedOrder', this.addedOrder);
+                // console.log('uRestMenu | componentInit | addOrder | addedOrder', this.addedOrder);
                 if (!this.addedOrder) {
                   this.props.addOrder(tableId);
                   this.addedOrder = true;
@@ -143,7 +148,7 @@ class uRestMenu extends React.Component {
   }
 
   addDishToCart(newDish) {
-    // console.log('uRestMenu | addDishToCart | dish', dish);
+    // console.log('uRestMenu | addDishToCart | newDish', newDish);
     // console.log('uRestMenu | addDishToCart | this.state.order', this.state.order);
     let dishIndex = this.props.appData.data.dishes.findIndex(x => x._id === newDish);
     let fullDishe = this.props.appData.data.dishes[dishIndex];
@@ -151,10 +156,10 @@ class uRestMenu extends React.Component {
     let newDishArray = [];
     let done = false;
     this.state.order.dishArray.map((dish, i) => {
-      // console.log('uRestMenu | addDishToCart | dish', dish);
+      // console.log('uRestMenu | addDishToCart | In for | dish ', dish);
       if (!done) {
         if (dish === "") {
-          // console.log('uRestMenu | addDishToCart | dish is empty');
+          // console.log('uRestMenu | addDishToCart | In for | dish is empty');
           newDishArray.push(newDish);
           done = true;
         } else {
@@ -232,7 +237,7 @@ class uRestMenu extends React.Component {
 
   render() {
     // console.log('uRestMenu | render | this.props', this.props);
-    // console.log('uRestMenu | render | this.state', this.state);
+    console.log('uRestMenu | render | this.state', this.state);
     const src = require("../../Images/5.gif");
     const styleDiv = {
       fontSize: 30
@@ -261,8 +266,11 @@ class uRestMenu extends React.Component {
             <div id="restMenu" className="panel panel-default">
               {this.state.subMenus.map((subMenu, i) => {
                 let counts = {};
+                {/*console.log('uRestMenu | render | counts', counts);*/}
+                {/*console.log('uRestMenu | render | this.state.order.dishArray', this.state.order.dishArray);*/}
                 {
                   this.state.order.dishArray.map((dish, i) => {
+                    {/*console.log('uRestMenu | render | dish', dish);*/}
                     if (!counts.hasOwnProperty(dish)) {
                       counts[dish] = 1;
                     } else {

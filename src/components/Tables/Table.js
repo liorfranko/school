@@ -5,7 +5,7 @@ import React from 'react';
 
 class Table extends React.Component {
   constructor(props) {
-    console.log('uTable | constructor | this.props', props);
+    console.log('Table | constructor | this.props', props);
     super(props);
     this.componentDidMount = this.componentDidMount.bind(this);
     // this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);

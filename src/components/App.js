@@ -561,7 +561,7 @@ class App extends React.Component {
   }
 
   addOrder(table_Id) {
-    console.log('App | addOrder | ', table_Id);
+    // console.log('App | addOrder | ', table_Id);
     let data = {
       table_Id: table_Id
     };
@@ -705,9 +705,9 @@ class App extends React.Component {
   }
 
   render() {
-    console.log('App | render | this.state', this.state);
+    // console.log('App | render | this.state', this.state);
     if (this.state.priv === 'user') {
-      console.log('App | render | User');
+      // console.log('App | render | User');
       return (
         <div>
           <nav className="navbar navbar-inverse navbar-fixed-top">
@@ -726,6 +726,7 @@ class App extends React.Component {
               {React.Children.map(this.props.children, (child) => React.cloneElement(child, {
                 appData: this.state,
                 getRests: this.getRests,
+                getDishes: this.getDishes,
                 getDishesUid: this.getDishesUid,
                 getMenus: this.getMenus,
                 getSubMenus: this.getSubMenus,
@@ -744,7 +745,7 @@ class App extends React.Component {
         </div>
       );
     } else {
-      console.log('App | render | Admin | this.state', this.state);
+      // console.log('App | render | Admin | this.state', this.state);
       if (this.state.uid === null) {
         this.checkFacebookID();
       }

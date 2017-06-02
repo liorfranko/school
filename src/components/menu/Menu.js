@@ -13,7 +13,7 @@ import {Nav, Navbar, NavItem, Breadcrumb} from 'react-bootstrap';
 const Menu = (props) => (
 
   <div>
-    {console.log('Menu | props', props)}
+    {/*{console.log('Menu | props', props)}*/}
     <Navbar inverse collapseOnSelect fluid>
       <Navbar.Header>
         <Navbar.Brand>

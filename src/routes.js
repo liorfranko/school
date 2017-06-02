@@ -37,7 +37,7 @@ export default class Routes extends Component {
           <Route path="/uRestaurants" component={uRestaurants}/>
           <Route path="/uRestaurants/:restName" component={uRestaurant}/>
           <Route path="/uRestaurants/:restName/Menus/:menuName/Table/:tableNum" component={uRestMenu}/>
-          <Route path="/uRestaurants/:restName/Tables/:tableName" component={uTable}/>
+          <Route path="/uRestaurants/:restName/uTables/:tableName" component={uTable}/>
         </Route>
       </ Router>
     );
