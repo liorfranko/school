@@ -8,6 +8,8 @@ import DeleteTable from './DeleteTable'
 import EditTable from './EditTable'
 import './Tables.styl';
 import {Button} from 'react-bootstrap';
+import QrCodeModal from './QrCodeModal';
+
 
 class TableManager extends React.Component {
   constructor(props) {
@@ -17,13 +19,16 @@ class TableManager extends React.Component {
     this.addTable = this.addTable.bind(this);
     this.deleteTable = this.deleteTable.bind(this);
     this.openEditDish = this.openEditDish.bind(this);
+    this.openQr = this.openQr.bind(this);
     this.handleAddClick = this.handleAddClick.bind(this);
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
     this.handleEditClick = this.handleEditClick.bind(this);
+
     this.state = {
       showAddModal: false,
       showDeleteModal: false,
       showEditModal: false,
+      showQrModal: false,
       selectedTable: 0
     }
   }
@@ -33,6 +38,7 @@ class TableManager extends React.Component {
       showAddModal: false,
       showDeleteModal: false,
       showEditModal: false,
+      showQrModal: false,
       selectedTable: 0
     });
   };
@@ -87,6 +93,14 @@ class TableManager extends React.Component {
     });
   }
 
+  openQr(data) {
+    console.log('TableManager | openQr', data);
+    this.setState({
+      selectedTable: data,
+      showQrModal: true
+    });
+  }
+
   render() {
     // console.log('tableManager | props', this.props);
     // console.log('restMenuManager | this.state', this.state);
@@ -102,6 +116,7 @@ class TableManager extends React.Component {
             rest={this.props.rest}
             deleteTable={this.deleteTable}
             editTable={this.openEditDish}
+            openQr={this.openQr}
           />
           <AddTable
             handleClick={this.handleAddClick.bind(this)}
@@ -121,6 +136,12 @@ class TableManager extends React.Component {
             handleClick={this.handleEditClick.bind(this)}
             exit={this.exitPopup.bind(this)}
             show={this.state.showEditModal}
+          />
+          <QrCodeModal
+            chosenTable={this.props.tables[this.state.selectedTable]}
+            rest={this.props.rest}
+            exit={this.exitPopup.bind(this)}
+            show={this.state.showQrModal}
           />
         </div>
       </div>

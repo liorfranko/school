@@ -3,8 +3,6 @@
  */
 "use strict";
 import React from 'react';
-import {Link} from 'react-router';
-
 const TableListItem = (props) => {
   // console.log('TableListItem | props', props);
   function onEditClick() {
@@ -16,6 +14,11 @@ const TableListItem = (props) => {
     props.deleteTable(props.tableNum)
   }
 
+  function openQr() {
+    // console.log('restMenuListItem | onDeleteClick, props', props);
+    props.openQr(props.tableNum)
+  }
+
   return (
     <li className="menuItem list-group-item">
       <a className="innerItem name" onClick={onEditClick.bind(this)} >
@@ -23,6 +26,9 @@ const TableListItem = (props) => {
       </a>
       <a className="innerItem delete" onClick={onDeleteClick.bind(this)}>
         del
+      </a>
+      <a className="innerItem openQr" onClick={openQr.bind(this)}>
+        Get QR Code
       </a>
     </li>
   );

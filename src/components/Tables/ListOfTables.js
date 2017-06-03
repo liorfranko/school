@@ -19,6 +19,7 @@ const ListOfTables = (props) => {
               item={table}
               deleteTable={props.deleteTable}
               editTable={props.editTable}
+              openQr={props.openQr}
               rest={props.rest}
               tableNum={i}
             />

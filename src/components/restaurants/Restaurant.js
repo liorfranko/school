@@ -16,7 +16,7 @@ class Restaurant extends React.Component {
   }
 
   componentDidMount() {
-    console.log('Restaurant | componentDidMount', this.props);
+    // console.log('Restaurant | componentDidMount', this.props);
     // let rest = this.props.appData.data.rests.findIndex(x => x.name == this.props.params.restName);
 
     // console.log('Restaurant | componentDidMount | rest', rest);
@@ -55,7 +55,7 @@ class Restaurant extends React.Component {
   }
 
   render() {
-    console.log('Restaurant | render |this.props', this.props);
+    // console.log('Restaurant | render |this.props', this.props);
     const src = require("../../Images/5.gif");
     const styleDiv = {
       fontSize: 30
