@@ -157,8 +157,8 @@ class uTable extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // console.log('uRestaurant | componentWillReceiveProps | nextProps', nextProps);
-    // console.log('uRestaurant | componentWillReceiveProps | this.props', this.props);
+    // console.log('uTable | componentWillReceiveProps | nextProps', nextProps);
+    // console.log('uTable | componentWillReceiveProps | this.props', this.props);
     this.componentInit();
   }
 
@@ -227,10 +227,15 @@ class uTable extends React.Component {
   }
 
   updateOrder() {
-    // console.log('uRestMenu | updateOrder | this.state.order.dishArray', this.state.order);
+    // console.log('uTable | updateOrder | this.state.order.dishArray', this.state.order);
     this.props.editOrderDishes(this.state.order);
     this.props.editOrderSumPaid(this.state.order);
-    // window.location.reload();
+    // window.setTimeout()
+    setTimeout(function(){
+      // console.log('uTable | updateOrder | Sleeping');
+      window.location.reload();
+    }, 2500);
+
   }
 
   handleChange(event) {
@@ -261,9 +266,9 @@ class uTable extends React.Component {
     const styleDiv_2 = {
       fontSize: 25
     };
-    // const styleDiv_3 = {
-    //   fontSize: 10
-    // };
+    const styleDiv_3 = {
+      fontSize: 20
+    };
     if (!this.props.appData.data.rests || !this.props.appData.data.dishes) {
       return (
         <div id="rests" className="panel panel-default">
@@ -274,7 +279,7 @@ class uTable extends React.Component {
         </div>
       )
     } else {
-      console.log('uTable | render | In second if');
+      // console.log('uTable | render | In second if');
       let rest = this.props.appData.data.rests.findIndex(x => x.name === this.props.params.restName);
       if (!this.props.appData.data.rests[rest].menus || !this.props.appData.data.rests[rest].tables || !this.state.order) {
         return (
@@ -309,7 +314,7 @@ class uTable extends React.Component {
                       <div>{menu.subMenus.map((submenu, i) => {
                         return (
                           <div key={i}>
-                            <div>{submenu.name}</div>
+                            <div style={styleDiv_3}>{submenu.name}</div>
                             <li className="restItem list-group-item">
                               <div className="innerItem name">
                                 Dish Name

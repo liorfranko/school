@@ -261,9 +261,9 @@ class App extends React.Component {
   }
 
   updateAllRests(data) {
-    console.log('App | updateAllRests data', data.items);
+    // console.log('App | updateAllRests data', data.items);
     const items = data.items || [];
-    console.log('App | updateAllRests', items);
+    // console.log('App | updateAllRests', items);
     this.setState({
       data: Object.assign({}, this.state.data, {rests: items}),
     });
@@ -373,7 +373,7 @@ class App extends React.Component {
   }
 
   getDishesUid(user_Id) {
-    console.log("App | getDishesUid");
+    // console.log("App | getDishesUid");
     // this.setState({loading: true});
     let data = {
       user_Id: user_Id
@@ -469,12 +469,12 @@ class App extends React.Component {
   }
 
   getAllRests() {
-    console.log("App | getAllRests");
+    // console.log("App | getAllRests");
     api.postRequest('getAllRestaurants', {}, this.updateAllRests);
   }
 
   getOrdersByTableId(table_Id) {
-    console.log("App | getOrdersByTableId | table_Id", table_Id);
+    // console.log("App | getOrdersByTableId | table_Id", table_Id);
     let data = {
       table_Id: table_Id
     };
@@ -737,8 +737,8 @@ class App extends React.Component {
                 editOrderDishes: this.editOrderDishes,
                 editOrderSumPaid: this.editOrderSumPaid,
               }))}
-              <Button onClick={this.goBack}>Back</Button>
-              <Button onClick={this.goForward}>Forward</Button>
+              {/*<Button onClick={this.goBack}>Back</Button>*/}
+              {/*<Button onClick={this.goForward}>Forward</Button>*/}
               <footer>Footer - links, & other shit</footer>
             </div>
           </div>

@@ -2,7 +2,6 @@
  * Created by liorf on 12/4/16.
  */
 
-// TODO fix the HTML of this page
 import React from 'react';
 import TableManager from '../uTables/utableManager';
 
@@ -61,7 +60,13 @@ class uRestaurant extends React.Component {
     const styleDiv = {
       fontSize: 30
     };
-    if (!this.props.appData.data.rests) {
+    const styleDiv_2 = {
+      fontSize: 25
+    };
+    const styleDiv_3 = {
+      fontSize: 20
+    };
+    if (!this.props.appData.data.rests || !this.props.appData.data.dishes) {
       return (
         <div id="rests" className="panel panel-default">
           <div className="panel-heading" style={styleDiv}>Restaurants:</div>
@@ -92,25 +97,25 @@ class uRestaurant extends React.Component {
                 }
                 return (
                   <ul className="restList list-group" key={t}>
-                    <div>{menu.name}</div>
+                    <div style={styleDiv_2}>{menu.name}</div>
                     {menu.subMenus ?
                       <div>{menu.subMenus.map((submenu, i) => {
-                        {/*console.log('uRestaurant | render | submenu', submenu);*/
-                        }
                         return (
-                          <li className="restItem list-group-item" key={i}>
-                            <div>{submenu.name}</div>
+                          <div key={i}>
+                            <div style={styleDiv_3}>{submenu.name}</div>
+                            <li className="restItem list-group-item">
+                              <div className="innerItem name">
+                                Dish Name
+                              </div>
+                              <div className="innerItem name">
+                                Dish Price
+                              </div>
+                            </li>
                             {submenu.dishArray ?
                               <div>{submenu.dishArray.map((dish, j) => {
-                                {/*console.log('uRestaurant | render | dish', dish);*/
-                                }
                                 let dishIndex = this.props.appData.data.dishes.findIndex(x => x._id === dish);
                                 if (dishIndex > -1) {
-                                  {/*console.log('uRestaurant | render | dishIndex', dishIndex);*/
-                                  }
                                   let fullDish = this.props.appData.data.dishes[dishIndex];
-                                  {/*console.log('uRestaurant | render | fullDish', fullDish);*/
-                                  }
                                   return (
                                     <li className="restItem list-group-item" key={j}>
                                       <div className="innerItem name">
@@ -124,7 +129,7 @@ class uRestaurant extends React.Component {
                                 }
                               })}</div> : null
                             }
-                          </li>
+                          </div>
                         )
                       })}</div> :
                       null
