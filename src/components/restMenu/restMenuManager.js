@@ -3,11 +3,11 @@
  */
 import React from 'react';
 import ListOfRestMenus from './ListOfRestMenus';
-import AddRestMenu from './AddRestMenu'
-import DeleteRestMenu from './DeleteRestMenu'
-import Popup from '../Popup/popup';
+import AddRestMenu from './AddRestMenu';
+import DeleteRestMenu from './DeleteRestMenu';
 import './restMenu.styl';
 import {Button} from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
 class restMenuManager extends React.Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class restMenuManager extends React.Component {
       showAddModal: false,
       showDeleteModal: false,
       selectedMenu: 0
-    }
+    };
   }
 
   exitPopup() {
@@ -31,14 +31,14 @@ class restMenuManager extends React.Component {
       showDeleteModal: false,
       selectedMenu: 0
     });
-  };
+  }
 
   addRestMenu() {
     // console.log('restMenuManager | addRestMenu');
     this.setState({
       showAddModal: true
     });
-  };
+  }
 
   deleteRestMenu(data) {
     // console.log('restMenuManager | deleteRestMenu | data', data);
@@ -46,8 +46,7 @@ class restMenuManager extends React.Component {
       showDeleteModal: true,
       selectedMenu: data
     });
-
-  };
+  }
 
   handleAddClick(...data) {
     // console.log('restMenuManager | handleAddClick this.props', this.props);
@@ -81,21 +80,26 @@ class restMenuManager extends React.Component {
                            rest={this.props.rest}
                            deleteRestMenu={this.deleteRestMenu}
           />
-          <AddRestMenu handleClick={this.handleAddClick.bind(this)}
+          <AddRestMenu handleClick={this.handleAddClick}
                        rest={this.props.rest}
-                       exit={this.exitPopup.bind(this)}
+                       exit={this.exitPopup}
                        show={this.state.showAddModal}
           />
           <Button onClick={this.addRestMenu}>Add Menu</Button>
           <DeleteRestMenu chosenMenu={this.props.menus[this.state.selectedMenu]}
-                          handleClick={this.handleDeleteClick.bind(this)}
-                          exit={this.exitPopup.bind(this)}
+                          handleClick={this.handleDeleteClick}
+                          exit={this.exitPopup}
                           show={this.state.showDeleteModal}
           />
         </div>
       </div>
-    )
+    );
   }
 }
-
+restMenuManager.propTypes = {
+  addRestMenu: PropTypes.func,
+  deleteRestMenu: PropTypes.func,
+  rest: PropTypes.object,
+  menus: PropTypes.object
+};
 export default restMenuManager;

@@ -7,13 +7,13 @@ import QRCode  from 'qrcode.react';
 
 class QrCodeModal extends React.Component {
   constructor(props) {
-    console.log('QrCode | constructor | props', props);
+    // console.log('QrCode | constructor | props', props);
     super(props);
 
   }
 
   render() {
-    console.log('EditTable | render | props', this.props);
+    // console.log('QrCode | render | props', this.props);
     return (
       <Modal show={this.props.show} onHide={this.props.exit}>
         <Modal.Header closeButton>

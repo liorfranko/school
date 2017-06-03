@@ -6,41 +6,50 @@
 
 import React from 'react';
 import {browserHistory} from 'react-router';
-// import {Nav, Navbar, NavItem, Breadcrumb} from 'react-bootstrap';
-import {Nav, Navbar, NavItem, Breadcrumb} from 'react-bootstrap';
-// import breadcrumbInstance from '../Breadcrumb'
+import PropTypes from 'prop-types';
 
-const Menu = (props) => (
+import {Nav, Navbar, NavItem} from 'react-bootstrap';
 
-  <div>
-    {/*{console.log('Menu | props', props)}*/}
-    <Navbar inverse collapseOnSelect fluid>
-      <Navbar.Header>
-        <Navbar.Brand>
-          <a onClick={() => browserHistory.push(`/`) } href="#">Homepage</a>
-        </Navbar.Brand>
-        <Navbar.Toggle />
-      </Navbar.Header>
-      <Navbar.Collapse>
-        <Nav>
-          {props.menu.map((item, i) => {
-            return (
-              <NavItem key={i} eventKey={i} onClick={() => browserHistory.push(`/${item.path}`) }>{item.name}</NavItem>
-            )
-          })}
-        </Nav>
-        {props.priv === 'user' ?
-          <Nav bsStyle="pills" pullRight>
-            <NavItem onClick={props.login}>Admin Login</NavItem>
-          </Nav> :
-          <Nav bsStyle="pills" pullRight>
-            <NavItem onClick={props.logout}>Logout</NavItem>
+const Menu = (props) => {
+  const onClick = (url) => {
+    browserHistory.push(url);
+  };
+  return (
+    <div>
+      {/*{console.log('Menu | props', props)}*/}
+      <Navbar inverse collapseOnSelect fluid>
+        <Navbar.Header>
+          <Navbar.Brand>
+            <a onClick={() => browserHistory.push(`/`)} href="#">Homepage</a>
+          </Navbar.Brand>
+          <Navbar.Toggle />
+        </Navbar.Header>
+        <Navbar.Collapse>
+          <Nav>
+            {props.menu.map((item, i) => {
+              return (
+                <NavItem key={i} eventKey={i} onClick={() => browserHistory.push(`/${item.path}`)}>{item.name}</NavItem>
+              );
+            })}
           </Nav>
-        }
-      </Navbar.Collapse>
-    </Navbar>
-  </div>
+          {props.priv === 'user' ?
+            <Nav bsStyle="pills" pullRight>
+              <NavItem onClick={props.login}>Admin Login</NavItem>
+            </Nav> :
+            <Nav bsStyle="pills" pullRight>
+              <NavItem onClick={props.logout}>Logout</NavItem>
+            </Nav>
+          }
+        </Navbar.Collapse>
+      </Navbar>
+    </div>
+  );
+};
 
-
-);
+Menu.propTypes = {
+  menu: PropTypes.array,
+  priv: PropTypes.string,
+  login: PropTypes.func,
+  logout: PropTypes.func
+};
 export default Menu;

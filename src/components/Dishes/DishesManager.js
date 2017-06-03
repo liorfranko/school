@@ -5,10 +5,12 @@ import AddDish from './AddDish.js';
 import EditDish from './EditDish.js';
 import DeleteDish from './DeleteDish.js';
 import {Button} from 'react-bootstrap';
+import PropTypes from 'prop-types';
+
 
 class DishesManager extends React.Component {
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     this.state = {
       selectedDish: 0,
       showEditModal: false,
@@ -27,7 +29,6 @@ class DishesManager extends React.Component {
 
   componentDidMount() {
     // console.log('DishesManager | componentDidMount', this.props);
-    // TODO: Ajax to load dishes
     if (!this.props.appData.data.dishes) {
       this.props.getDishes();
     }
@@ -39,7 +40,7 @@ class DishesManager extends React.Component {
       showEditModal: false,
       showDeleteModal: false
     });
-  };
+  }
 
   handleAddClick(data) {
     // console.log('DishesManager | handleAddClick | data', data);
@@ -104,10 +105,10 @@ class DishesManager extends React.Component {
         <div id="dishes" className="panel panel-default">
           <div className="panel-heading" style={styleDiv}>Dishes:</div>
           <div className="panel-body">
-            <img src={ src }/>
+            <img src={src}/>
           </div>
         </div>
-      )
+      );
     } else {
       return (
         <div id="dishes" className="panel panel-default">
@@ -117,25 +118,32 @@ class DishesManager extends React.Component {
                           editDish={this.openEditDish}
                           deleteDish={this.openDeleteDish}/>
             <Button onClick={this.openAddDish}>Add Dish</Button>
-            <AddDish handleClick={this.handleAddClick.bind(this)} exit={this.exitPopup.bind(this)}
+            <AddDish handleClick={this.handleAddClick} exit={this.exitPopup}
                      show={this.state.showAddModal}/>
             <EditDish
               dish={this.props.appData.data.dishes[this.state.selectedDish]}
-              handleClick={this.handleEditClick.bind(this)}
-              exit={this.exitPopup.bind(this)}
+              handleClick={this.handleEditClick}
+              exit={this.exitPopup}
               show={this.state.showEditModal}
             />
             <DeleteDish
               dish={this.props.appData.data.dishes[this.state.selectedDish]}
-              handleClick={this.handleDeleteClick.bind(this)}
-              exit={this.exitPopup.bind(this)}
+              handleClick={this.handleDeleteClick}
+              exit={this.exitPopup}
               show={this.state.showDeleteModal}
             />
           </div>
         </div>
-      )
+      );
     }
   }
 }
 
+DishesManager.propTypes = {
+  appData: PropTypes.object,
+  getDishes: PropTypes.func,
+  addDish: PropTypes.func,
+  editDish: PropTypes.func,
+  deleteDish: PropTypes.func
+};
 export default DishesManager;

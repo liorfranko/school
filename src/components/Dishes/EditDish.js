@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import {Modal, Button} from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
 class EditDish extends React.Component {
   constructor(props) {
@@ -13,14 +14,14 @@ class EditDish extends React.Component {
         dishName: '',
         dishId: '',
         dishDescription: '',
-        defaultPrice: '',
+        defaultPrice: ''
       };
     } else {
       this.state = {
         dishName: this.props.dish['name'],
         dishId: this.props.dish['_id'],
         dishDescription: this.props.dish['description'],
-        defaultPrice: this.props.dish['defaultPrice'],
+        defaultPrice: this.props.dish['defaultPrice']
       };
     }
     this.handleChange = this.handleChange.bind(this);
@@ -35,7 +36,7 @@ class EditDish extends React.Component {
         dishName: '',
         dishId: '',
         dishDescription: '',
-        defaultPrice: '',
+        defaultPrice: ''
       };
     } else {
       this.setState (
@@ -43,27 +44,15 @@ class EditDish extends React.Component {
           dishName: nextProps.dish['name'],
           dishId: nextProps.dish['_id'],
           dishDescription: nextProps.dish['description'],
-          defaultPrice: nextProps.dish['defaultPrice'],
+          defaultPrice: nextProps.dish['defaultPrice']
         }
-      )
+      );
     }
   }
 
   handleChange(event) {
     // console.log('EditDish | handleChange', event.target.value);
     this.setState({[event.target.name]: event.target.value});
-    // if (event.target.name == 'defaultPrice') {
-    //   if (event.target.value == parseInt(event.target.value, 10)) {
-    //     // console.log('EditDish | isInteger');
-    //     this.setState({[event.target.name]: event.target.value});
-    //   }
-    //   else {
-    //     // console.log('EditDish | not Integer');
-    //     alert('The price can be only numbers')
-    //   }
-    // } else {
-    //   this.setState({[event.target.name]: event.target.value});
-    // }
   }
 
   handleSubmit(event) {
@@ -102,10 +91,15 @@ class EditDish extends React.Component {
         <Button onClick={this.props.exit}>Close</Button>
       </Modal.Footer>
     </Modal>
-    )
-
+    );
   }
 }
 
+EditDish.propTypes = {
+  dish: PropTypes.object,
+  handleClick: PropTypes.func,
+  show: PropTypes.bool,
+  exit: PropTypes.func
+};
 
 export default EditDish;

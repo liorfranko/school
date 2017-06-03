@@ -8,6 +8,7 @@ import './rests.styl';
 
 class uRestaurantsManager extends React.Component {
   constructor(props) {
+    // console.log('RestaurantsManager | constructor', props);
     super(props);
     this.state = {
       selectedRes: 0,

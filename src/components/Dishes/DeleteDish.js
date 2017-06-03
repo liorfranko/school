@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import {Modal, Button} from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
 class DeleteDish extends React.Component {
   constructor(props) {
@@ -16,11 +17,10 @@ class DeleteDish extends React.Component {
     this.props.handleClick();
   }
 
-
   render() {
     // console.log('DeleteDish | render', this.props);
     if (! this.props.dish) {
-      return (null)
+      return (null);
     } else {
       return (
         <Modal show={this.props.show} onHide={this.props.exit}>
@@ -45,10 +45,18 @@ class DeleteDish extends React.Component {
             <Button onClick={this.props.exit}>Close</Button>
           </Modal.Footer>
         </Modal>
-      )
+      );
     }
   }
 }
 
-
+DeleteDish.propTypes = {
+  handleClick: PropTypes.func,
+  dish: PropTypes.object,
+  item: PropTypes.object,
+  exit: PropTypes.func,
+  deleteDish: PropTypes.func,
+  dishNum: PropTypes.number,
+  show: PropTypes.bool
+};
 export default DeleteDish;

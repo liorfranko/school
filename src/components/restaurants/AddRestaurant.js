@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import {Modal, Button} from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
 class AddRestaurant extends React.Component {
   constructor(props) {
@@ -51,31 +52,16 @@ class AddRestaurant extends React.Component {
       <Modal.Footer>
         <input type="submit" form="AddDishForm" value="Submit" className="btn btn-default"/>
         <Button onClick={this.props.exit}>Close</Button>
-        {/*<Button type="submit" onClick={this.handleSubmit} form="AddDishForm">Submit</Button>*/}
       </Modal.Footer>
     </Modal>
-      // <div>
-      //   {this.props.exit}
-      //   <div>Adding new Restaurant</div>
-      //   <div>
-      //     <form onSubmit={this.handleSubmit}>
-      //       <label>
-      //         <div>Restaurant Name:
-      //           <input type="text" name="resName" value={this.state.resName} onChange={this.handleChange} required/>
-      //         </div>
-      //         <div>
-      //           Restaurant Address:
-      //           <input type="text" name="resAddress" value={this.state.resAddress} onChange={this.handleChange} required/>
-      //         </div>
-      //       </label>
-      //       <input type="submit" value="Submit"/>
-      //     </form>
-      //   </div>
-      // </div>
-    )
-
+    );
   }
 }
 
+AddRestaurant.propTypes = {
+  handleClick: PropTypes.func,
+  exit: PropTypes.func,
+  show: PropTypes.bool
+};
 
 export default AddRestaurant;

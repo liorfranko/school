@@ -102,7 +102,7 @@ class TableManager extends React.Component {
   }
 
   render() {
-    console.log('tableManager | props', this.props);
+    // console.log('tableManager | props', this.props);
     // console.log('restMenuManager | this.state', this.state);
     let styleDiv = {
       fontSize: 30

@@ -1,27 +1,23 @@
-/**
- * Created by liorf on 11/25/16.
- */
-/**
- * Created by Alex on 21/11/2016.
- */
-
 "use strict";
 import React from 'react';
+import PropTypes from 'prop-types';
+
 
 const DishesListItem = (props) => {
   // console.log("DishesListItem | ", props);
-  function onEditClick() {
+  const onEditClick = () => {
     // console.log('DishesListItem | onEditClick');
-    props.editDish(props.dishNum)
-  }
+    props.editDish(props.dishNum);
+  };
 
-  function onDeleteClick() {
+  const onDeleteClick = () => {
     // console.log('DishesListItem | onDeleteClick');
-    props.deleteDish(props.dishNum)
-  }
+    props.deleteDish(props.dishNum);
+  };
+
   return (
     <li className="dishItem list-group-item">
-      <a className="innerItem name" onClick={onEditClick.bind(this)}>
+      <a className="innerItem name" onClick={onEditClick}>
         {props.item.name}
       </a>
       <div className="innerItem description">
@@ -30,22 +26,22 @@ const DishesListItem = (props) => {
       <div className="innerItem Price">
         {props.item.defaultPrice}
       </div>
-      <a className="innerItem delete" onClick={onDeleteClick.bind(this)}>
+      <a className="innerItem delete" onClick={onDeleteClick}>
         del
       </a>
-      <a className="innerItem edit" onClick={onEditClick.bind(this)}>
+      <a className="innerItem edit" onClick={onEditClick}>
         edit
       </a>
     </li>
   );
-
-
 };
 
-DishesListItem.PropTypes = {
-  item: React.PropTypes.object
+DishesListItem.propTypes = {
+  item: PropTypes.object,
+  deleteDish: PropTypes.func,
+  editDish: PropTypes.func,
+  dishNum: PropTypes.number
 };
-
 export default DishesListItem;
 
 

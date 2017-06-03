@@ -3,10 +3,11 @@
  */
 import React from 'react';
 import {Modal, Button} from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
 class AddDish extends React.Component {
   constructor(props) {
-    // console.log('AddDish | constructor');
+    console.log('AddDish | constructor | ', props);
     super(props);
     this.state = {
       dishName: '',
@@ -21,18 +22,6 @@ class AddDish extends React.Component {
   handleChange(event) {
     // console.log('AddDish | handleChange', event.target.value);
     this.setState({[event.target.name]: event.target.value});
-    // if (event.target.name === 'defaultPrice') {
-    //   if (event.target.value == parseInt(event.target.value, 10)) {
-    //     // console.log('AddDish | isInteger');
-    //     this.setState({[event.target.name]: event.target.value});
-    //   }
-    //   else {
-    //     // console.log('AddDish | not Integer');
-    //     alert('The price can be only numbers')
-    //   }
-    // } else {
-    //   this.setState({[event.target.name]: event.target.value});
-    // }
   }
 
 
@@ -72,9 +61,13 @@ class AddDish extends React.Component {
           {/*<Button type="submit" onClick={this.handleSubmit} form="AddDishForm">Submit</Button>*/}
         </Modal.Footer>
       </Modal>
-    )
+    );
   }
 }
 
-
+AddDish.propTypes = {
+  handleClick: PropTypes.func,
+  show: PropTypes.bool,
+  exit: PropTypes.func
+};
 export default AddDish;

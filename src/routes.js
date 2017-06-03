@@ -20,23 +20,28 @@ import uTable from './components/uTables/uTable';
 // import Login from './components/Login/Login'
 
 // import DishesManager
+
 //TODO Fix back button
 export default class Routes extends Component {
   render() {
     return (
       <Router history={browserHistory}>
-        <Route path="/" component={App}>
+        <Route name="Home" path="/" component={App}>
           <IndexRoute component={Homepage}/>
-          <Route path="/Admin" component={App}/>
-          <Route path="/Admin/Dishes" component={Dishes}/>
-          <Route path="/Admin/Restaurants" component={Restaurants}/>
-          <Route path="/Admin/Restaurants/:restName" component={Restaurant}/>
-          <Route path="/Admin/Restaurants/:restName/Menus/:menuName" component={RestMenu}/>
-          <Route path="/Admin/Restaurants/:restName/Menus/:menuName/Submenus/:subMenuName" component={RestSubMenu}/>
+          <Route name="Admin" path="/Admin" component={App}/>
+          <Route name="Dishes" path="/Admin/Dishes" component={Dishes}/>
+          <Route name="Restaurants" path="/Admin/Restaurants" component={Restaurants}/>
+          <Route name="Restaurants/:restName" path="/Admin/Restaurants/:restName" component={Restaurant}/>
+          <Route name="Restaurants/:restName/Menus/:menuName" path="/Admin/Restaurants/:restName/Menus/:menuName" component={RestMenu}/>
+          <Route name="subMenuName" path="/Admin/Restaurants/:restName/Menus/:menuName/Submenus/:subMenuName" component={RestSubMenu}/>""
 
-          <Route path="/uRestaurants" component={uRestaurants}/>
-          <Route path="/uRestaurants/:restName" component={uRestaurant}/>
-          <Route path="/uRestaurants/:restName/Menus/:menuName/Table/:tableNum" component={uRestMenu}/>
+          <Route name="Route1" path="/uRestaurants" component={uRestaurants}/>
+          <Route name="Route2" path="/uRestaurants/:restName" component={uRestaurant}/>
+          {/*<Route name='Route1' path="/uRestaurants" component={uRestaurants} exact>*/}
+            {/*<Route name='Route2' path=":restName" component={uRestaurant}>*/}
+            {/*</Route>*/}
+          {/*</Route>*/}
+          <Route name="RestName" path="/uRestaurants/:restName/Menus/:menuName/Table/:tableNum" component={uRestMenu}/>
           <Route path="/uRestaurants/:restName/uTables/:tableName" component={uTable}/>
         </Route>
       </ Router>

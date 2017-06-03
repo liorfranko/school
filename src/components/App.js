@@ -5,15 +5,14 @@
 import React from 'react';
 import Menu from './menu/Menu';
 import {Button} from 'react-bootstrap';
-import api from '../api/API'
+import api from '../api/API';
 import 'react-super-select/lib/react-super-select.css';
 import update from 'immutability-helper';
 import {browserHistory} from 'react-router';
 import LoginHOC from 'react-facebook-login-hoc';
+import Breadcrumbs  from 'react-breadcrumbs';
+import PropTypes from 'prop-types';
 
-// import Login from './Login/Login'
-// import {setPId} from 'react-pstate'
-// TODO Change the default loading page to be with userId 99999 and move the management interface to /admin
 const configureLoginProps = {
   appId: '756445047848860',
   scope: 'public_profile, email',
@@ -36,7 +35,7 @@ class App extends React.Component {
       status: 'unknown',
       facebook_id: null,
       token: null,
-      data: {},
+      data: {}
     };
 
     this.goBack = this.goBack.bind(this);
@@ -110,7 +109,7 @@ class App extends React.Component {
     const items = data.items || [];
     // console.log('App | updateRest', items);
     this.setState({
-      data: Object.assign({}, this.state.data, {rests: items}),
+      data: Object.assign({}, this.state.data, {rests: items})
       // loading: false
     });
   }
@@ -200,7 +199,7 @@ class App extends React.Component {
                 data: Object.assign({}, this.state.data, {rests: newRestArray})
               });
             }
-          })
+          });
         }
       });
     }
@@ -247,16 +246,16 @@ class App extends React.Component {
   }
 
   updateLogin(data) {
-    console.log('App | updateLogin data', data);
+    // console.log('App | updateLogin data', data);
     // const items = data.items || [];
     if (data.status == 'Success') {
-      console.log('App | updateLogin Success');
+      // console.log('App | updateLogin Success');
       this.setState({
         uid: data.items._id
       });
     } else {
-      console.log('App | updateLogin Failed');
-      this.addUser()
+      // console.log('App | updateLogin Failed');
+      this.addUser();
     }
 
   }
@@ -266,7 +265,7 @@ class App extends React.Component {
     const items = data.items || [];
     // console.log('App | updateAllRests', items);
     this.setState({
-      data: Object.assign({}, this.state.data, {rests: items}),
+      data: Object.assign({}, this.state.data, {rests: items})
     });
   }
 
@@ -356,7 +355,7 @@ class App extends React.Component {
   }
 
   getRests() {
-    console.log("App | getRests", this.state);
+    // console.log("App | getRests", this.state);
     // this.setState({loading: true});
     let data = {
       user_Id: this.state.uid
@@ -399,7 +398,7 @@ class App extends React.Component {
       };
       // console.log("App | getMenus, data", data);
       api.postRequest('getMenus', data, this.updateMenus);
-    }.bind(this)
+    }.bind(this);
   }
 
   getMenus(restaurant_Id) {
@@ -428,7 +427,7 @@ class App extends React.Component {
       };
       // console.log("App | getSubMenusLocal, data", data);
       api.postRequest('getSubMenus', data, this.updateSubMenus);
-    }.bind(this)
+    }.bind(this);
   }
 
   getSubMenus(menuId) {
@@ -607,9 +606,9 @@ class App extends React.Component {
       // console.log('App | editOrderDishes | data.dishArray[i]', data.dishArray[i]);
       if (data.dishArray[i]) {
         // console.log('App | editOrderDishes | Exist');
-        postData = postData + '&d' + (i + 1) + '=' + data.dishArray[i]
+        postData = postData + '&d' + (i + 1) + '=' + data.dishArray[i];
       } else {
-        postData = postData + '&d' + (i + 1) + '=' + ""
+        postData = postData + '&d' + (i + 1) + '=' + "";
       }
     }
     // console.log('App | editOrderDishes | postData', postData);
@@ -633,7 +632,7 @@ class App extends React.Component {
     let data = {
       facebook_Id: this.state.facebook_id,
       name: '',
-      password: '',
+      password: ''
     };
     api.postRequest('addUser', data, this.checkFacebookID);
   }
@@ -648,11 +647,9 @@ class App extends React.Component {
   }
 
   getStatus(response) {
-    console.log('App | getStatus | response', response);
+    // console.log('App | getStatus | response', response);
     if (response.authResponse) {
-      this.responseApi.call(this, response)
-    } else {
-      console.log('App | getStatus | response', response);
+      this.responseApi.call(this, response);
     }
   }
 
@@ -670,14 +667,14 @@ class App extends React.Component {
   }
 
   checkLoginState() {
-    this.status(this.getStatus.bind(this))
-  };
+    this.status(this.getStatus.bind(this));
+  }
 
   loginFacebook() {
     browserHistory.push(`/`);
     this.login(this.getStatus.bind(this));
     this.setState({
-      data: {},
+      data: {}
     });
   }
 
@@ -700,15 +697,18 @@ class App extends React.Component {
       status: 'connected',
       facebook_id: null,
       token: null,
-      uid: userUid,
+      uid: userUid
     });
 
   }
 
   render() {
     // console.log('App | render | this.state', this.state);
+    // console.log('App | render | props', this.props);
+    // console.log('App | render | route', this.props.route);
+    // console.log('App | render | params', this.props.params);
+    // console.log('App | render | routeParams', this.props.routeParams);
     if (this.state.priv === 'user') {
-      // console.log('App | render | User');
       return (
         <div>
           <nav className="navbar navbar-inverse navbar-fixed-top">
@@ -736,10 +736,16 @@ class App extends React.Component {
                 getOrdersByTableId: this.getOrdersByTableId,
                 addOrder: this.addOrder,
                 editOrderDishes: this.editOrderDishes,
-                editOrderSumPaid: this.editOrderSumPaid,
+                editOrderSumPaid: this.editOrderSumPaid
               }))}
               {/*<Button onClick={this.goBack}>Back</Button>*/}
               {/*<Button onClick={this.goForward}>Forward</Button>*/}
+              <div>
+                <Breadcrumbs
+                  routes={this.props.routes}
+                  params={this.props.params}
+                />
+              </div>
               <footer>Footer - links, & other shit</footer>
             </div>
           </div>
@@ -757,7 +763,7 @@ class App extends React.Component {
               <Menu
                 menu={[
                   {name: 'Your Restaurants', path: 'Admin/Restaurants'},
-                  {name: 'Your Dishes', path: 'Admin/Dishes'},
+                  {name: 'Your Dishes', path: 'Admin/Dishes'}
                 ]}
                 uid={this.state.uid}
                 logout={this.logoutFacebook}
@@ -790,177 +796,42 @@ class App extends React.Component {
                 deleteRestMenu: this.deleteRestMenu,
                 deleteSubMenu: this.deleteSubMenu,
                 deleteTable: this.deleteTable,
-                publicDns: publicDns,
+                publicDns: publicDns
               }))}
               <Button onClick={this.goBack}>Back</Button>
               <Button onClick={this.goForward}>Forward</Button>
+              <div>
+                <Breadcrumbs
+                  routes={this.props.routes}
+                  params={this.props.params}
+                />
+              </div>
               <footer>Footer - links, & other shit</footer>
             </div>
           </div>
         </div>
-      )
+      );
     }
-    // if (this.state.uid !== null) {
-    //   // console.log('App | render | connected');
-    //   // console.log('App | render | this.state.uid ', this.state.uid);
-    //   if (this.state.uid === userUid) {
-    //     console.log('App | render | User access');
-    //     return (
-    //       <div>
-    //         <nav className="navbar navbar-inverse navbar-fixed-top">
-    //           <div className="container">
-    //             <Menu
-    //               menu={[{name: 'Restaurants', path: 'uRestaurants'}]}
-    //               uid={this.state.uid}
-    //               logout={this.logoutFacebook}
-    //             />
-    //           </div>
-    //         </nav>
-    //         <div className="jumbotron">
-    //           <div className="container">
-    //             <h1>Header - Logo + Menu</h1>
-    //             {React.Children.map(this.props.children, (child) => React.cloneElement(child, {
-    //               appData: this.state,
-    //               getRests: this.getRests,
-    //               getDishesUid: this.getDishesUid,
-    //               getMenus: this.getMenus,
-    //               getSubMenus: this.getSubMenus,
-    //               getTables: this.getTables,
-    //               getAllRests: this.getAllRests,
-    //               getOrdersByTableId: this.getOrdersByTableId,
-    //               addOrder: this.addOrder,
-    //               editOrderDishes: this.editOrderDishes,
-    //               editOrderSumPaid: this.editOrderSumPaid,
-    //             }))}
-    //             <Button onClick={this.goBack}>Back</Button>
-    //             <Button onClick={this.goForward}>Forward</Button>
-    //             <footer>Footer - links, & other shit</footer>
-    //           </div>
-    //         </div>
-    //       </div>
-    //     );
-    //   } else {
-    //     console.log('App | render | Admin access');
-    //     return (
-    //       <div>
-    //         <nav className="navbar navbar-inverse navbar-fixed-top">
-    //           <div className="container">
-    //             <Menu
-    //               menu={[
-    //                 {name: 'Restaurants', path: 'Admin/Restaurants'},
-    //                 {name: 'Dishes', path: 'Admin/Dishes'},
-    //               ]}
-    //               uid={this.state.uid}
-    //               logout={this.logoutFacebook}
-    //             />
-    //           </div>
-    //         </nav>
-    //         <div className="jumbotron">
-    //           <div className="container">
-    //             <h1>Header - Logo + Menu</h1>
-    //             {React.Children.map(this.props.children, (child) => React.cloneElement(child, {
-    //               appData: this.state,
-    //               getRests: this.getRests,
-    //               getDishes: this.getDishes,
-    //               getMenus: this.getMenus,
-    //               getSubMenus: this.getSubMenus,
-    //               getTables: this.getTables,
-    //               addRest: this.addRest,
-    //               addDish: this.addDish,
-    //               addSubMenu: this.addSubMenu,
-    //               addRestMenu: this.addRestMenu,
-    //               addTable: this.addTable,
-    //               editRest: this.editRest,
-    //               editDish: this.editDish,
-    //               editRestMenu: this.editRestMenu,
-    //               editSubMenu: this.editSubMenu,
-    //               editTable: this.editTable,
-    //               deleteRest: this.deleteRest,
-    //               deleteDish: this.deleteDish,
-    //               deleteRestMenu: this.deleteRestMenu,
-    //               deleteSubMenu: this.deleteSubMenu,
-    //               deleteTable: this.deleteTable,
-    //             }))}
-    //             <Button onClick={this.goBack}>Back</Button>
-    //             <Button onClick={this.goForward}>Forward</Button>
-    //             <footer>Footer - links, & other shit</footer>
-    //           </div>
-    //         </div>
-    //       </div>
-    //     )
-    //   }
-    //
-    // } else {
-    //   // console.log('App | render | uid == null');
-    //   // this.userLogin();
-    //   const styleDiv = {
-    //     fontSize: 30
-    //   };
-    //   const src = require("../Images/5.gif");
-    //   // const login = require("../Images/facebook-sign-in-button-png-26.png");
-    //   if (this.state.facebook_id === null) {
-    //     // console.log('App | render | facebook_id == null');
-    //     return (
-    //       <div>
-    //         <nav className="navbar navbar-inverse navbar-fixed-top">
-    //           <div className="container">
-    //             <Menu
-    //               menu={[]}
-    //               uid={null}
-    //               login={this.loginFacebook}
-    //             />
-    //           </div>
-    //         </nav>
-    //         <div className="jumbotron">
-    //           <div className="container">
-    //             <h1>Header - Logo + Menu</h1>
-    //             <div id="rests" className="panel panel-default">
-    //               <div className="panel-heading" style={styleDiv}>Welcome:</div>
-    //               <div className="panel-body">
-    //                 <div>To manage your restaurants, please login using facebook.</div>
-    //                 <button onClick={ this.loginFacebook.bind(this) }>Facebook Login</button>
-    //                 <div>
-    //                   <button onClick={this.userLogin.bind(this) }>User access click here</button>
-    //                 </div>
-    //               </div>
-    //             </div>
-    //             <footer>Footer - links, & other shit</footer>
-    //           </div>
-    //         </div>
-    //       </div>
-    //     )
-    //   } else {
-    //     console.log('App | render | facebook_id != null');
-    //     this.checkFacebookID();
-    //     return (
-    //       <div>
-    //         <nav className="navbar navbar-inverse navbar-fixed-top">
-    //           <div className="container">
-    //             {/*<Menu menu={[*/}
-    //               {/*{name: 'Homepage', path: ''},*/}
-    //               {/*{name: 'Rests', path: 'Rests'},*/}
-    //               {/*{name: 'Dishes', path: 'Dishes'},*/}
-    //             {/*]}/>*/}
-    //           </div>
-    //         </nav>
-    //         <div className="jumbotron">
-    //           <div className="container">
-    //             <h1>Header - Logo + Menu</h1>
-    //             <div id="rests" className="panel panel-default">
-    //               <div className="panel-heading" style={styleDiv}>Login:</div>
-    //               <div className="panel-body">
-    //                 <img src={ src }/>
-    //               </div>
-    //             </div>
-    //           </div>
-    //         </div>
-    //       </div>
-    //     );
-    //   }
-    // }
   }
 
 }
+
+App.propTypes = {
+  routes: PropTypes.array,
+  appId: PropTypes.string,
+  children: PropTypes.object,
+  routeParams: PropTypes.object,
+  route: PropTypes.object,
+  params: PropTypes.object,
+  location: PropTypes.object,
+  history: PropTypes.object,
+  fb: PropTypes.object,
+  cookie: PropTypes.bool,
+  language: PropTypes.string,
+  scope: PropTypes.string,
+  version: PropTypes.string,
+  xfbml: PropTypes.string
+};
 
 // export default App;
 export default LoginHOC(configureLoginProps)(App);

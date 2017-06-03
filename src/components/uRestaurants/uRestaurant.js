@@ -32,7 +32,7 @@ class uRestaurant extends React.Component {
         this.props.getTables(this.props.appData.data.rests[rest]._id);
       }
       if (!this.props.appData.data.dishes) {
-        console.log('uRestaurant | componentInit | getDishesUid()');
+        // console.log('uRestaurant | componentInit | getDishesUid()');
         this.props.getDishesUid(this.props.appData.data.rests[rest].userId);
       }
     }
@@ -55,7 +55,7 @@ class uRestaurant extends React.Component {
   }
 
   render() {
-    console.log('uRestaurant | render |this.props', this.props);
+    // console.log('uRestaurant | render |this.props', this.props);
     const src = require("../../Images/5.gif");
     const styleDiv = {
       fontSize: 30
@@ -141,18 +141,6 @@ class uRestaurant extends React.Component {
             </div>
           </div>
         );
-        // return (
-        //   <div>
-        //     <TableManager
-        //       rest={this.props.appData.data.rests[rest]}
-        //       tables={this.props.appData.data.rests[rest].tables}
-        //       addOrder={this.props.addOrder}
-        //       getOrdersByTableId={this.props.getOrdersByTableId}
-        //       // deleteTable={this.props.deleteTable}
-        //       // editTable={this.props.editTable}
-        //     />
-        //   </div>
-        // )
       }
     }
   }

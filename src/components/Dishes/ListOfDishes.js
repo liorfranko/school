@@ -1,9 +1,8 @@
-/**
- * Created by liorf on 11/25/16.
- */
 import React from 'react';
 import DishesListItem from './DishesListItem';
-import ReactSuperSelect from 'react-super-select'
+import ReactSuperSelect from 'react-super-select';
+import PropTypes from 'prop-types';
+
 
 const ListOfDishes = (props) => {
   // console.log('ListOfDishes | props', props);
@@ -17,7 +16,7 @@ const ListOfDishes = (props) => {
     testData.push({
       "id": dish._id,
       "name": dish.name
-    })
+    });
   });
 
   if (props.type === "inMenu") {
@@ -25,9 +24,9 @@ const ListOfDishes = (props) => {
       <ReactSuperSelect placeholder="Make Your Selections"
                         dataSource={testData}
                         onChange={handlerExample}
-                        multiple={true}
-                        keepOpenOnSelection={true}/>
-    )
+                        multiple={Boolean(true)}
+                        keepOpenOnSelection={Boolean(true)}/>
+    );
   } else {
     return (
       <ul className="dishList list-group">
@@ -45,9 +44,14 @@ const ListOfDishes = (props) => {
           })
         }
       </ul>
-    )
+    );
   }
-
 };
 
+ListOfDishes.propTypes = {
+  dishes: PropTypes.array,
+  type: PropTypes.string,
+  editDish: PropTypes.func,
+  deleteDish: PropTypes.func
+};
 export default ListOfDishes;

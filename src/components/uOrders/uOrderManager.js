@@ -8,13 +8,13 @@ import './Orders.styl';
 
 class uOrderManager extends React.Component {
   constructor(props) {
-    console.log('uOrderManager | constructor', props);
+    // console.log('uOrderManager | constructor', props);
     super(props);
   }
 
 
   render() {
-    console.log('uOrderManager | props', this.props);
+    // console.log('uOrderManager | props', this.props);
     // console.log('restMenuManager | this.state', this.state);
     // let styleDiv = {
     //   fontSize: 30

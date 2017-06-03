@@ -7,15 +7,14 @@ import Image from 'react'
 
 import ListOfRestaurants from './ListOfRestaurants';
 import './rests.styl';
-// import Popup from '../Popup/popup';
 import EditRestaurant from './EditRestaurant.js';
 import DeleteRestaurant from './DeleteRestaurant.js';
 import AddRestaurant from './AddRestaurant.js';
-// import Restaurant from './Restaurant'
 import {Button} from 'react-bootstrap';
 
 class RestaurantsManager extends React.Component {
   constructor(props) {
+    // console.log('RestaurantsManager | constructor | props', props);
     super(props);
     this.state = {
       selectedRes: 0,
@@ -52,7 +51,7 @@ class RestaurantsManager extends React.Component {
 
   handleDeleteClick() {
     // console.log('RestaurantsManager | handleDeleteClick', resNum);
-    console.log('RestaurantsManager | handleDeleteClick', this.state.selectedRes);
+    // console.log('RestaurantsManager | handleDeleteClick', this.state.selectedRes);
     this.props.deleteRest(this.state.selectedRes);
     this.setState({
       showDeleteModal: false,
