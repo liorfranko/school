@@ -55,7 +55,7 @@ class Restaurant extends React.Component {
   }
 
   render() {
-    // console.log('Restaurant | render |this.props', this.props);
+    console.log('Restaurant | render |this.props', this.props);
     const src = require("../../Images/5.gif");
     const styleDiv = {
       fontSize: 30
@@ -94,6 +94,7 @@ class Restaurant extends React.Component {
               addTable={this.props.addTable}
               deleteTable={this.props.deleteTable}
               editTable={this.props.editTable}
+              publicDns={this.props.publicDns}
             />
           </div>
         )

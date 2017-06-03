@@ -13,7 +13,7 @@ class QrCodeModal extends React.Component {
   }
 
   render() {
-    // console.log('EditTable | render | props', this.props);
+    console.log('EditTable | render | props', this.props);
     return (
       <Modal show={this.props.show} onHide={this.props.exit}>
         <Modal.Header closeButton>
@@ -21,7 +21,7 @@ class QrCodeModal extends React.Component {
         </Modal.Header>
         <Modal.Body>
           <form id="AddTableForm" onSubmit={this.handleSubmit}>
-            <QRCode value={`http://localhost:4000/uRestaurants/${this.props.rest.name}/${this.props.chosenTable.tableNum}`} />
+            <QRCode value={`http://${this.props.publicDns}/uRestaurants/${this.props.rest.name}/uTables/${this.props.chosenTable.tableNum}`} />
           </form>
         </Modal.Body>
         <Modal.Footer>

@@ -94,7 +94,7 @@ class TableManager extends React.Component {
   }
 
   openQr(data) {
-    console.log('TableManager | openQr', data);
+    // console.log('TableManager | openQr', data);
     this.setState({
       selectedTable: data,
       showQrModal: true
@@ -102,7 +102,7 @@ class TableManager extends React.Component {
   }
 
   render() {
-    // console.log('tableManager | props', this.props);
+    console.log('tableManager | props', this.props);
     // console.log('restMenuManager | this.state', this.state);
     let styleDiv = {
       fontSize: 30
@@ -142,6 +142,7 @@ class TableManager extends React.Component {
             rest={this.props.rest}
             exit={this.exitPopup.bind(this)}
             show={this.state.showQrModal}
+            publicDns={this.props.publicDns}
           />
         </div>
       </div>

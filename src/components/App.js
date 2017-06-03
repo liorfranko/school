@@ -23,6 +23,7 @@ const configureLoginProps = {
   language: 'en_US'
 };
 const userUid = '999999';
+const publicDns = 'ec2-35-156-35-110.eu-central-1.compute.amazonaws.com';
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -789,6 +790,7 @@ class App extends React.Component {
                 deleteRestMenu: this.deleteRestMenu,
                 deleteSubMenu: this.deleteSubMenu,
                 deleteTable: this.deleteTable,
+                publicDns: publicDns,
               }))}
               <Button onClick={this.goBack}>Back</Button>
               <Button onClick={this.goForward}>Forward</Button>
