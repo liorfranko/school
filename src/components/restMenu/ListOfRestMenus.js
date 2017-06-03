@@ -6,6 +6,7 @@
 
 import React from 'react';
 import RestMenuListItem from './restMenuListItem';
+import PropTypes from 'prop-types';
 
 const ListOfRestMenus = (props) => {
   // console.log('ListOfRestMenus |', props);
@@ -24,7 +25,12 @@ const ListOfRestMenus = (props) => {
         })
       }
     </ul>
-  )
+  );
 };
-
+ListOfRestMenus.propTypes = {
+  editRest: PropTypes.func,
+  deleteRestMenu: PropTypes.func,
+  rest: PropTypes.object,
+  menus: PropTypes.array
+};
 export default ListOfRestMenus;

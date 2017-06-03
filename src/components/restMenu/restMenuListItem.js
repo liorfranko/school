@@ -4,28 +4,31 @@
 "use strict";
 import React from 'react';
 import {Link} from 'react-router';
+import PropTypes from 'prop-types';
 
 const restMenuListItem = (props) => {
   // console.log("restMenuListItem | ", props);
-  function onDeleteClick() {
+  const onDeleteClick = () => {
     // console.log('restMenuListItem | onDeleteClick, props', props);
-    props.deleteRestMenu(props.menuNum)
-  }
+    props.deleteRestMenu(props.menuNum);
+  };
 
   return (
     <li className="menuItem list-group-item">
       <div className="innerItem name">
         <Link to={`/Admin/Restaurants/${props.rest.name}/Menus/${props.item.name}`}>{props.item.name}</Link>
       </div>
-      <a className="innerItem delete" onClick={onDeleteClick.bind(this)}>
+      <a className="innerItem delete" onClick={onDeleteClick}>
         del
       </a>
     </li>
   );
 };
 
-restMenuListItem.PropTypes = {
-  item: React.PropTypes.object
+restMenuListItem.propTypes = {
+  item: PropTypes.object,
+  rest: PropTypes.object,
+  deleteRestMenu: PropTypes.func,
+  menuNum: PropTypes.number
 };
-
 export default restMenuListItem;

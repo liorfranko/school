@@ -10,7 +10,6 @@ import {browserHistory} from 'react-router';
 import update from 'react/lib/update';
 import * as $ from 'jquery';
 
-//{"subMenu_Id":"583cb590422ce433e4abec81","items":[{"Id":"ABCD"},{"Id":"EFGH"},{"Id":"IJKL"}]}
 
 class RestSubMenu extends Component {
   constructor(props) {

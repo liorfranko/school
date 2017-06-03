@@ -2,15 +2,15 @@
  * Created by liorf on 11/16/16.
  */
 import React from 'react';
-import ListOfDishes from '../Dishes/ListOfDishes';
 import {Modal, Button} from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
 class AddRestMenu extends React.Component {
   constructor(props) {
     // console.log('AddRestMenu | constructor props', props);
     super(props);
     this.state = {
-      resMenuName: '',
+      resMenuName: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -54,9 +54,15 @@ class AddRestMenu extends React.Component {
         {/*<Button type="submit" onClick={this.handleSubmit} form="AddDishForm">Submit</Button>*/}
       </Modal.Footer>
     </Modal>
-    )
+    );
   }
 }
 
+AddRestMenu.propTypes = {
+  handleClick: PropTypes.func,
+  rest: PropTypes.object,
+  show: PropTypes.bool,
+  exit: PropTypes.func
+};
 
 export default AddRestMenu;

@@ -2,6 +2,7 @@
  * Created by liorf on 11/16/16.
  */
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class EditRestMenu extends React.Component {
   constructor(props) {
@@ -19,7 +20,7 @@ class EditRestMenu extends React.Component {
 
   handleChange(event) {
     // console.log('EditRestMenu | handleChange', event.target.value);
-    this.setState({[event.target.name]: event.target.value})
+    this.setState({[event.target.name]: event.target.value});
   }
 
   handleSubmit(event) {
@@ -46,11 +47,14 @@ class EditRestMenu extends React.Component {
           </form>
         </div>
       </div>
-
-    )
-
+    );
   }
 }
 
-
+EditRestMenu.propTypes = {
+  handleClick: PropTypes.func,
+  exit: PropTypes.func,
+  rest: PropTypes.object,
+  show: PropTypes.bool
+};
 export default EditRestMenu;

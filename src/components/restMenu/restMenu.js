@@ -2,7 +2,9 @@
  * Created by liorf on 12/10/16.
  */
 import React from 'react';
-import SubMenuManager from '../SubMenus/SubMenuManager'
+import SubMenuManager from '../SubMenus/SubMenuManager';
+import PropTypes from 'prop-types';
+
 // FIXME fix loading submenus when moving between menus.
 
 class RestMenu extends React.Component {
@@ -63,7 +65,7 @@ class RestMenu extends React.Component {
         }
       }
     }
-    this.forceUpdate()
+    this.forceUpdate();
   }
 
   addSubMenu() {
@@ -104,10 +106,10 @@ class RestMenu extends React.Component {
         <div id="restMenu" className="panel panel-default">
           <div className="panel-heading" style={styleDiv}>Restaurants:</div>
           <div className="panel-body">
-            <img src={ src }/>
+            <img src={src}/>
           </div>
         </div>
-      )
+      );
     } else {
       // console.log('RestMenu | render | this.props.appData', this.props.appData);
       // console.log('RestMenu | render | this.props.params', this.props.params);
@@ -130,7 +132,7 @@ class RestMenu extends React.Component {
           editSubMenu={this.props.editSubMenu}
           addSubMenu={this.props.addSubMenu}
         />
-        )
+        );
       } else {
         return (
           <SubMenuManager
@@ -147,5 +149,30 @@ class RestMenu extends React.Component {
     }
   }
 }
+
+RestMenu.propTypes = {
+  appData: PropTypes.object,
+  getRests: PropTypes.func,
+  getDishes: PropTypes.func,
+  getMenus: PropTypes.func,
+  getSubMenus: PropTypes.func,
+  getTables: PropTypes.func,
+  addRest: PropTypes.func,
+  addDish: PropTypes.func,
+  addSubMenu: PropTypes.func,
+  addTable: PropTypes.func,
+  editRest: PropTypes.func,
+  editDish: PropTypes.func,
+  editRestMenu: PropTypes.func,
+  editSubMenu: PropTypes.func,
+  editTable: PropTypes.func,
+  deleteRest: PropTypes.func,
+  deleteDish: PropTypes.func,
+  deleteRestMenu: PropTypes.func,
+  deleteSubMenu: PropTypes.func,
+  deleteTable: PropTypes.func,
+  params: PropTypes.object,
+  publicDns: PropTypes.string
+};
 
 export default RestMenu;

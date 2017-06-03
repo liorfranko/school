@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import Image from 'react'
+import PropTypes from 'prop-types';
 
 import ListOfRestaurants from './ListOfRestaurants';
 import './rests.styl';
@@ -46,7 +46,7 @@ class RestaurantsManager extends React.Component {
       showDeleteModal: false,
       selectedRes: 0
     });
-  };
+  }
 
 
   handleDeleteClick() {
@@ -113,35 +113,34 @@ class RestaurantsManager extends React.Component {
         <div id="rests" className="panel panel-default">
           <div className="panel-heading" style={styleDiv}>Restaurants:</div>
           <div className="panel-body">
-            <img src={ src }/>
+            <img src={src}/>
           </div>
         </div>
-      )
+      );
     } else {
       return (
         <div id="rests" className="panel panel-default">
           <div className="panel-heading" style={styleDiv}>Restaurants:</div>
           <div className="panel-body">
-            {/*{this.props.appData.data.rests ? <img src={ src } />: 'Show'}*/}
             <ListOfRestaurants rests={this.props.appData.data.rests}
                                editRest={this.editRest}
                                deleteRest={this.deleteRest}
             />
             {/*<a onClick={this.addRest} >Add restaurant</a>*/}
-            <AddRestaurant handleClick={this.handleAddClick.bind(this)}
-                           exit={this.exitPopup.bind(this)}
+            <AddRestaurant handleClick={this.handleAddClick}
+                           exit={this.exitPopup}
                            show={this.state.showAddModal}/>
             <Button onClick={this.addRest}>Add restaurant</Button>
             <DeleteRestaurant
               rest={this.props.appData.data.rests[this.state.selectedRes]}
-              handleClick={this.handleDeleteClick.bind(this)}
-              exit={this.exitPopup.bind(this)}
+              handleClick={this.handleDeleteClick}
+              exit={this.exitPopup}
               show={this.state.showDeleteModal}
             />
             <EditRestaurant
               rest={this.props.appData.data.rests[this.state.selectedRes]}
-              handleClick={this.handleEditClick.bind(this)}
-              exit={this.exitPopup.bind(this)}
+              handleClick={this.handleEditClick}
+              exit={this.exitPopup}
               show={this.state.showEditModal}
             />
           </div>
@@ -149,8 +148,30 @@ class RestaurantsManager extends React.Component {
 
       );
     }
-
   }
 }
-
+RestaurantsManager.propTypes = {
+  appData: PropTypes.object,
+  getRests: PropTypes.func,
+  getDishes: PropTypes.func,
+  getMenus: PropTypes.func,
+  getSubMenus: PropTypes.func,
+  getTables: PropTypes.func,
+  addRest: PropTypes.func,
+  addDish: PropTypes.func,
+  addSubMenu: PropTypes.func,
+  addTable: PropTypes.func,
+  editRest: PropTypes.func,
+  editDish: PropTypes.func,
+  editRestMenu: PropTypes.func,
+  editSubMenu: PropTypes.func,
+  editTable: PropTypes.func,
+  deleteRest: PropTypes.func,
+  deleteDish: PropTypes.func,
+  deleteRestMenu: PropTypes.func,
+  deleteSubMenu: PropTypes.func,
+  deleteTable: PropTypes.func,
+  params: PropTypes.object,
+  publicDns: PropTypes.string
+};
 export default RestaurantsManager;

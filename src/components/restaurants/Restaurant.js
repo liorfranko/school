@@ -4,8 +4,9 @@
 
 
 import React from 'react';
-import RestMenuManager from '../restMenu/restMenuManager'
-import TableManager from '../Tables/tableManager'
+import RestMenuManager from '../restMenu/restMenuManager';
+import TableManager from '../Tables/tableManager';
+import PropTypes from 'prop-types';
 
 class Restaurant extends React.Component {
   constructor(props) {
@@ -40,16 +41,16 @@ class Restaurant extends React.Component {
     // console.log('Restaurant | componentWillReceiveProps | this.props', this.props);
     if (!this.props.appData.data.rests) {
       this.props.getRests();
-      this.forceUpdate()
+      this.forceUpdate();
     } else {
       let rest = this.props.appData.data.rests.findIndex(x => x.name===this.props.params.restName);
       if (!this.props.appData.data.rests[rest].menus) {
         this.props.getMenus(this.props.appData.data.rests[rest]._id);
-        this.forceUpdate()
+        this.forceUpdate();
       }
       if (!this.props.appData.data.rests[rest].tables) {
         this.props.getTables(this.props.appData.data.rests[rest]._id);
-        this.forceUpdate()
+        this.forceUpdate();
       }
     }
   }
@@ -65,10 +66,10 @@ class Restaurant extends React.Component {
         <div id="rests" className="panel panel-default">
           <div className="panel-heading" style={styleDiv}>Restaurants:</div>
           <div className="panel-body">
-            <img src={ src }/>
+            <img src={src}/>
           </div>
         </div>
-      )
+      );
     } else {
       let rest = this.props.appData.data.rests.findIndex(x => x.name === this.props.params.restName);
       if (!this.props.appData.data.rests[rest].menus || !this.props.appData.data.rests[rest].tables) {
@@ -76,10 +77,10 @@ class Restaurant extends React.Component {
           <div id="rests" className="panel panel-default">
             <div className="panel-heading" style={styleDiv}>Restaurants:</div>
             <div className="panel-body">
-              <img src={ src }/>
+              <img src={src}/>
             </div>
           </div>
-        )
+        );
       } else {
         return (
           <div>
@@ -97,10 +98,35 @@ class Restaurant extends React.Component {
               publicDns={this.props.publicDns}
             />
           </div>
-        )
+        );
       }
     }
   }
 }
+
+Restaurant.propTypes = {
+  appData: PropTypes.object,
+  getRests: PropTypes.func,
+  getDishes: PropTypes.func,
+  getMenus: PropTypes.func,
+  getSubMenus: PropTypes.func,
+  getTables: PropTypes.func,
+  addRest: PropTypes.func,
+  addDish: PropTypes.func,
+  addSubMenu: PropTypes.func,
+  addTable: PropTypes.func,
+  editRest: PropTypes.func,
+  editDish: PropTypes.func,
+  editRestMenu: PropTypes.func,
+  editSubMenu: PropTypes.func,
+  editTable: PropTypes.func,
+  deleteRest: PropTypes.func,
+  deleteDish: PropTypes.func,
+  deleteRestMenu: PropTypes.func,
+  deleteSubMenu: PropTypes.func,
+  deleteTable: PropTypes.func,
+  params: PropTypes.object,
+  publicDns: PropTypes.string
+};
 
 export default Restaurant;

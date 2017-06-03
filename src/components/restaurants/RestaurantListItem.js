@@ -4,20 +4,20 @@
 
 "use strict";
 import React from 'react';
-import {Link, NavLink} from 'react-router';
-// import ListOfRestMenus from '../restMenu/ListOfRestMenus'
+import {Link} from 'react-router';
+import PropTypes from 'prop-types';
 
 const RestaurantListItem = (props) => {
   // console.log("RestaurantListItem | ", props);
-  function onEditClick() {
+  const onEditClick = () => {
     // console.log('RestaurantListItem | onEditClick');
-    props.editRest(props.resNum)
-  }
+    props.editRest(props.resNum);
+  };
 
-  function onDeleteClick() {
+  const onDeleteClick = () => {
     // console.log('RestaurantListItem | onDeleteClick');
-    props.deleteRest(props.resNum)
-  }
+    props.deleteRest(props.resNum);
+  };
 
   return (
     <li className="restItem list-group-item">
@@ -27,18 +27,20 @@ const RestaurantListItem = (props) => {
       <div className="innerItem address">
         {props.item.address}
       </div>
-      <a className="innerItem delete" onClick={onDeleteClick.bind(this)}>
+      <a className="innerItem delete" onClick={onDeleteClick}>
         del
       </a>
-      <a className="innerItem edit" onClick={onEditClick.bind(this)}>
+      <a className="innerItem edit" onClick={onEditClick}>
         edit
       </a>
     </li>
   );
 };
 
-RestaurantListItem.PropTypes = {
-  item: React.PropTypes.object
+RestaurantListItem.propTypes = {
+  item: PropTypes.object,
+  resNum: PropTypes.number,
+  deleteRest: PropTypes.func
 };
 
 export default RestaurantListItem;

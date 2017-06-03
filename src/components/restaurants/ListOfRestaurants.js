@@ -6,6 +6,7 @@
 
 import React from 'react';
 import RestaurantListItem from './RestaurantListItem';
+import PropTypes from 'prop-types';
 
 const ListOfRestaurants = (props) => {
   // console.log('ListOfRestaurants |', props);
@@ -23,7 +24,11 @@ const ListOfRestaurants = (props) => {
         })
       }
     </ul>
-  )
+  );
 };
-
+ListOfRestaurants.propTypes = {
+  editRest: PropTypes.func,
+  deleteRest: PropTypes.func,
+  rests: PropTypes.array
+};
 export default ListOfRestaurants;

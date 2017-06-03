@@ -17,11 +17,6 @@ import uRestMenu from './components/uRestMenus/uRestMenu';
 import RestSubMenu from './components/SubMenus/RestSubMenu';
 import uTable from './components/uTables/uTable';
 
-// import Login from './components/Login/Login'
-
-// import DishesManager
-
-//TODO Fix back button
 export default class Routes extends Component {
   render() {
     return (

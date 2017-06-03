@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import SubMenuListItem from './SubMenuListItem';
+import PropTypes from 'prop-types';
 
 const ListOfSubMenus = (props) => {
   // console.log('ListOfSubMenus |', props);
@@ -12,7 +13,6 @@ const ListOfSubMenus = (props) => {
         props.subMenus.map((subMenu, i) => {
           return (
             <SubMenuListItem key={i} item={subMenu}
-                             dishes={props.dishes}
                              delSubMenu = {props.delSubMenu}
                              rest = {props.rest}
                              menu = {props.menu}
@@ -22,7 +22,12 @@ const ListOfSubMenus = (props) => {
         })
       }
     </ul>
-  )
+  );
 };
-
+ListOfSubMenus.propTypes = {
+  delSubMenu: PropTypes.func,
+  rest: PropTypes.object,
+  menu: PropTypes.object,
+  subMenus: PropTypes.array
+};
 export default ListOfSubMenus;

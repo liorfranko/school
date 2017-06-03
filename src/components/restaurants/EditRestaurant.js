@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import {Modal, Button} from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
 class EditRestaurant extends React.Component {
   constructor(props) {
@@ -12,13 +13,13 @@ class EditRestaurant extends React.Component {
       this.state = {
         resName: '',
         resId: '',
-        resAddress: '',
+        resAddress: ''
       };
     } else {
       this.state = {
         resName: this.props.rest['name'],
         resId: this.props.rest['_id'],
-        resAddress: this.props.rest['address'],
+        resAddress: this.props.rest['address']
       };
     }
 
@@ -35,13 +36,13 @@ class EditRestaurant extends React.Component {
       this.state = {
         resName: '',
         resId: '',
-        resAddress: '',
+        resAddress: ''
       };
     } else {
       this.state = {
         resName: nextProps.rest['name'],
         resId: nextProps.rest['_id'],
-        resAddress: nextProps.rest['address'],
+        resAddress: nextProps.rest['address']
       };
     }
   }
@@ -79,32 +80,16 @@ class EditRestaurant extends React.Component {
         <Modal.Footer>
           <input type="submit" form="AddRestaurantForm" value="Submit" className="btn btn-default"/>
           <Button onClick={this.props.exit}>Close</Button>
-          {/*<Button onClick={this.handleSubmit}>Submit</Button>*/}
         </Modal.Footer>
       </Modal>
-
-      // <div>
-      //   {this.props.exit}
-      //   <div>Edit Restaurant</div>
-      //   <div>
-      //     <form onSubmit={this.handleSubmit}>
-      //       <label>
-      //         <div>Restaurant Name:
-      //           <input type="text" name="resName" value={this.state.resName} onChange={this.handleChange}/>
-      //         </div>
-      //         <div>
-      //           Restaurant Address:
-      //           <input type="text" name="resAddress" value={this.state.resAddress} onChange={this.handleChange}/>
-      //         </div>
-      //       </label>
-      //       <input type="submit" value="Submit"/>
-      //     </form>
-      //   </div>
-      // </div>
-    )
-
+    );
   }
 }
 
-
+EditRestaurant.propTypes = {
+  handleClick: PropTypes.func,
+  exit: PropTypes.func,
+  rest: PropTypes.object,
+  show: PropTypes.bool
+};
 export default EditRestaurant;

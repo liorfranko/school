@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import {Modal, Button} from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
 class DeleteRestaurant extends React.Component {
   constructor(props) {
@@ -21,7 +22,7 @@ class DeleteRestaurant extends React.Component {
   render() {
     // console.log('DeleteRestaurant | render', this.props);
     if (! this.props.rest) {
-      return (null)
+      return (null);
     } else {
       return (
         <Modal show={this.props.show} onHide={this.props.exit}>
@@ -45,32 +46,15 @@ class DeleteRestaurant extends React.Component {
             <input type="submit" form="DeleteRestaurantForm" value="Delete" className="btn btn-default"/>
             <Button onClick={this.props.exit}>Close</Button>
           </Modal.Footer>
-        </Modal> )
+        </Modal> );
     }
-
-
-      // <div>
-      //   {this.props.exit}
-      //   <div >Deleting Restaurant</div>
-      //   <div>
-      //     <form onSubmit={this.handleSubmit}>
-      //       <label>
-      //         <div>Restaurant Name:
-      //           <div>{this.props['resName']}</div>
-      //         </div>
-      //         <div>
-      //           Restaurant Address:
-      //           <div>{this.props['resAddress']}</div>
-      //           <div>Are you sure you want to delete?</div>
-      //         </div>
-      //       </label>
-      //       <input type="submit" value="Submit"/>
-      //     </form>
-      //   </div>
-      // </div>
-
   }
 }
-
+DeleteRestaurant.propTypes = {
+  handleClick: PropTypes.func,
+  exit: PropTypes.func,
+  rest: PropTypes.object,
+  show: PropTypes.bool
+};
 
 export default DeleteRestaurant;

@@ -100,6 +100,6 @@ restMenuManager.propTypes = {
   addRestMenu: PropTypes.func,
   deleteRestMenu: PropTypes.func,
   rest: PropTypes.object,
-  menus: PropTypes.object
+  menus: PropTypes.array
 };
 export default restMenuManager;

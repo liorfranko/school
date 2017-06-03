@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import {Modal, Button} from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
 class DeleteRestSubMenu extends React.Component {
   constructor(props) {
@@ -22,7 +23,7 @@ class DeleteRestSubMenu extends React.Component {
     if (!this.props.chosenSubMenu) {
       return (
         <div></div>
-      )
+      );
     }
     return (
     <Modal show={this.props.show} onHide={this.props.exit}>
@@ -43,9 +44,14 @@ class DeleteRestSubMenu extends React.Component {
         <Button onClick={this.props.exit}>Close</Button>
       </Modal.Footer>
     </Modal>
-    )
+    );
   }
 }
 
-
+DeleteRestSubMenu.propTypes = {
+  handleClick: PropTypes.func,
+  exit: PropTypes.func,
+  show: PropTypes.bool,
+  chosenSubMenu: PropTypes.object
+};
 export default DeleteRestSubMenu;
