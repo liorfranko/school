@@ -474,7 +474,7 @@ class App extends React.Component {
   }
 
   getOrdersByTableId(table_Id) {
-    // console.log("App | getOrdersByTableId | table_Id", table_Id);
+    console.log("App | getOrdersByTableId | table_Id", table_Id);
     let data = {
       table_Id: table_Id
     };
