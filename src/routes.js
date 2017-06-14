@@ -16,6 +16,7 @@ import RestMenu from './components/restMenu/restMenu';
 import uRestMenu from './components/uRestMenus/uRestMenu';
 import RestSubMenu from './components/SubMenus/RestSubMenu';
 import uTable from './components/uTables/uTable';
+import Orders from './components/Orders/OrderManager';
 
 export default class Routes extends Component {
   render() {
@@ -26,6 +27,7 @@ export default class Routes extends Component {
           <Route name="Admin" path="/Admin" component={App}/>
           <Route name="Dishes" path="/Admin/Dishes" component={Dishes}/>
           <Route name="Restaurants" path="/Admin/Restaurants" component={Restaurants}/>
+          <Route name="Orders" path="/Admin/Orders" component={Orders}/>
           <Route name="Restaurants/:restName" path="/Admin/Restaurants/:restName" component={Restaurant}/>
           <Route name="Restaurants/:restName/Menus/:menuName" path="/Admin/Restaurants/:restName/Menus/:menuName" component={RestMenu}/>
           <Route name="subMenuName" path="/Admin/Restaurants/:restName/Menus/:menuName/Submenus/:subMenuName" component={RestSubMenu}/>""

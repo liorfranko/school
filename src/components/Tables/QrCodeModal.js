@@ -14,22 +14,28 @@ class QrCodeModal extends React.Component {
 
   render() {
     // console.log('QrCode | render | props', this.props);
-    return (
-      <Modal show={this.props.show} onHide={this.props.exit}>
-        <Modal.Header closeButton>
-          <Modal.Title>Table {this.props.chosenTable.tableNum} - QR Code</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <form id="AddTableForm" onSubmit={this.handleSubmit}>
-            <QRCode value={`http://${this.props.publicDns}/uRestaurants/${this.props.rest.name}/uTables/${this.props.chosenTable.tableNum}`} />
-          </form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={this.props.exit}>Close</Button>
-        </Modal.Footer>
-      </Modal>
-    )
+    if (this.props.chosenTable ) {
+      return (
 
+        <Modal show={this.props.show} onHide={this.props.exit}>
+          <Modal.Header closeButton>
+            <Modal.Title>Table {this.props.chosenTable.tableNum} - QR Code</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <form id="AddTableForm" onSubmit={this.handleSubmit}>
+              <QRCode value={`http://${this.props.publicDns}/uRestaurants/${this.props.rest.name}/uTables/${this.props.chosenTable.tableNum}`} />
+            </form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.props.exit}>Close</Button>
+          </Modal.Footer>
+        </Modal>
+      )
+    } else {
+      return (
+        null
+      )
+    }
   }
 }
 

@@ -30,6 +30,7 @@ class RestaurantsManager extends React.Component {
     this.exitPopup = this.exitPopup.bind(this);
     this.deleteRest = this.deleteRest.bind(this);
     this.addRest = this.addRest.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
   }
 
   componentDidMount() {

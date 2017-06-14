@@ -209,8 +209,8 @@ class App extends React.Component {
   updateTables(data) {
     // Problem:
     // When loading menus and menus list is empty, How can I get the restaurant ID.
-    // console.log('App | updateTables data', data);
-    // console.log('App | updateTables this.state.data', this.state.data);
+    console.log('App | updateTables data', data);
+    console.log('App | updateTables this.state.data', this.state.data);
     const items = data.items || [];
     // console.log('App | updateTables items.length()', items.length);
     let arrayVar = this.state.data.rests.slice();
@@ -324,34 +324,6 @@ class App extends React.Component {
         }
       });
     }
-    //   arrayVar.map((rest, i) => {
-    //     if (rest._id === items[0].restaurantId) {
-    //       // index = i;
-    //       let curRestArray = this.state.data.rests[i];
-    //       curRestArray.tables = items;
-    //       let newRestArray = update(this.state.data.rests, {
-    //         [i]: {$set: curRestArray}
-    //       });
-    //       this.setState({
-    //         data: Object.assign({}, this.state.data, {rests: newRestArray})
-    //       });
-    //     }
-    //   });
-    // } else {
-    //   let restId = data.reason;
-    //   // console.log('App | updateMenus restId', restId);
-    //   // console.log('App | updateMenus this.state.data.rests', this.state.data.rests);
-    //   let index = this.state.data.rests.findIndex(x => x._id == restId);
-    //   // console.log('App | updateMenus index', index);
-    //   let curRestArray = this.state.data.rests[index];
-    //   curRestArray.tables = items;
-    //   let newRestArray = update(this.state.data.rests, {
-    //     [index]: {$set: curRestArray}
-    //   });
-    //   this.setState({
-    //     data: Object.assign({}, this.state.data, {rests: newRestArray})
-    //   });
-    // }
   }
 
   getRests() {
@@ -763,7 +735,8 @@ class App extends React.Component {
               <Menu
                 menu={[
                   {name: 'Your Restaurants', path: 'Admin/Restaurants'},
-                  {name: 'Your Dishes', path: 'Admin/Dishes'}
+                  {name: 'Your Dishes', path: 'Admin/Dishes'},
+                  {name: 'Your Orders', path: 'Admin/Orders'}
                 ]}
                 uid={this.state.uid}
                 logout={this.logoutFacebook}
@@ -781,6 +754,7 @@ class App extends React.Component {
                 getMenus: this.getMenus,
                 getSubMenus: this.getSubMenus,
                 getTables: this.getTables,
+                getOrdersByTableId: this.getOrdersByTableId,
                 addRest: this.addRest,
                 addDish: this.addDish,
                 addSubMenu: this.addSubMenu,

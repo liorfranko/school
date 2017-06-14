@@ -1,0 +1,32 @@
+//@import './../../settings.styl';
+
+#Orders
+  position: relative
+  ul.OrdersList
+    li.OrdersItem
+      display: flex
+      flex-direction: row
+      width: 100%
+      .innerItem
+        width: 25%
+
+#subMenu
+  position relative
+  ul.subMenuList
+    background purple
+    li.subMenuItem
+      display flex
+      flex-direction row
+      width 100%
+      background gray
+      .innerItem
+        width 25%
+        background yellow
+        .innerItem
+          display flex
+          background red
+          width: 100%
+          .innerItem
+            flex-direction row
+            background green
+            //width 25%
