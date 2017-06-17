@@ -10,7 +10,7 @@ import {Accordion, Panel} from 'react-bootstrap';
 
 class OrderManager extends React.Component {
   constructor(props) {
-    console.log('OrderManager | constructor', props);
+    // console.log('OrderManager | constructor', props);
     super(props);
     // this.state = {};
 
@@ -23,13 +23,13 @@ class OrderManager extends React.Component {
   }
 
   componentInit() {
-    console.log('OrderManager | componentInit');
+    // console.log('OrderManager | componentInit');
 
     if (!this.props.appData.data.rests) {
       this.props.getRests();
     } else {
       this.props.appData.data.rests.map((rest, i) => {
-        console.log('OrderManager | componentInit | rest', rest);
+        // console.log('OrderManager | componentInit | rest', rest);
         if (!rest.tables) {
           this.props.getTables(rest._id);
         } else {
@@ -59,7 +59,7 @@ class OrderManager extends React.Component {
   //   // this.componentInit();
   // }
   render() {
-    console.log('OrderManager | props', this.props);
+    // console.log('OrderManager | props', this.props);
     // setInterval(
     //   function() { componentInit() }
     //     , 5000);
@@ -75,10 +75,16 @@ class OrderManager extends React.Component {
           {
             this.props.appData.data.rests ? (
               this.props.appData.data.rests.map((rest, i) => {
-                console.log('OrderManager | rest', rest);
+                {/*console.log('OrderManager | rest', rest);*/}
                 return (
                   <Accordion key={i}>
-                    <Panel header={rest.name} eventKey={i} key={i}>
+
+                    <Panel header={rest.name} eventKey={i}>
+                      <ul className="OrdersList">
+                        <li className="OrdersItem list-group-item" style={{backgroundColor:"#f5f5f5"}}>
+                          <div><strong>Tables</strong></div>
+                        </li>
+                      </ul>
                       {
                         rest.tables ? (
                           rest.tables.map((table, j) => {
@@ -116,41 +122,9 @@ class OrderManager extends React.Component {
                     </Panel>
                   </Accordion>
                 );
-
               })
             ) : null
           }
-          {/*<ul className="restMenuList list-group">*/}
-          {/*<li className="menuItem list-group-item">*/}
-          {/*<Accordion>*/}
-          {/*<Panel header="Collapsible Group Item #1" eventKey="1">*/}
-          {/*Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf*/}
-          {/*moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.*/}
-          {/*Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda*/}
-          {/*shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea*/}
-          {/*proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim*/}
-          {/*aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.*/}
-          {/*</Panel>*/}
-          {/*<Panel header="Collapsible Group Item #2" eventKey="2">*/}
-          {/*Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf*/}
-          {/*moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.*/}
-          {/*Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda*/}
-          {/*shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea*/}
-          {/*proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim*/}
-          {/*aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.*/}
-          {/*</Panel>*/}
-          {/*<Panel header="Collapsible Group Item #3" eventKey="3">*/}
-          {/*Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf*/}
-          {/*moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.*/}
-          {/*Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda*/}
-          {/*shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea*/}
-          {/*proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim*/}
-          {/*aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.*/}
-          {/*</Panel>*/}
-          {/*</Accordion>*/}
-          {/*</li>*/}
-          {/*</ul>*/}
-          {/*Orders*/}
         </div>
       </div>
     )

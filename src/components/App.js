@@ -209,8 +209,8 @@ class App extends React.Component {
   updateTables(data) {
     // Problem:
     // When loading menus and menus list is empty, How can I get the restaurant ID.
-    console.log('App | updateTables data', data);
-    console.log('App | updateTables this.state.data', this.state.data);
+    // console.log('App | updateTables data', data);
+    // console.log('App | updateTables this.state.data', this.state.data);
     const items = data.items || [];
     // console.log('App | updateTables items.length()', items.length);
     let arrayVar = this.state.data.rests.slice();

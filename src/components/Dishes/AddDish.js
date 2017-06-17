@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 class AddDish extends React.Component {
   constructor(props) {
-    console.log('AddDish | constructor | ', props);
+    // console.log('AddDish | constructor | ', props);
     super(props);
     this.state = {
       dishName: '',
