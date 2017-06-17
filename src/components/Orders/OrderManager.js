@@ -68,9 +68,13 @@ class OrderManager extends React.Component {
     // let styleDiv = {
     //   fontSize: 30
     // };
+    const styleDiv = {
+      fontSize: 30
+    };
     return (
       <div id="Orders" className="panel panel-default">
         {/*<div className="panel-heading" style={styleDiv}>{this.props.rest.name}</div>*/}
+        <div className="panel-heading" style={styleDiv}>Restaurants:</div>
         <div className="panel-body">
           {
             this.props.appData.data.rests ? (
@@ -78,7 +82,6 @@ class OrderManager extends React.Component {
                 {/*console.log('OrderManager | rest', rest);*/}
                 return (
                   <Accordion key={i}>
-
                     <Panel header={rest.name} eventKey={i}>
                       <ul className="OrdersList">
                         <li className="OrdersItem list-group-item" style={{backgroundColor:"#f5f5f5"}}>
