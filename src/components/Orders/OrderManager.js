@@ -59,21 +59,11 @@ class OrderManager extends React.Component {
   //   // this.componentInit();
   // }
   render() {
-    // console.log('OrderManager | props', this.props);
-    // setInterval(
-    //   function() { componentInit() }
-    //     , 5000);
-
-    // console.log('OrderManager | this.state', this.state);
-    // let styleDiv = {
-    //   fontSize: 30
-    // };
     const styleDiv = {
       fontSize: 30
     };
     return (
       <div id="Orders" className="panel panel-default">
-        {/*<div className="panel-heading" style={styleDiv}>{this.props.rest.name}</div>*/}
         <div className="panel-heading" style={styleDiv}>Restaurants:</div>
         <div className="panel-body">
           {
@@ -85,7 +75,7 @@ class OrderManager extends React.Component {
                     <Panel header={rest.name} eventKey={i}>
                       <ul className="OrdersList">
                         <li className="OrdersItem list-group-item" style={{backgroundColor:"#f5f5f5"}}>
-                          <div><strong>Tables</strong></div>
+                          <div><strong>Tables:</strong></div>
                         </li>
                       </ul>
                       {

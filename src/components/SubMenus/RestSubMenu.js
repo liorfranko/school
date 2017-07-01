@@ -216,7 +216,7 @@ class RestSubMenu extends Component {
     // console.log('postData', postData);
     postData['subMenu_Id'] = subMenu_Id;
     this.props.editSubMenu(postData, menuId);
-    browserHistory.push(`/Restaurants/${this.props.appData.data.rests[rest].name}/Menus/${this.props.appData.data.rests[rest].menus[menu].name}`)
+    browserHistory.push(`/Admin/Restaurants/${this.props.appData.data.rests[rest].name}/Menus/${this.props.appData.data.rests[rest].menus[menu].name}`)
   };
 
   cancelRestSubMenu() {
@@ -231,7 +231,7 @@ class RestSubMenu extends Component {
     // let subMenu_Id = this.props.appData.data.rests[rest].menus[menu].subMenus[submenu]['_id'];
     // console.log('RestSubMenu | submitRestSubMenu | subMenu_Id', subMenu_Id);
     //{`/${props.rest.name}/${props.menu.name}/${props.item.name}`}
-    browserHistory.push(`/Restaurants/${this.props.appData.data.rests[rest].name}/Menus/${this.props.appData.data.rests[rest].menus[menu].name}`)
+    browserHistory.push(`/Admin/Restaurants/${this.props.appData.data.rests[rest].name}/Menus/${this.props.appData.data.rests[rest].menus[menu].name}`)
   }
 
   render() {
