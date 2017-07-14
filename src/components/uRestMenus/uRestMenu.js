@@ -5,6 +5,8 @@ import React from 'react';
 import update from 'react/lib/update';
 import * as $ from 'jquery';
 import {Button} from 'react-bootstrap';
+import CircularProgress from 'material-ui/CircularProgress';
+
 // TODO set max dishes to 20 and enforce it with alert
 // TODO Rebuild this page, load all menus and submenus.
 class uRestMenu extends React.Component {
@@ -246,7 +248,7 @@ class uRestMenu extends React.Component {
       return (
         <div id="restMenu" className="panel panel-default">
           <div className="panel-body">
-            <img src={ src }/>
+            <CircularProgress />
           </div>
         </div>
       )

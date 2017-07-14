@@ -105,7 +105,7 @@ class App extends React.Component {
 
   handleToggle() {
     this.setState({open: !this.state.open});
-    console.log("open")
+    // console.log("open")
   }
   handleClose(path) {
     browserHistory.push(path);
@@ -263,10 +263,10 @@ class App extends React.Component {
   }
 
   updateLogin(data) {
-    console.log('App | updateLogin data', data);
+    // console.log('App | updateLogin data', data);
     // const items = data.items || [];
     if (data.status == 'Success') {
-      console.log('App | updateLogin Success');
+      // console.log('App | updateLogin Success');
       this.setState({
         uid: data.items._id
       });
@@ -344,7 +344,7 @@ class App extends React.Component {
   }
 
   getRests() {
-    console.log("App | getRests", this.state);
+    // console.log("App | getRests", this.state);
     // this.setState({loading: true});
     // alert(3);
     let data = {
@@ -430,7 +430,7 @@ class App extends React.Component {
   }
 
   getTables(restaurant_Id) {
-    console.log("App | getTables, restaurant_Id", restaurant_Id);
+    // console.log("App | getTables, restaurant_Id", restaurant_Id);
     let data = {
       restaurant_Id: restaurant_Id
     };
@@ -439,7 +439,7 @@ class App extends React.Component {
   }
 
   getTablesLocal(restaurant_Id) {
-    console.log("App | getTablesLocal, restaurant_Id", restaurant_Id);
+    // console.log("App | getTablesLocal, restaurant_Id", restaurant_Id);
     // console.log("App | getMenus, this.restaurantId", this.restaurantId);
     //1.
     //  const that = this;
@@ -644,10 +644,10 @@ class App extends React.Component {
   }
 
   responseApi(res) {
-    console.log('res:', res);
-    console.log('token:', res.authResponse.accessToken);
-    console.log('status:', res.status);
-    console.log('userID:', res.authResponse.userID);
+    // console.log('res:', res);
+    // console.log('token:', res.authResponse.accessToken);
+    // console.log('status:', res.status);
+    // console.log('userID:', res.authResponse.userID);
     this.setState({
       status: res.status,
       facebook_id: res.authResponse.userID,
@@ -719,9 +719,6 @@ class App extends React.Component {
               <MenuItem onTouchTap={() => this.handleClose('/Admin/Restaurants')}>Your Restaurants</MenuItem>
               <MenuItem onTouchTap={() => this.handleClose('/Admin/Dishes')}>Your Dishes</MenuItem>
               <MenuItem onTouchTap={() => this.handleClose('/Admin/Orders')}>Your Orders</MenuItem>
-              {/*<MenuItem onTouchTap={() => browserHistory.push(`/Admin/Restaurants`)}>Your Restaurants</MenuItem>*/}
-              {/*<MenuItem onTouchTap={() => browserHistory.push(`/Admin/Dishes`)}>Your Dishes</MenuItem>*/}
-              {/*<MenuItem onTouchTap={() => browserHistory.push(`/Admin/Orders`)}>Your Orders</MenuItem>*/}
             </div>:
               <MenuItem onTouchTap={() => this.handleClose('/uRestaurants')}>Restaurants</MenuItem>
             }
@@ -731,7 +728,6 @@ class App extends React.Component {
             onTitleTouchTap={() => browserHistory.push(`/`)}
             iconClassNameRight="muidocs-icon-navigation-expand-more"
             onLeftIconButtonTouchTap={this.handleToggle}
-            // onLeftIconButtonClick={this.handleToggle}
             iconElementRight={this.state.logged ? <FlatButton label="Logout" onTouchTap={this.logoutFacebook}/> : <FlatButton label="Login" onTouchTap={this.loginFacebook}/>}
           />
           {this.state.priv === 'user' ? null :
@@ -785,155 +781,6 @@ class App extends React.Component {
       </MuiThemeProvider>
     );
   }
-
-  // render() {
-  //   // console.log('App | render | this.state', this.state);
-  //   // console.log('App | render | props', this.props);
-  //   // console.log('App | render | route', this.props.route);
-  //   // console.log('App | render | params', this.props.params);
-  //   // console.log('App | render | routeParams', this.props.routeParams);
-  //
-  //   if (this.state.priv === 'user') {
-  //     return (
-  //       <MuiThemeProvider>
-  //         <div>
-  //           <Drawer
-  //             docked={false}
-  //             open={this.state.open}
-  //             onRequestChange={(open) => this.setState({open})}>
-  //             <MenuItem onTouchTap={this.handleClose}>Menu Item 1</MenuItem>
-  //             <MenuItem onTouchTap={this.handleClose}>Menu Item 2</MenuItem>
-  //             <MenuItem onTouchTap={this.handleClose}>Menu Item 3</MenuItem>
-  //           </Drawer>
-  //           <AppBar
-  //             title="RestManager"
-  //             iconClassNameRight="muidocs-icon-navigation-expand-more"
-  //             onLeftIconButtonTouchTap={this.handleToggle}
-  //             onLeftIconButtonClick={this.handleToggle}
-  //             iconElementRight={this.state.logged ? <Logged /> : <FlatButton label="Login" onTouchTap={this.loginFacebook}/>}
-  //           />
-  //           <Breadcrumbs
-  //             routes={this.props.routes}
-  //             params={this.props.params}
-  //           />
-  //           {/*<nav className="navbar navbar-inverse navbar-fixed-top">*/}
-  //             {/*<div className="container">*/}
-  //               {/*<Menu*/}
-  //                 {/*menu={[{name: 'Restaurants', path: 'uRestaurants'}]}*/}
-  //                 {/*uid={userUid}*/}
-  //                 {/*login={this.loginFacebook}*/}
-  //                 {/*priv={this.state.priv}*/}
-  //               {/*/>*/}
-  //             {/*</div>*/}
-  //           {/*</nav>*/}
-  //           <div className="jumbotron">
-  //             <div className="container">
-  //               <div className="heading">
-  //                 <img src="http://lorempixel.com/60/60/food/"/>
-  //                 <div className="h1">RestManager</div>
-  //
-  //               </div>
-  //               {React.Children.map(this.props.children, (child) => React.cloneElement(child, {
-  //                 appData: this.state,
-  //                 getRests: this.getRests,
-  //                 getDishes: this.getDishes,
-  //                 getDishesUid: this.getDishesUid,
-  //                 getMenus: this.getMenus,
-  //                 getSubMenus: this.getSubMenus,
-  //                 getTables: this.getTables,
-  //                 getAllRests: this.getAllRests,
-  //                 getOrdersByTableId: this.getOrdersByTableId,
-  //                 addOrder: this.addOrder,
-  //                 editOrderDishes: this.editOrderDishes,
-  //                 editOrderSumPaid: this.editOrderSumPaid
-  //               }))}
-  //               {/*<Button onClick={this.goBack}>Back</Button>*/}
-  //               {/*<Button onClick={this.goForward}>Forward</Button>*/}
-  //               <div>
-  //                 <Breadcrumbs
-  //                   routes={this.props.routes}
-  //                   params={this.props.params}
-  //                 />
-  //               </div>
-  //               <footer>Footer - links, & other shit</footer>
-  //             </div>
-  //           </div>
-  //         </div>
-  //       </MuiThemeProvider>
-  //     );
-  //   } else {
-  //     // console.log('App | render | Admin | this.state', this.state);
-  //     if (this.state.uid === null) {
-  //       this.checkFacebookID();
-  //     }
-  //     return (
-  //       <div>
-  //         <AppBar
-  //           title="Rest Manager"
-  //           iconClassNameRight="muidocs-icon-navigation-expand-more"
-  //         />
-  //         <nav className="navbar navbar-inverse navbar-fixed-top">
-  //           <div className="container">
-  //             <Menu
-  //               menu={[
-  //                 {name: 'Your Restaurants', path: 'Admin/Restaurants'},
-  //                 {name: 'Your Dishes', path: 'Admin/Dishes'},
-  //                 {name: 'Your Orders', path: 'Admin/Orders'}
-  //               ]}
-  //               uid={this.state.uid}
-  //               logout={this.logoutFacebook}
-  //               priv={this.state.priv}
-  //             />
-  //           </div>
-  //         </nav>
-  //         <div className="jumbotron">
-  //           <div className="container">
-  //             <div className="heading">
-  //               <img src="http://lorempixel.com/60/60/food/"/>
-  //               <h1>Welcome</h1>
-  //
-  //             </div>
-  //             {React.Children.map(this.props.children, (child) => React.cloneElement(child, {
-  //               appData: this.state,
-  //               getRests: this.getRests,
-  //               getDishes: this.getDishes,
-  //               getMenus: this.getMenus,
-  //               getSubMenus: this.getSubMenus,
-  //               getTables: this.getTables,
-  //               getOrdersByTableId: this.getOrdersByTableId,
-  //               addRest: this.addRest,
-  //               addDish: this.addDish,
-  //               addSubMenu: this.addSubMenu,
-  //               addRestMenu: this.addRestMenu,
-  //               addTable: this.addTable,
-  //               editRest: this.editRest,
-  //               editDish: this.editDish,
-  //               editRestMenu: this.editRestMenu,
-  //               editSubMenu: this.editSubMenu,
-  //               editTable: this.editTable,
-  //               deleteRest: this.deleteRest,
-  //               deleteDish: this.deleteDish,
-  //               deleteRestMenu: this.deleteRestMenu,
-  //               deleteSubMenu: this.deleteSubMenu,
-  //               deleteTable: this.deleteTable,
-  //               publicDns: publicDns
-  //             }))}
-  //             <Button onClick={this.goBack}>Back</Button>
-  //             <Button onClick={this.goForward}>Forward</Button>
-  //             {/*<div>*/}
-  //               {/*<Breadcrumbs*/}
-  //                 {/*routes={this.props.routes}*/}
-  //                 {/*params={this.props.params}*/}
-  //               {/*/>*/}
-  //             {/*</div>*/}
-  //             <footer>Footer - links, & other shit</footer>
-  //           </div>
-  //         </div>
-  //       </div>
-  //     );
-  //   }
-  // }
-
 }
 
 App.propTypes = {

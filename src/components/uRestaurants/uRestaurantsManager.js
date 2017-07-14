@@ -16,7 +16,7 @@ import {
   TableRowColumn,
 } from 'material-ui/Table';
 import {Router, Route, browserHistory, IndexRoute} from 'react-router';
-
+import CircularProgress from 'material-ui/CircularProgress';
 
 class uRestaurantsManager extends React.Component {
   constructor(props) {
@@ -69,7 +69,7 @@ class uRestaurantsManager extends React.Component {
         <div id="rests" className="panel panel-default">
           <div className="panel-heading" style={styleDiv}>Restaurants:</div>
           <div className="panel-body">
-            <img src={ src }/>
+            <CircularProgress />
           </div>
         </div>
       )

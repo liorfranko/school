@@ -4,6 +4,7 @@
 
 import React from 'react';
 import TableManager from '../uTables/utableManager';
+import CircularProgress from 'material-ui/CircularProgress';
 
 class uRestaurant extends React.Component {
   constructor(props) {
@@ -90,7 +91,7 @@ class uRestaurant extends React.Component {
         <div id="rests" className="panel panel-default">
           <div className="panel-heading" style={styleDiv}>Restaurants:</div>
           <div className="panel-body">
-            <img src={ src }/>
+            <CircularProgress />
           </div>
         </div>
       )
@@ -101,7 +102,7 @@ class uRestaurant extends React.Component {
           <div id="rests" className="panel panel-default">
             <div className="panel-heading" style={styleDiv}>Restaurants:</div>
             <div className="panel-body">
-              <img src={ src }/>
+              <CircularProgress />
             </div>
           </div>
         )

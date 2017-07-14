@@ -4,12 +4,13 @@
 import React from 'react';
 import SubMenuManager from '../SubMenus/SubMenuManager';
 import PropTypes from 'prop-types';
+import CircularProgress from 'material-ui/CircularProgress';
 
 // FIXME fix loading submenus when moving between menus.
 
 class RestMenu extends React.Component {
   constructor(props) {
-    console.log('RestMenu | constructor | this.props', props);
+    // console.log('RestMenu | constructor | this.props', props);
     super(props);
     this.addSubMenu = this.addSubMenu.bind(this);
     this.editSubMenu = this.editSubMenu.bind(this);
@@ -31,7 +32,7 @@ class RestMenu extends React.Component {
       } else {
         const menu = this.props.appData.data.rests[rest].menus.findIndex(x => x.name === this.props.params.menuName);
         // console.log('RestMenu | componentDidMount | menu', menu);
-        if (!this.props.appData.data.rests[rest].menus[menu].subMenus) {
+        if (menu > -1 && !this.props.appData.data.rests[rest].menus[menu].subMenus) {
           // console.log('RestMenu | componentDidMount | getSubMenus()');
           this.props.getSubMenus(this.props.appData.data.rests[rest].menus[menu]._id);
         }
@@ -43,7 +44,7 @@ class RestMenu extends React.Component {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     // console.log('RestMenu | componentWillReceiveProps | nextProps', nextProps);
     // console.log('RestMenu | componentWillReceiveProps | this.props', this.props);
     if (!this.props.appData.data.rests) {
@@ -56,7 +57,7 @@ class RestMenu extends React.Component {
       } else {
         const menu = this.props.appData.data.rests[rest].menus.findIndex(x => x.name === this.props.params.menuName);
         // console.log('RestMenu | componentDidMount | menu', menu);
-        if (!this.props.appData.data.rests[rest].menus[menu].subMenus) {
+        if (menu > -1 && !this.props.appData.data.rests[rest].menus[menu].subMenus) {
           // console.log('RestMenu | componentDidMount | getSubMenus()');
           this.props.getSubMenus(this.props.appData.data.rests[rest].menus[menu]._id);
         }
@@ -115,9 +116,7 @@ class RestMenu extends React.Component {
   }
 
   render() {
-    console.log('RestMenu | render | this.props', this.props);
-
-
+    // console.log('RestMenu | render | this.props', this.props);
     const src = require("../../Images/5.gif");
     const styleDiv = {
       fontSize: 30
@@ -127,13 +126,13 @@ class RestMenu extends React.Component {
         <div id="restMenu" className="panel panel-default">
           <div className="panel-heading" style={styleDiv}>Restaurants:</div>
           <div className="panel-body">
-            <img src={src}/>
+            <CircularProgress />
           </div>
         </div>
       );
     } else {
       if (this.props.params.subMenuName) {
-        return( <div>
+        return ( <div>
           {this.recursiveCloneChildren(this.props.children)}
         </div>);
       } else {

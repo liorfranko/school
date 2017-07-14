@@ -6,7 +6,7 @@
 import React from 'react';
 import {Button} from 'react-bootstrap';
 import update from 'react/lib/update';
-
+import CircularProgress from 'material-ui/CircularProgress';
 class uTable extends React.Component {
   constructor(props) {
     console.log('uRestaurant | constructor | this.props', props);
@@ -274,7 +274,7 @@ class uTable extends React.Component {
         <div id="rests" className="panel panel-default">
           <div className="panel-heading" style={styleDiv}>Restaurants:</div>
           <div className="panel-body">
-            <img src={ src }/>
+            <CircularProgress />
           </div>
         </div>
       )
@@ -286,7 +286,7 @@ class uTable extends React.Component {
           <div id="rests" className="panel panel-default">
             <div className="panel-heading" style={styleDiv}>Restaurants:</div>
             <div className="panel-body">
-              <img src={ src }/>
+              <CircularProgress />
             </div>
           </div>
         )

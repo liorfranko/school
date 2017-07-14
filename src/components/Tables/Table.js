@@ -2,6 +2,7 @@
  * Created by liorf on 4/17/17.
  */
 import React from 'react';
+import CircularProgress from 'material-ui/CircularProgress';
 
 class Table extends React.Component {
   constructor(props) {
@@ -60,7 +61,7 @@ class Table extends React.Component {
         <div id="restMenu" className="panel panel-default">
           <div className="panel-heading" style={styleDiv}>Restaurants:</div>
           <div className="panel-body">
-            <img src={ src }/>
+            <CircularProgress />
           </div>
         </div>
       )

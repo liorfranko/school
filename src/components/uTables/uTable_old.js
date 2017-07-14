@@ -173,7 +173,7 @@ class uTable extends React.Component {
         <div id="restMenu" className="panel panel-default">
           <div className="panel-heading" style={styleDiv}>Restaurants:</div>
           <div className="panel-body">
-            <img src={ src }/>
+            <CircularProgress />
           </div>
         </div>
       )

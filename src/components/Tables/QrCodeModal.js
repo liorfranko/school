@@ -2,42 +2,54 @@
  * Created by liorf on 11/16/16.
  */
 import React from 'react';
-import {Modal, Button} from 'react-bootstrap';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
+import {browserHistory} from 'react-router';
 import QRCode  from 'qrcode.react';
 
-class QrCodeModal extends React.Component {
+/**
+ * Dialog with action buttons. The actions are passed in as an array of React objects,
+ * in this example [FlatButtons](/#/components/flat-button).
+ *
+ * You can also close this dialog by clicking outside the dialog, or with the 'Esc' key.
+ */
+class QrCode extends React.Component {
   constructor(props) {
-    // console.log('QrCode | constructor | props', props);
+    // console.log('Restaurant | constructor | this.props', props);
     super(props);
-
+    this.handleOpen = this.handleOpen.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.state = {
+      open: true,
+    };
   }
+
+  handleOpen () {
+    this.setState({open: true});
+  };
+
+  handleClose () {
+    this.setState({open: false});
+    browserHistory.goBack();
+  };
 
   render() {
     // console.log('QrCode | render | props', this.props);
-    if (this.props.chosenTable ) {
-      return (
-
-        <Modal show={this.props.show} onHide={this.props.exit}>
-          <Modal.Header closeButton>
-            <Modal.Title>Table {this.props.chosenTable.tableNum} - QR Code</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <form id="AddTableForm" onSubmit={this.handleSubmit}>
-              <QRCode value={`http://${this.props.publicDns}/uRestaurants/${this.props.rest.name}/uTables/${this.props.chosenTable.tableNum}`} />
-            </form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button onClick={this.props.exit}>Close</Button>
-          </Modal.Footer>
-        </Modal>
-      )
-    } else {
-      return (
-        null
-      )
-    }
+    const actions = [];
+    return (
+      <div>
+        <Dialog
+          title={`Table ${this.props.params.tableNum} QR Code`}
+          actions={actions}
+          modal={false}
+          open={this.handleOpen}
+          onRequestClose={this.handleClose}
+        >
+          <QRCode value={`http://${this.props.publicDns}/uRestaurants/${this.props.params.restName}/uTables/${this.props.params.tableNum}`} />
+        </Dialog>
+      </div>
+    );
   }
 }
-
-
-export default QrCodeModal;
+export default QrCode;

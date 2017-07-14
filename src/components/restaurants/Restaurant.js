@@ -8,11 +8,11 @@ import RestMenuManager from '../restMenu/restMenuManager';
 import TableManager from '../Tables/tableManager';
 import PropTypes from 'prop-types';
 import EditTable from '../../components/EditTable';
-
+import CircularProgress from 'material-ui/CircularProgress';
 
 class Restaurant extends React.Component {
   constructor(props) {
-    console.log('Restaurant | constructor | this.props', props);
+    // console.log('Restaurant | constructor | this.props', props);
     super(props);
     this.componentDidMount = this.componentDidMount.bind(this);
     this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
@@ -48,21 +48,20 @@ class Restaurant extends React.Component {
     // console.log('Restaurant | componentWillReceiveProps | this.props', this.props);
     if (!this.props.appData.data.rests) {
       this.props.getRests();
-      this.forceUpdate();
     } else {
       let rest = this.props.appData.data.rests.findIndex(x => x.name === this.props.params.restName);
       if (!this.props.appData.data.rests[rest].menus) {
         this.props.getMenus(this.props.appData.data.rests[rest]._id);
-        this.forceUpdate();
       }
       if (!this.props.appData.data.rests[rest].tables) {
         this.props.getTables(this.props.appData.data.rests[rest]._id);
-        this.forceUpdate();
       }
     }
+    this.forceUpdate();
   }
 
   recursiveCloneChildren(children) {
+    // console.log('Restaurant | recursiveCloneChildren | this.props.appData', this.props.appData);
     return React.Children.map(children, child => {
       let childProps = {};
       if (React.isValidElement(child)) {
@@ -119,14 +118,14 @@ class Restaurant extends React.Component {
     let rest = this.props.appData.data.rests.findIndex(x => x.name === this.props.params.restName);
     let rest_id = this.props.appData.data.rests[rest]._id;
     // console.log('Restaurant | onDelete | rest', rest);
-    let Menu = this.props.appData.data.rests[rest].menus[e.rowId];
+    let menu = this.props.appData.data.rests[rest].menus[e.rowId];
     // console.log('Restaurant | onDelete | Menu', Menu);
 
     // let Menu = this.props.appData.data.rests.findIndex(x => x.name === this.props.params.restName);
     // let menu = this.props.appData.data.rests[rest].menus.findIndex(x => x.name === this.props.params.menuName);
-    if (Menu) {
+    if (menu) {
       let data = {
-        _id: e.row.columns[0].value,
+        _id: menu._id,
         restaurantId: rest_id,
       };
       this.props.deleteRestMenu(data);
@@ -134,7 +133,7 @@ class Restaurant extends React.Component {
   }
 
   onChangeTable(row) {
-    console.log('Restaurant | onChangeTable | row is:', row);
+    // console.log('Restaurant | onChangeTable | row is:', row);
     for (let i = 0; i < row.columns.length; i++) {
       // console.log('DishesManager | onChange | row is: ', row.columns[i]);
       if (row.columns[i].id === 0) {
@@ -169,21 +168,23 @@ class Restaurant extends React.Component {
   }
 
   onDeleteTable(e) {
-
+    // console.log('Restaurant | onDeleteTable | e', e);
     let rest = this.props.appData.data.rests.findIndex(x => x.name === this.props.params.restName);
     let rest_id = this.props.appData.data.rests[rest]._id;
+    // console.log('Restaurant | onDeleteTable | tables', this.props.appData.data.rests[rest].tables);
     let table = this.props.appData.data.rests[rest].tables[e.rowId];
+    // console.log('Restaurant | onDeleteTable | table', table);
     if (table) {
       let data = {
         restaurantId: rest_id,
-        _id: e.row.columns[0].value,
+        _id: table._id,
       };
       this.props.deleteTable(data);
     }
   }
 
   render() {
-    console.log('Restaurant | render |this.props', this.props);
+    // console.log('Restaurant | render | this.props', this.props);
     const src = require("../../Images/5.gif");
     const styleDiv = {
       fontSize: 30
@@ -193,10 +194,24 @@ class Restaurant extends React.Component {
         <div id="rests" className="panel panel-default">
           <div className="panel-heading" style={styleDiv}>Restaurants:</div>
           <div className="panel-body">
-            <img src={src}/>
+            <CircularProgress />
           </div>
         </div>
       );
+    } else if(this.props.params.tableNum) {
+      return <div>
+        {React.Children.map(this.props.children, (child) => React.cloneElement(child, {
+          appData: this.props.appData,
+          getDishes: this.props.getDishes,
+          getSubMenus: this.props.getSubMenus,
+          editSubMenu: this.props.editSubMenu,
+          addSubMenu: this.props.addSubMenu,
+          deleteSubMenu: this.props.deleteSubMenu,
+          getRests: this.props.getRests,
+          getMenus: this.props.getMenus,
+          publicDns: this.props.publicDns
+        }))}
+      </div>
     } else {
       let rest = this.props.appData.data.rests.findIndex(x => x.name === this.props.params.restName);
       if (!this.props.appData.data.rests[rest].menus || !this.props.appData.data.rests[rest].tables) {
@@ -204,7 +219,7 @@ class Restaurant extends React.Component {
           <div id="rests" className="panel panel-default">
             <div className="panel-heading" style={styleDiv}>Restaurants:</div>
             <div className="panel-body">
-              <img src={src}/>
+              <CircularProgress />
             </div>
           </div>
         );
@@ -224,8 +239,7 @@ class Restaurant extends React.Component {
               columns: [
                 {value: row.name, field: 'name', required: true},
                 {value: row._id, field: 'id', hidden: true},
-                {value: `/Admin/Restaurants/${rest_name}/Menus/${row.name}`, field: 'Link', hidden: true}
-              //  /Admin/Restaurants/${props.rest.name}/Menus/${props.item.name}
+                {value: `/Admin/Restaurants/${rest_name}/Menus/${row.name}`, field: 'Link', link: true, hidden: true}
               ]
             }
           )
@@ -236,6 +250,7 @@ class Restaurant extends React.Component {
               columns: [
                 {value: row.tableNum, field: 'name', required: true},
                 {value: row._id, field: 'id', hidden: true},
+                {value: `/Admin/Restaurants/${rest_name}/Table/${row.tableNum}`, field: 'Link', link: true, hidden: true}
               ]
             }
           )
@@ -264,20 +279,6 @@ class Restaurant extends React.Component {
                     enableDelete={true}
                   />
                 </div>
-
-                <RestMenuManager rest={this.props.appData.data.rests[rest]}
-                                 menus={this.props.appData.data.rests[rest].menus}
-                                 addRestMenu={this.props.addRestMenu}
-                                 deleteRestMenu={this.props.deleteRestMenu}
-                />
-                <TableManager
-                  rest={this.props.appData.data.rests[rest]}
-                  tables={this.props.appData.data.rests[rest].tables}
-                  addTable={this.props.addTable}
-                  deleteTable={this.props.deleteTable}
-                  editTable={this.props.editTable}
-                  publicDns={this.props.publicDns}
-                />
               </div>
             )}
           </div>

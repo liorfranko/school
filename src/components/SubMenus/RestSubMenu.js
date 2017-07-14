@@ -9,6 +9,7 @@ import {Button} from 'react-bootstrap';
 import {browserHistory} from 'react-router';
 import update from 'react/lib/update';
 import * as $ from 'jquery';
+import CircularProgress from 'material-ui/CircularProgress';
 
 
 class RestSubMenu extends Component {
@@ -245,7 +246,7 @@ class RestSubMenu extends Component {
         <div id="subMenusubMenuManager" className="panel panel-default">
           <div className="panel-heading" style={styleDiv}>Restaurants:</div>
           <div className="panel-body">
-            <img src={ src }/>
+            <CircularProgress />
           </div>
         </div>
       )

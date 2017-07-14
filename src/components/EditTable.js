@@ -1,42 +1,25 @@
-const React = require('react');
-const mui = require('material-ui');
-const ModeEdit = require('material-ui/svg-icons/editor/mode-edit').default;
-const Check = require('material-ui/svg-icons/navigation/check').default;
-const Cancel = require('material-ui/svg-icons/navigation/cancel').default;
-const Delete = require('material-ui/svg-icons/action/delete').default;
-const Launch = require('material-ui/svg-icons/action/launch').default;
-const times = require('lodash.times');
-const {IconButton, Toggle, TextField, RaisedButton, DatePicker} = mui;
-// const browserHistory = require('react-router');
+// import mui from 'material-ui';
+import React from 'react';
+
+import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
+import Check from 'material-ui/svg-icons/navigation/check';
+import Cancel from 'material-ui/svg-icons/navigation/cancel';
+import Delete from 'material-ui/svg-icons/action/delete';
+import Launch from 'material-ui/svg-icons/action/launch';
+import times from 'lodash.times';
+import {IconButton, Toggle, TextField, RaisedButton, DatePicker} from 'material-ui';
 import {browserHistory} from 'react-router';
 
-// const injectTapEventPlugin = require('react-tap-event-plugin')
-// injectTapEventPlugin()
-
-module.exports = React.createClass({
-  getDefaultProps: () => {
-    return {
-      headerColumns: [],
-      rows: [],
-      enableDelete: true,
-      onChange: function () {},
-      onDelete: function () {}
+class EditTable extends React.Component {
+  constructor(props) {
+    // console.log('EditTable | constructor | props', props);
+    super(props);
+    this.state = {
+      rows: props.rows,
     }
-  },
+  }
 
-  getInitialState: function () {
-    return {
-      rows: this.props.rows,
-      hoverValue: false,
-      currentRow: false
-    }
-  },
-
-  contextTypes: {
-    muiTheme: React.PropTypes.object.isRequired
-  },
-
-  update: function () {
+  update() {
     // console.log('update');
     let row = this.state.rows.filter((row) => {
       return row.selected
@@ -49,9 +32,9 @@ module.exports = React.createClass({
       // console.log('False');
       return false
     }
-  },
+  }
 
-  getCellValue: function (cell) {
+  getCellValue(cell) {
     let self = this;
     let id = cell && cell.id;
     let type = this.props.headerColumns.map((header) => {
@@ -117,12 +100,12 @@ module.exports = React.createClass({
           />
         }
         if (type === 'Toggle') {
-          return <Toggle onToggle={onToggle} toggled={value} />
+          return <Toggle onToggle={onToggle} toggled={value}/>
         }
       }
       else {
         if (type === 'Toggle') {
-          return <Toggle disabled onToggle={onToggle} toggled={value} />
+          return <Toggle disabled onToggle={onToggle} toggled={value}/>
         }
         if (type === 'DatePicker') {
           return <DatePicker
@@ -143,9 +126,9 @@ module.exports = React.createClass({
       disabled
       value={value}
     />
-  },
+  }
 
-  renderHeader: function () {
+  renderHeader() {
     let headerColumns = this.props.headerColumns;
     let columns = headerColumns.map((column, id) => {
       return {value: column.value}
@@ -153,9 +136,16 @@ module.exports = React.createClass({
     let row = {columns: columns, header: true};
 
     return this.renderRow(row)
-  },
+  }
 
-  renderRow: function (row) {
+  renderRow(row) {
+    let show_link = false;
+    row.columns.forEach((col) => {
+      // console.log('col is', col);
+      if (col.link) {
+        show_link = true
+      }
+    });
     let self = this;
     let columns = row.columns;
     const rowStyle = {
@@ -224,7 +214,7 @@ module.exports = React.createClass({
       let rows = self.state.rows;
       rows.forEach((row, i) => {
         if (rowId === i) {
-          console.log('row is:', row);
+          // console.log('row is:', row);
           row.columns.forEach((col) => {
             if (col.field === 'Link') {
               browserHistory.push(col.value);
@@ -236,30 +226,33 @@ module.exports = React.createClass({
 
     const onClick = function (e) {
       if (selected) {
-         if(self.update()) {
-           onRowClick(e)
-         }
+        if (self.update()) {
+          onRowClick(e)
+        }
       } else {
         onRowClick(e)
       }
     };
 
-    const deleteButton = (!this.props.enableDelete || selected || row.header) ? <div style={deleteButtonStyle} />
+    const deleteButton = (!this.props.enableDelete || selected || row.header) ? <div style={deleteButtonStyle}/>
       : <IconButton style={deleteButtonStyle} tooltip={'Delete this row'} onClick={onDeleteRow}>
         <Delete />
       </IconButton>;
 
-    const cancelButton = !(this.props.enableDelete && selected) || row.header ? <div style={deleteButtonStyle} />
+    const cancelButton = !(this.props.enableDelete && selected) || row.header ? <div/>
       : <IconButton style={deleteButtonStyle} tooltip={'Cancel'} onClick={onDeleteRow}>
         <Cancel />
       </IconButton>;
+    // console.log('selected is:', selected);
+    // console.log('show_link is:', show_link);
+    // console.log('row.header is:', row.header);
 
-    const launchButton = (!this.props.enableDelete || selected || row.header) ? <div style={deleteButtonStyle} />
+    const launchButton = (selected || row.header || !show_link) ? <div/>
       : <IconButton style={deleteButtonStyle} tooltip={'Open'} onClick={onLaunchRow}>
         <Launch />
       </IconButton>;
 
-    const checkbox = row.header ? <div style={checkboxStyle} />
+    const checkbox = row.header ? <div style={checkboxStyle}/>
       : <IconButton style={checkboxStyle} tooltip={tooltip} onClick={onClick}>
         {button}
       </IconButton>;
@@ -301,9 +294,9 @@ module.exports = React.createClass({
         {launchButton}
       </div>
     )
-  },
+  }
 
-  render: function () {
+  render() {
     let self = this;
     const style = {
       display: 'flex',
@@ -362,4 +355,6 @@ module.exports = React.createClass({
       </div>
     )
   }
-});
+}
+export default EditTable;
+

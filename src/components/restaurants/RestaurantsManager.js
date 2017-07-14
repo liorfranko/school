@@ -48,7 +48,7 @@ class RestaurantsManager extends React.Component {
     }
   }
   onChange(row) {
-    console.log('RestaurantsManager | onChange | row is:', row);
+    // console.log('RestaurantsManager | onChange | row is:', row);
     for (let i = 0; i < row.columns.length; i++) {
       // console.log('DishesManager | onChange | row is: ', row.columns[i]);
       if (row.columns[i].id === 0) {
@@ -68,14 +68,14 @@ class RestaurantsManager extends React.Component {
         resAddress: row.columns[1].value,
         resId: row.columns[2].value,
       };
-      console.log('editRest data is:', data);
+      // console.log('editRest data is:', data);
       this.props.editRest(data);
     } else {
       let data = {
         resName: row.columns[0].value,
         resAddress: row.columns[1].value,
       };
-      console.log('addRest data is:', data);
+      // console.log('addRest data is:', data);
       this.props.addRest(data);
     }
     return true
@@ -150,7 +150,7 @@ class RestaurantsManager extends React.Component {
   }
 
   render() {
-    console.log('Restaurants Manager | this.props', this.props);
+    // console.log('Restaurants Manager | this.props', this.props);
     // console.log('Restaurants Manager | this.state', this.state);
     // const src = require("../../Images/5.gif");
     const styleDiv = {
@@ -179,12 +179,12 @@ class RestaurantsManager extends React.Component {
               {value: row.name, field: 'name', required: true},
               {value: row.address, field: 'description'},
               {value: row._id, field: 'id', hidden: true},
-              {value: `/Admin/Restaurants/${row.name}`, field: 'Link', hidden: true}
+              {value: `/Admin/Restaurants/${row.name}`, field: 'Link', link: true, hidden: true}
             ]
           }
         )
       });
-      console.log('Restaurants Manager | rows', rows);
+      // console.log('Restaurants Manager | rows', rows);
       return (
         <div>
           {this.props.children ? React.cloneElement(this.props.children, this.props) : (

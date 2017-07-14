@@ -2,10 +2,6 @@
  * Created by liorf on 12/17/16.
  */
 import React from 'react';
-import ListOfSubMenus from './ListOfSubMenus'
-import {Button} from 'react-bootstrap';
-import AddRestSubMenu from './AddRestSubMenu'
-import DeleteRestSubMenu from './DeleteRestSubMenu'
 import './subMenu.styl';
 import EditTable from '../../components/EditTable';
 
@@ -29,8 +25,8 @@ class subMenuManager extends React.Component {
     }
   }
   onChange(row) {
-    console.log('subMenuManager | onChange | row is:', row);
-    console.log('subMenuManager | onChange | this.props.menu is:', this.props);
+    // console.log('subMenuManager | onChange | row is:', row);
+    // console.log('subMenuManager | onChange | this.props.menu is:', this.props);
     for (let i = 0; i < row.columns.length; i++) {
       // console.log('DishesManager | onChange | row is: ', row.columns[i]);
       if (row.columns[i].id === 0) {
@@ -57,9 +53,9 @@ class subMenuManager extends React.Component {
   }
 
   onDelete(e) {
-    console.log('subMenuManager | onDelete', this.props);
+    // console.log('subMenuManager | onDelete', this.props);
     let subMenu = this.props.menu.subMenus[e.rowId];
-    console.log('subMenuManager | onDelete | subMenu', subMenu);
+    // console.log('subMenuManager | onDelete | subMenu', subMenu);
     let data = {
       menuId: subMenu.menuId,
       _id: subMenu._id,
@@ -125,7 +121,7 @@ class subMenuManager extends React.Component {
           columns: [
             {value: row.name, field: 'name', required: true},
             {value: row._id, field: 'id', hidden: true},
-            {value: 'Link', field: 'link', link: true, hidden: true}
+            {value: `/Admin/Restaurants/${this.props.rest.name}/Menus/${this.props.menu.name}/Submenus/${row.name}`, field: 'Link', link: true, hidden: true}
           ]
         }
       )

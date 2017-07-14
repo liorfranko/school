@@ -7,6 +7,7 @@ import EditTable from '../../components/EditTable';
 class DishesManager extends React.Component {
   constructor(props) {
     super(props);
+
     this.componentDidMount = this.componentDidMount.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onDelete = this.onDelete.bind(this);
@@ -14,20 +15,20 @@ class DishesManager extends React.Component {
 
   componentDidMount() {
     // console.log('DishesManager | componentDidMount', this.props);
+    // console.log('DishesManager | componentDidMount', this.props.appData.data.dishes.length);
     if (!this.props.appData.data.dishes) {
       this.props.getDishes();
     }
   }
 
-
   onChange(row) {
-    // console.log('DishesManager | onChange | row is:', row);
+    console.log('DishesManager | onChange | row is:', row);
     // console.log('DishesManager | onChange | this.props.appData.data.dishes.length:', this.props.appData.data.dishes.length);
     for (let i = 0; i < row.columns.length; i++) {
       // console.log('DishesManager | onChange | row is: ', row.columns[i]);
       if (row.columns[i].id === 0) {
         // console.log('DishesManager | onChange | row is: name');
-        if (row.columns[i].value === "" ) {
+        if (row.columns[i].value === "") {
           // console.log('DishesManager | onChange | row is empty');
           alert('Name can\'t empty.');
           return false
@@ -35,7 +36,7 @@ class DishesManager extends React.Component {
       }
       if (row.columns[i].id === 2) {
         // console.log('DishesManager | onChange | row is: price');
-        if (row.columns[i].value === "" ) {
+        if (row.columns[i].value === "") {
           // console.log('DishesManager | onChange | row is empty');
           alert('Price can\'t empty.');
           return false
@@ -47,10 +48,11 @@ class DishesManager extends React.Component {
           }
         }
       }
-    };
+    }
 
-    if (row.columns[3]){
-      // console.log('id exists | row[3]', row.columns[3]);
+
+    if (row.columns[3]) {
+      console.log('id exists | row[3]', row.columns[3]);
       // let dish = this.props.appData.data.dishes.findIndex(x => x._id === row.columns[3].value);
       let data = {
         dishName: row.columns[0].value,
@@ -61,7 +63,7 @@ class DishesManager extends React.Component {
       // console.log('data is:', data);
       this.props.editDish(data);
     } else {
-      // console.log('id not exists - New dish');
+      console.log('id not exists - New dish');
       let data = {
         dishName: row.columns[0].value,
         dishDescription: row.columns[1].value,
@@ -100,12 +102,14 @@ class DishesManager extends React.Component {
         <div id="dishes" className="panel panel-default">
           <div className="panel-heading" style={styleDiv}>Dishes:</div>
           <div className="panel-body">
-              <CircularProgress />
+            <CircularProgress />
           </div>
         </div>
       );
     } else {
+
       this.props.appData.data.dishes.map((row, index) => {
+        // console.log('row is:', row);
         rows.push(
           {
             columns: [
@@ -113,11 +117,11 @@ class DishesManager extends React.Component {
               {value: row.description, field: 'description'},
               {value: row.defaultPrice, field: 'defaultPrice', required: true},
               {value: row._id, field: 'id', hidden: true},
-              {value: 'Link', field: 'link', link: true, hidden: true}
             ]
           }
         )
       });
+
       return (
         <div id="dishes" className="panel panel-default">
           <div className="panel-heading" style={styleDiv}>Dishes:</div>
