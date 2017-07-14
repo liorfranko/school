@@ -12,6 +12,7 @@ class uRestaurant extends React.Component {
     this.componentDidMount = this.componentDidMount.bind(this);
     this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
     this.componentInit = this.componentInit.bind(this);
+    this.recursiveCloneChildren = this.recursiveCloneChildren.bind(this);
   }
 
   componentInit() {
@@ -54,6 +55,24 @@ class uRestaurant extends React.Component {
     this.componentInit();
   }
 
+  recursiveCloneChildren(children) {
+    return React.Children.map(children, child => {
+      let childProps = {};
+      if (React.isValidElement(child)) {
+        childProps = {
+          appData: this.props.appData,
+          getSubMenus: this.props.getSubMenus,
+          getOrdersByTableId: this.props.getOrdersByTableId,
+          addOrder: this.props.addOrder,
+          editOrderSumPaid: this.props.editOrderSumPaid,
+          editOrderDishes: this.props.editOrderDishes
+        };
+      }
+      childProps.children = this.recursiveCloneChildren(child.props.children);
+      return React.cloneElement(child, childProps);
+    })
+  }
+
   render() {
     // console.log('uRestaurant | render |this.props', this.props);
     const src = require("../../Images/5.gif");
@@ -89,57 +108,63 @@ class uRestaurant extends React.Component {
       } else {
         // console.log('uRestaurant | render | Loading page', this.props);
         return (
-          <div id="rests" className="panel panel-default">
-            <div className="panel-heading" style={styleDiv}>{this.props.appData.data.rests[rest].name}</div>
-            <div className="panel-body">
-              {this.props.appData.data.rests[rest].menus.map((menu, t) => {
-                {/*console.log('uRestaurant | render | menu', menu);*/
-                }
-                return (
-                  <ul className="restList list-group" key={t}>
-                    <div style={styleDiv_2}>{menu.name}</div>
-                    {menu.subMenus ?
-                      <div>{menu.subMenus.map((submenu, i) => {
-                        return (
-                          <div key={i}>
-                            <div style={styleDiv_3}>{submenu.name}</div>
-                            <li className="restItem list-group-item">
-                              <div className="innerItem name">
-                                Dish Name
-                              </div>
-                              <div className="innerItem name">
-                                Dish Price
-                              </div>
-                            </li>
-                            {submenu.dishArray ?
-                              <div>{submenu.dishArray.map((dish, j) => {
-                                let dishIndex = this.props.appData.data.dishes.findIndex(x => x._id === dish);
-                                if (dishIndex > -1) {
-                                  let fullDish = this.props.appData.data.dishes[dishIndex];
-                                  return (
-                                    <li className="restItem list-group-item" key={j}>
-                                      <div className="innerItem name">
-                                        {fullDish.name}
-                                      </div>
-                                      <div className="innerItem price">
-                                        {fullDish.defaultPrice}
-                                      </div>
-                                    </li>
-                                  )
-                                }
-                              })}</div> : null
-                            }
-                          </div>
-                        )
-                      })}</div> :
-                      null
+          <div>
+            {this.props.params.tableName ? this.recursiveCloneChildren(this.props.children) : (
+              <div id="rests" className="panel panel-default">
+                <div className="panel-heading" style={styleDiv}>{this.props.appData.data.rests[rest].name}</div>
+                <div className="panel-body">
+                  {this.props.appData.data.rests[rest].menus.map((menu, t) => {
+                    {/*console.log('uRestaurant | render | menu', menu);*/
                     }
-                  </ul>
+                    return (
+                      <ul className="restList list-group" key={t}>
+                        <div style={styleDiv_2}>{menu.name}</div>
+                        {menu.subMenus ?
+                          <div>{menu.subMenus.map((submenu, i) => {
+                            return (
+                              <div key={i}>
+                                <div style={styleDiv_3}>{submenu.name}</div>
+                                <li className="restItem list-group-item">
+                                  <div className="innerItem name">
+                                    Dish Name
+                                  </div>
+                                  <div className="innerItem name">
+                                    Dish Price
+                                  </div>
+                                </li>
+                                {submenu.dishArray ?
+                                  <div>{submenu.dishArray.map((dish, j) => {
+                                    let dishIndex = this.props.appData.data.dishes.findIndex(x => x._id === dish);
+                                    if (dishIndex > -1) {
+                                      let fullDish = this.props.appData.data.dishes[dishIndex];
+                                      return (
+                                        <li className="restItem list-group-item" key={j}>
+                                          <div className="innerItem name">
+                                            {fullDish.name}
+                                          </div>
+                                          <div className="innerItem price">
+                                            {fullDish.defaultPrice}
+                                          </div>
+                                        </li>
+                                      )
+                                    }
+                                  })}</div> : null
+                                }
+                              </div>
+                            )
+                          })}</div> :
+                          null
+                        }
+                      </ul>
 
-                )
-              })}
-            </div>
+                    )
+                  })}
+                </div>
+              </div>
+            )
+            }
           </div>
+
         );
       }
     }

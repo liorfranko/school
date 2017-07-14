@@ -35,7 +35,9 @@ class RestaurantsManager extends React.Component {
 
   componentDidMount() {
     // console.log('RestaurantsManager | componentDidMount', this.props);
+    // alert(1);
     if (!this.props.appData.data.rests) {
+      // alert(2);
       this.props.getRests();
     }
   }
@@ -120,33 +122,36 @@ class RestaurantsManager extends React.Component {
       );
     } else {
       return (
-        <div id="rests" className="panel panel-default">
-          <div className="panel-heading" style={styleDiv}>Restaurants:</div>
-          <div className="panel-body">
-            <ListOfRestaurants rests={this.props.appData.data.rests}
-                               editRest={this.editRest}
-                               deleteRest={this.deleteRest}
-            />
-            {/*<a onClick={this.addRest} >Add restaurant</a>*/}
-            <AddRestaurant handleClick={this.handleAddClick}
-                           exit={this.exitPopup}
-                           show={this.state.showAddModal}/>
-            <Button onClick={this.addRest}>Add restaurant</Button>
-            <DeleteRestaurant
-              rest={this.props.appData.data.rests[this.state.selectedRes]}
-              handleClick={this.handleDeleteClick}
-              exit={this.exitPopup}
-              show={this.state.showDeleteModal}
-            />
-            <EditRestaurant
-              rest={this.props.appData.data.rests[this.state.selectedRes]}
-              handleClick={this.handleEditClick}
-              exit={this.exitPopup}
-              show={this.state.showEditModal}
-            />
-          </div>
+        <div>
+          {this.props.children ? React.cloneElement(this.props.children, this.props) : (
+            <div id="rests" className="panel panel-default">
+              <div className="panel-heading" style={styleDiv}>Restaurants:</div>
+              <div className="panel-body">
+                <ListOfRestaurants rests={this.props.appData.data.rests}
+                                   editRest={this.editRest}
+                                   deleteRest={this.deleteRest}
+                />
+                <AddRestaurant handleClick={this.handleAddClick}
+                               exit={this.exitPopup}
+                               show={this.state.showAddModal}/>
+                <Button onClick={this.addRest}>Add restaurant</Button>
+                <DeleteRestaurant
+                  rest={this.props.appData.data.rests[this.state.selectedRes]}
+                  handleClick={this.handleDeleteClick}
+                  exit={this.exitPopup}
+                  show={this.state.showDeleteModal}
+                />
+                <EditRestaurant
+                  rest={this.props.appData.data.rests[this.state.selectedRes]}
+                  handleClick={this.handleEditClick}
+                  exit={this.exitPopup}
+                  show={this.state.showEditModal}
+                />
+              </div>
+            </div>
+          )
+          }
         </div>
-
       );
     }
   }

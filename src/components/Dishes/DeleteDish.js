@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 class DeleteDish extends React.Component {
   constructor(props) {
-    // console.log('DeleteDish | constructor | props', props);
+    console.log('DeleteDish | constructor | props', props);
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -23,29 +23,40 @@ class DeleteDish extends React.Component {
       return (null);
     } else {
       return (
-        <Modal show={this.props.show} onHide={this.props.exit}>
-          <Modal.Header closeButton>
-            <Modal.Title>Delete Dish</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <form id="DeleteDishForm" onSubmit={this.handleSubmit}>
-              <label>
-                <div>Dish Name:
-                  {this.props.dish['name']}
-                </div>
-                <div>
-                  Dish Description:
-                  {this.props.dish['description']}
-                </div>
-              </label>
-            </form>
-          </Modal.Body>
-          <Modal.Footer>
-            <input type="submit" form="DeleteDishForm" value="Delete" className="btn btn-default"/>
-            <Button onClick={this.props.exit}>Close</Button>
-          </Modal.Footer>
-        </Modal>
+        <div>
+          <div>Dish Name:
+            {this.props.dish['name']}
+          </div>
+          <div>Dish Description:
+          {this.props.dish['description']}
+          </div>
+        </div>
       );
+      // return (
+
+        {/*<Modal show={this.props.show} onHide={this.props.exit}>*/}
+          {/*<Modal.Header closeButton>*/}
+            {/*<Modal.Title>Delete Dish</Modal.Title>*/}
+          {/*</Modal.Header>*/}
+          {/*<Modal.Body>*/}
+            {/*<form id="DeleteDishForm" onSubmit={this.handleSubmit}>*/}
+              {/*<label>*/}
+                {/*<div>Dish Name:*/}
+                  {/*{this.props.dish['name']}*/}
+                {/*</div>*/}
+                {/*<div>*/}
+                  {/*Dish Description:*/}
+                  {/*{this.props.dish['description']}*/}
+                {/*</div>*/}
+              {/*</label>*/}
+            {/*</form>*/}
+          {/*</Modal.Body>*/}
+          {/*<Modal.Footer>*/}
+            {/*<input type="submit" form="DeleteDishForm" value="Delete" className="btn btn-default"/>*/}
+            {/*<Button onClick={this.props.exit}>Close</Button>*/}
+          {/*</Modal.Footer>*/}
+        {/*</Modal>*/}
+      // );
     }
   }
 }

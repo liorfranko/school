@@ -16,6 +16,7 @@ const DishesListItem = (props) => {
   };
 
   return (
+
     <li className="dishItem list-group-item">
       <a className="innerItem name" onClick={onEditClick}>
         {props.item.name}

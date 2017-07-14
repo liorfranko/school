@@ -10,10 +10,11 @@ import PropTypes from 'prop-types';
 
 class Restaurant extends React.Component {
   constructor(props) {
-    // console.log('Restaurant | constructor | this.props', props);
+    console.log('Restaurant | constructor | this.props', props);
     super(props);
     this.componentDidMount = this.componentDidMount.bind(this);
     this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
+    this.recursiveCloneChildren = this.recursiveCloneChildren.bind(this);
   }
 
   componentDidMount() {
@@ -55,6 +56,24 @@ class Restaurant extends React.Component {
     }
   }
 
+  recursiveCloneChildren(children) {
+    return React.Children.map(children, child => {
+      let childProps = {};
+      if (React.isValidElement(child)) {
+        childProps = {
+          appData: this.props.appData,
+          getDishes: this.props.getDishes,
+          getSubMenus: this.props.getSubMenus,
+          editSubMenu: this.props.editSubMenu,
+          getRests: this.props.getRests,
+          getMenus: this.props.getMenus,
+        };
+      }
+      childProps.children = this.recursiveCloneChildren(child.props.children);
+      return React.cloneElement(child, childProps);
+    })
+  }
+
   render() {
     // console.log('Restaurant | render |this.props', this.props);
     const src = require("../../Images/5.gif");
@@ -84,19 +103,24 @@ class Restaurant extends React.Component {
       } else {
         return (
           <div>
-            <RestMenuManager rest={this.props.appData.data.rests[rest]}
-                             menus={this.props.appData.data.rests[rest].menus}
-                             addRestMenu={this.props.addRestMenu}
-                             deleteRestMenu={this.props.deleteRestMenu}
-            />
-            <TableManager
-              rest={this.props.appData.data.rests[rest]}
-              tables={this.props.appData.data.rests[rest].tables}
-              addTable={this.props.addTable}
-              deleteTable={this.props.deleteTable}
-              editTable={this.props.editTable}
-              publicDns={this.props.publicDns}
-            />
+            {this.props.params.menuName ? this.recursiveCloneChildren(this.props.children) : (
+              <div>
+                <RestMenuManager rest={this.props.appData.data.rests[rest]}
+                                 menus={this.props.appData.data.rests[rest].menus}
+                                 addRestMenu={this.props.addRestMenu}
+                                 deleteRestMenu={this.props.deleteRestMenu}
+                />
+                <TableManager
+                  rest={this.props.appData.data.rests[rest]}
+                  tables={this.props.appData.data.rests[rest].tables}
+                  addTable={this.props.addTable}
+                  deleteTable={this.props.deleteTable}
+                  editTable={this.props.editTable}
+                  publicDns={this.props.publicDns}
+                />
+              </div>
+              )
+            }
           </div>
         );
       }

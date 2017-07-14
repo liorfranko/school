@@ -11,18 +11,36 @@ import PropTypes from 'prop-types';
 
 class restMenuManager extends React.Component {
   constructor(props) {
-    // console.log('restMenuManager | constructor', props);
+    console.log('restMenuManager | constructor', props);
     super(props);
     this.exitPopup = this.exitPopup.bind(this);
     this.addRestMenu = this.addRestMenu.bind(this);
     this.deleteRestMenu = this.deleteRestMenu.bind(this);
     this.handleAddClick = this.handleAddClick.bind(this);
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
+    this.recursiveCloneChildren = this.recursiveCloneChildren.bind(this);
     this.state = {
       showAddModal: false,
       showDeleteModal: false,
       selectedMenu: 0
     };
+  }
+
+  recursiveCloneChildren(children) {
+    console.log('restMenuManager | recursiveCloneChildren');
+    return React.Children.map(children, child => {
+      let childProps = {};
+      if (React.isValidElement(child)) {
+        childProps = {
+          appData: this.props.appData,
+          getDishes: this.props.getDishes,
+          getSubMenus: this.props.getSubMenus,
+          submitRestSubMenu: this.props.submitRestSubMenu,
+        };
+      }
+      childProps.children = this.recursiveCloneChildren(child.props.children);
+      return React.cloneElement(child, childProps);
+    })
   }
 
   exitPopup() {
@@ -66,32 +84,37 @@ class restMenuManager extends React.Component {
   }
 
   render() {
-    // console.log('restMenuManager | props', this.props);
+    console.log('restMenuManager | props', this.props);
     // console.log('restMenuManager | this.state', this.state);
     let styleDiv = {
       fontSize: 30
     };
     return (
-      <div id="restMenu" className="panel panel-default">
-        <div className="panel-heading" style={styleDiv}>{this.props.rest.name}</div>
-        <div className="panel-body">
-          Menus:
-          <ListOfRestMenus menus={this.props.menus}
+      <div>
+        {this.props.children ? this.recursiveCloneChildren(this.props.children) : (
+          <div id="restMenu" className="panel panel-default">
+            <div className="panel-heading" style={styleDiv}>{this.props.rest.name}</div>
+            <div className="panel-body">
+              Menus:
+              <ListOfRestMenus menus={this.props.menus}
+                               rest={this.props.rest}
+                               deleteRestMenu={this.deleteRestMenu}
+              />
+              <AddRestMenu handleClick={this.handleAddClick}
                            rest={this.props.rest}
-                           deleteRestMenu={this.deleteRestMenu}
-          />
-          <AddRestMenu handleClick={this.handleAddClick}
-                       rest={this.props.rest}
-                       exit={this.exitPopup}
-                       show={this.state.showAddModal}
-          />
-          <Button onClick={this.addRestMenu}>Add Menu</Button>
-          <DeleteRestMenu chosenMenu={this.props.menus[this.state.selectedMenu]}
-                          handleClick={this.handleDeleteClick}
-                          exit={this.exitPopup}
-                          show={this.state.showDeleteModal}
-          />
-        </div>
+                           exit={this.exitPopup}
+                           show={this.state.showAddModal}
+              />
+              <Button onClick={this.addRestMenu}>Add Menu</Button>
+              <DeleteRestMenu chosenMenu={this.props.menus[this.state.selectedMenu]}
+                              handleClick={this.handleDeleteClick}
+                              exit={this.exitPopup}
+                              show={this.state.showDeleteModal}
+              />
+            </div>
+          </div>
+        )
+        }
       </div>
     );
   }

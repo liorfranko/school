@@ -9,7 +9,7 @@ import update from 'react/lib/update';
 
 class uTable extends React.Component {
   constructor(props) {
-    // console.log('uRestaurant | constructor | this.props', props);
+    console.log('uRestaurant | constructor | this.props', props);
     super(props);
     this.componentDidMount = this.componentDidMount.bind(this);
     this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);

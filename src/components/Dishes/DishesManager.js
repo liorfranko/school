@@ -6,7 +6,25 @@ import EditDish from './EditDish.js';
 import DeleteDish from './DeleteDish.js';
 import {Button} from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import Dialog from 'material-ui/Dialog';
+import {FlatButton} from 'material-ui'
+import Divider from 'material-ui/Divider';
+import Paper from 'material-ui/Paper';
+import TextField from 'material-ui/TextField';
+// import Ta from 'material-ui/'
+// const getMuiTheme = require('material-ui/styles/getMuiTheme').default;
+// const baseTheme = require('material-ui/styles/baseThemes/darkBaseTheme');
+import EditTable from '../../components/EditTable';
+// const container = document.createElement('div');
 
+// import {
+//   Table,
+//   TableBody,
+//   TableHeader,
+//   TableHeaderColumn,
+//   TableRow,
+//   TableRowColumn,
+// } from 'material-ui/Table';
 
 class DishesManager extends React.Component {
   constructor(props) {
@@ -25,6 +43,8 @@ class DishesManager extends React.Component {
     this.openEditDish = this.openEditDish.bind(this);
     this.openDeleteDish = this.openDeleteDish.bind(this);
     this.openAddDish = this.openAddDish.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onDelete = this.onDelete.bind(this);
   }
 
   componentDidMount() {
@@ -32,6 +52,51 @@ class DishesManager extends React.Component {
     if (!this.props.appData.data.dishes) {
       this.props.getDishes();
     }
+  }
+
+
+  onChange(row) {
+    console.log('DishesManager | onChange | row is:', row);
+    console.log('DishesManager | onChange | this.props:', this.props);
+    // this.state = {
+    //   dishName: this.props.dish['name'],
+    //   dishId: this.props.dish['_id'],
+    //   dishDescription: this.props.dish['description'],
+    //   defaultPrice: this.props.dish['defaultPrice']
+    // };
+    let dish = this.props.appData.data.dishes.findIndex(x => x.tableNum == this.props.params.tableNum);
+
+    for (let i = 0; i < row.columns.length; i++) {
+      console.log('DishesManager | onChange | row is: ', row.columns[i]);
+      if (row.columns[i].id === 0) {
+        // console.log('DishesManager | onChange | row is: name');
+        if (row.columns[i].value === "" ) {
+          // console.log('DishesManager | onChange | row is empty');
+          alert('Name can\'t empty.');
+          return false
+        }
+      }
+      if (row.columns[i].id === 2) {
+        // console.log('DishesManager | onChange | row is: price');
+        if (row.columns[i].value === "" ) {
+          // console.log('DishesManager | onChange | row is empty');
+          alert('Price can\'t empty.');
+          return false
+        } else {
+          // console.log('DishesManager | onChange | row is not empty');
+          if (isNaN(row.columns[i].value)) {
+            alert('Price is invalid \'' + row.columns[i].value + '\'.');
+            return false
+          }
+        }
+      }
+    };
+
+    return true
+  }
+
+  onDelete(e) {
+    console.log('DishesManager | onDelete', e);
   }
 
   exitPopup() {
@@ -99,6 +164,28 @@ class DishesManager extends React.Component {
     const styleDiv = {
       fontSize: 30
     };
+    const style = {
+      marginLeft: 20,
+    };
+    const deleteActions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onTouchTap={this.exitPopup}
+      />,
+      <FlatButton
+        label="Submit"
+        primary={true}
+        keyboardFocused={true}
+        onTouchTap={this.handleDeleteClick}
+      />,
+    ];
+    const headers = [
+      {value: 'Name', type: 'TextField'},
+      {value: 'Description', type: 'TextField'},
+      {value: 'Price', type: 'TextField'},
+    ];
+    let rows = [];
     if (!this.props.appData.data.dishes) {
       // console.log('DishesManager | loading');
       return (
@@ -110,28 +197,109 @@ class DishesManager extends React.Component {
         </div>
       );
     } else {
+      this.props.appData.data.dishes.map((row, index) => {
+        rows.push(
+          {
+            columns: [
+              {value: row.name, field: 'name', width: 50},
+              {value: row.description, field: 'description', width: 50},
+              {value: row.defaultPrice, field: 'defaultPrice', width: 50},
+            ]
+          }
+        )
+      });
       return (
         <div id="dishes" className="panel panel-default">
           <div className="panel-heading" style={styleDiv}>Dishes:</div>
           <div className="panel-body">
-            <ListOfDishes dishes={this.props.appData.data.dishes}
-                          editDish={this.openEditDish}
-                          deleteDish={this.openDeleteDish}/>
-            <Button onClick={this.openAddDish}>Add Dish</Button>
-            <AddDish handleClick={this.handleAddClick} exit={this.exitPopup}
-                     show={this.state.showAddModal}/>
-            <EditDish
-              dish={this.props.appData.data.dishes[this.state.selectedDish]}
-              handleClick={this.handleEditClick}
-              exit={this.exitPopup}
-              show={this.state.showEditModal}
+            <EditTable
+              onChange={this.onChange}
+              onDelete={this.onDelete}
+              rows={rows}
+              headerColumns={headers}
+              enableDelete={true}
             />
-            <DeleteDish
-              dish={this.props.appData.data.dishes[this.state.selectedDish]}
-              handleClick={this.handleDeleteClick}
-              exit={this.exitPopup}
-              show={this.state.showDeleteModal}
-            />
+            {/*<Table>*/}
+              {/*<TableHeader>*/}
+                {/*<TableRow>*/}
+                  {/*<TableHeaderColumn>ID</TableHeaderColumn>*/}
+                  {/*<TableHeaderColumn>Name</TableHeaderColumn>*/}
+                  {/*<TableHeaderColumn>Description</TableHeaderColumn>*/}
+                  {/*<TableHeaderColumn>Price</TableHeaderColumn>*/}
+                {/*</TableRow>*/}
+              {/*</TableHeader>*/}
+              {/*<TableBody showRowHover={true}>*/}
+                {/*{this.props.appData.data.dishes.map((row, index) => (*/}
+                  {/*<TableRow key={index}>*/}
+                    {/*<TableRowColumn>{index}</TableRowColumn>*/}
+                    {/*<TableRowColumn>{row.name}</TableRowColumn>*/}
+                    {/*<TableRowColumn>{row.description}</TableRowColumn>*/}
+                    {/*<TableRowColumn>{row.defaultPrice}</TableRowColumn>*/}
+                  {/*</TableRow>*/}
+                {/*))}*/}
+              {/*</TableBody>*/}
+            {/*</Table>*/}
+
+            {/*<ListOfDishes dishes={this.props.appData.data.dishes}*/}
+                          {/*editDish={this.openEditDish}*/}
+                          {/*deleteDish={this.openDeleteDish}/>*/}
+            {/*<Button onClick={this.openAddDish}>Add Dish</Button>*/}
+            {/*<AddDish handleClick={this.handleAddClick} exit={this.exitPopup}*/}
+                     {/*show={this.state.showAddModal}/>*/}
+            {/*<EditDish*/}
+              {/*dish={this.props.appData.data.dishes[this.state.selectedDish]}*/}
+              {/*handleClick={this.handleEditClick}*/}
+              {/*exit={this.exitPopup}*/}
+              {/*show={this.state.showEditModal}*/}
+            {/*/>*/}
+            {/*<DeleteDish*/}
+            {/*dish={this.props.appData.data.dishes[this.state.selectedDish]}*/}
+            {/*handleClick={this.handleDeleteClick}*/}
+            {/*exit={this.exitPopup}*/}
+            {/*show={this.state.showDeleteModal}*/}
+            {/*/>*/}
+            {/*<Dialog*/}
+              {/*title="Dialog With Actions"*/}
+              {/*actions={deleteActions}*/}
+              {/*modal={false}*/}
+              {/*open={this.state.showDeleteModal}*/}
+              {/*onRequestClose={this.exitPopup}*/}
+              {/*children={DeleteDish}*/}
+            {/*>*/}
+              {/*<Table>*/}
+                {/*<TableHeader>*/}
+                  {/*<TableRow>*/}
+                    {/*<TableHeaderColumn>Dish Name</TableHeaderColumn>*/}
+                    {/*<TableHeaderColumn>Dish Description</TableHeaderColumn>*/}
+                  {/*</TableRow>*/}
+                {/*</TableHeader>*/}
+                {/*<TableBody>*/}
+                  {/*<TableRow>*/}
+                    {/*<TableRowColumn>{this.props.appData.data.dishes[this.state.selectedDish]['name']}</TableRowColumn>*/}
+                    {/*<TableRowColumn>{this.props.appData.data.dishes[this.state.selectedDish]['description']}</TableRowColumn>*/}
+                  {/*</TableRow>*/}
+                {/*</TableBody>*/}
+              {/*</Table>*/}
+              {/*<Paper zDepth={2}>*/}
+                {/*<TextField hintText="First name" style={style} underlineShow={false}/>*/}
+                {/*<Divider />*/}
+                {/*<TextField hintText="Middle name" style={style} underlineShow={false}/>*/}
+                {/*<Divider />*/}
+                {/*<TextField hintText="Last name" style={style} underlineShow={false}/>*/}
+                {/*<Divider />*/}
+                {/*<TextField hintText="Email address" style={style} underlineShow={false}/>*/}
+                {/*<Divider />*/}
+              {/*</Paper>*/}
+              {/*<div>*/}
+                {/*<div>Dish Name:*/}
+                  {/*{this.props.appData.data.dishes[this.state.selectedDish]['name']}*/}
+                {/*</div>*/}
+                {/*<div>Dish Description:*/}
+                  {/*{this.props.appData.data.dishes[this.state.selectedDish]['description']}*/}
+                {/*</div>*/}
+              {/*</div>*/}
+              {/*Are you sure you want to delete this dish?*/}
+            {/*</Dialog>*/}
           </div>
         </div>
       );

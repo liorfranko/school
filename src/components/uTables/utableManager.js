@@ -8,7 +8,7 @@ import ListOfTables from './uListOfTables';
 
 class uTableManager extends React.Component {
   constructor(props) {
-    // console.log('uTableManager | constructor', props);
+    console.log('uTableManager | constructor', props);
     super(props);
     this.componentInit = this.componentInit.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
