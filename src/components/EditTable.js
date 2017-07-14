@@ -4,8 +4,12 @@ const ModeEdit = require('material-ui/svg-icons/editor/mode-edit').default;
 const Check = require('material-ui/svg-icons/navigation/check').default;
 const Cancel = require('material-ui/svg-icons/navigation/cancel').default;
 const Delete = require('material-ui/svg-icons/action/delete').default;
+const Launch = require('material-ui/svg-icons/action/launch').default;
 const times = require('lodash.times');
 const {IconButton, Toggle, TextField, RaisedButton, DatePicker} = mui;
+// const browserHistory = require('react-router');
+import {browserHistory} from 'react-router';
+
 // const injectTapEventPlugin = require('react-tap-event-plugin')
 // injectTapEventPlugin()
 
@@ -37,7 +41,14 @@ module.exports = React.createClass({
     const row = this.state.rows.filter((row) => {
       return row.selected
     });
-    return !!this.props.onChange(row[0]);
+
+    if (this.props.onChange(row[0])) {
+      // console.log('True');
+      return true
+    } else {
+      // console.log('False');
+      return false
+    }
   },
 
   getCellValue: function (cell) {
@@ -207,6 +218,18 @@ module.exports = React.createClass({
       if (deleteEvent !== {}) self.props.onDelete(deleteEvent)
     };
 
+    const onLaunchRow = function (e) {
+      // console.log('onLaunchRow | rowId', rowId);
+      // console.log('onLaunchRow | self.state.rows', self.state.rows);
+      let rows = self.state.rows;
+      rows.forEach((row, i) => {
+        if (rowId === i) {
+          // console.log('row is:', row);
+          browserHistory.push(row.columns[3].value);
+        }
+      });
+    };
+
     const onClick = function (e) {
       if (selected) {
          if(self.update()) {
@@ -225,6 +248,11 @@ module.exports = React.createClass({
     const cancelButton = !(this.props.enableDelete && selected) || row.header ? <div style={deleteButtonStyle} />
       : <IconButton style={deleteButtonStyle} tooltip={'Cancel'} onClick={onDeleteRow}>
         <Cancel />
+      </IconButton>;
+
+    const launchButton = (!this.props.enableDelete || selected || row.header) ? <div style={deleteButtonStyle} />
+      : <IconButton style={deleteButtonStyle} tooltip={'Open'} onClick={onLaunchRow}>
+        <Launch />
       </IconButton>;
 
     const checkbox = row.header ? <div style={checkboxStyle} />
@@ -266,6 +294,7 @@ module.exports = React.createClass({
         })}
         {deleteButton}
         {cancelButton}
+        {launchButton}
       </div>
     )
   },

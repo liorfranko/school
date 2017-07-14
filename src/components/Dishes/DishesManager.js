@@ -109,10 +109,11 @@ class DishesManager extends React.Component {
         rows.push(
           {
             columns: [
-              {value: row.name, field: 'name', width: 50},
-              {value: row.description, field: 'description', width: 50},
-              {value: row.defaultPrice, field: 'defaultPrice', width: 50},
-              {value: row._id, field: 'id', hidden: true}
+              {value: row.name, field: 'name', required: true},
+              {value: row.description, field: 'description'},
+              {value: row.defaultPrice, field: 'defaultPrice', required: true},
+              {value: row._id, field: 'id', hidden: true},
+              {value: 'Link', field: 'link', link: true, hidden: true}
             ]
           }
         )

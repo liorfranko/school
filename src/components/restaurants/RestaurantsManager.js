@@ -4,6 +4,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import CircularProgress from 'material-ui/CircularProgress';
 
 import ListOfRestaurants from './ListOfRestaurants';
 import './rests.styl';
@@ -11,6 +12,7 @@ import EditRestaurant from './EditRestaurant.js';
 import DeleteRestaurant from './DeleteRestaurant.js';
 import AddRestaurant from './AddRestaurant.js';
 import {Button} from 'react-bootstrap';
+import EditTable from '../../components/EditTable';
 
 class RestaurantsManager extends React.Component {
   constructor(props) {
@@ -31,6 +33,9 @@ class RestaurantsManager extends React.Component {
     this.deleteRest = this.deleteRest.bind(this);
     this.addRest = this.addRest.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onDelete = this.onDelete.bind(this);
+
   }
 
   componentDidMount() {
@@ -41,7 +46,25 @@ class RestaurantsManager extends React.Component {
       this.props.getRests();
     }
   }
+  onChange(row) {
+    console.log('RestaurantsManager | onChange | row is:', row);
+    for (let i = 0; i < row.columns.length; i++) {
+      // console.log('DishesManager | onChange | row is: ', row.columns[i]);
+      if (row.columns[i].id === 0) {
+        // console.log('DishesManager | onChange | row is: name');
+        if (row.columns[i].value === "") {
+          // console.log('DishesManager | onChange | row is empty');
+          alert('Name can\'t empty.');
+          return false
+        }
+      }
+    }
+  }
 
+  onDelete(e) {
+    console.log('RestaurantsManager | onDelete', e);
+
+  }
   exitPopup() {
     this.setState({
       showAddModal: false,
@@ -106,7 +129,7 @@ class RestaurantsManager extends React.Component {
   render() {
     // console.log('Restaurants Manager | this.props', this.props);
     // console.log('Restaurants Manager | this.state', this.state);
-    const src = require("../../Images/5.gif");
+    // const src = require("../../Images/5.gif");
     const styleDiv = {
       fontSize: 30
     };
@@ -116,37 +139,61 @@ class RestaurantsManager extends React.Component {
         <div id="rests" className="panel panel-default">
           <div className="panel-heading" style={styleDiv}>Restaurants:</div>
           <div className="panel-body">
-            <img src={src}/>
+            <CircularProgress />
           </div>
         </div>
       );
     } else {
+      const headers = [
+        {value: 'Name', type: 'TextField'},
+        {value: 'Address', type: 'TextField'},
+      ];
+      let rows = [];
+      this.props.appData.data.rests.map((row, index) => {
+        rows.push(
+          {
+            columns: [
+              {value: row.name, field: 'name', required: true},
+              {value: row.address, field: 'description'},
+              {value: row._id, field: 'id', hidden: true},
+              {value: `/Admin/Restaurants/${row.name}`, field: 'Link', hidden: true}
+            ]
+          }
+        )
+      });
       return (
         <div>
           {this.props.children ? React.cloneElement(this.props.children, this.props) : (
             <div id="rests" className="panel panel-default">
               <div className="panel-heading" style={styleDiv}>Restaurants:</div>
               <div className="panel-body">
-                <ListOfRestaurants rests={this.props.appData.data.rests}
-                                   editRest={this.editRest}
-                                   deleteRest={this.deleteRest}
+                <EditTable
+                  onChange={this.onChange}
+                  onDelete={this.onDelete}
+                  rows={rows}
+                  headerColumns={headers}
+                  enableDelete={true}
                 />
-                <AddRestaurant handleClick={this.handleAddClick}
-                               exit={this.exitPopup}
-                               show={this.state.showAddModal}/>
-                <Button onClick={this.addRest}>Add restaurant</Button>
-                <DeleteRestaurant
-                  rest={this.props.appData.data.rests[this.state.selectedRes]}
-                  handleClick={this.handleDeleteClick}
-                  exit={this.exitPopup}
-                  show={this.state.showDeleteModal}
-                />
-                <EditRestaurant
-                  rest={this.props.appData.data.rests[this.state.selectedRes]}
-                  handleClick={this.handleEditClick}
-                  exit={this.exitPopup}
-                  show={this.state.showEditModal}
-                />
+                {/*<ListOfRestaurants rests={this.props.appData.data.rests}*/}
+                                   {/*editRest={this.editRest}*/}
+                                   {/*deleteRest={this.deleteRest}*/}
+                {/*/>*/}
+                {/*<AddRestaurant handleClick={this.handleAddClick}*/}
+                               {/*exit={this.exitPopup}*/}
+                               {/*show={this.state.showAddModal}/>*/}
+                {/*<Button onClick={this.addRest}>Add restaurant</Button>*/}
+                {/*<DeleteRestaurant*/}
+                  {/*rest={this.props.appData.data.rests[this.state.selectedRes]}*/}
+                  {/*handleClick={this.handleDeleteClick}*/}
+                  {/*exit={this.exitPopup}*/}
+                  {/*show={this.state.showDeleteModal}*/}
+                {/*/>*/}
+                {/*<EditRestaurant*/}
+                  {/*rest={this.props.appData.data.rests[this.state.selectedRes]}*/}
+                  {/*handleClick={this.handleEditClick}*/}
+                  {/*exit={this.exitPopup}*/}
+                  {/*show={this.state.showEditModal}*/}
+                {/*/>*/}
               </div>
             </div>
           )

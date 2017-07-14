@@ -4,6 +4,8 @@
 
 import React from 'react';
 import ListOfRestaurants from './ListOfuRestaurants';
+import EditTable from '../../components/EditTable';
+
 import './rests.styl';
 import {
   Table,
@@ -78,6 +80,8 @@ class uRestaurantsManager extends React.Component {
             <div id="rests" className="panel panel-default">
               <div className="panel-heading" style={styleDiv}>Restaurants:</div>
               <div className="panel-body">
+
+
                 <Table selectable={true} onRowSelection={this.onRowSelection}>
                   <TableHeader displaySelectAll={false } adjustForCheckbox={false}>
                     <TableRow>
