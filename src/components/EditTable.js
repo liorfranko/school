@@ -108,7 +108,8 @@ module.exports = React.createClass({
         if (type === 'Toggle') {
           return <Toggle onToggle={onToggle} toggled={value} />
         }
-      } else {
+      }
+      else {
         if (type === 'Toggle') {
           return <Toggle disabled onToggle={onToggle} toggled={value} />
         }
@@ -220,9 +221,7 @@ module.exports = React.createClass({
       : <IconButton style={deleteButtonStyle} tooltip={'Delete this row'} onClick={onDeleteRow}>
         <Delete />
       </IconButton>;
-    if (!(!this.props.enableDelete || selected || row.header)) {
 
-    }
     const cancelButton = !(this.props.enableDelete && selected) || row.header ? <div style={deleteButtonStyle} />
       : <IconButton style={deleteButtonStyle} tooltip={'Cancel'} onClick={onDeleteRow}>
         <Cancel />
@@ -237,31 +236,33 @@ module.exports = React.createClass({
       <div key={rowKey} className='row' style={rowStyle}>
         {checkbox}
         {columns.map((column, id) => {
-          const width = this.props.headerColumns.map((header) => {
-            return (header && header.width) || false
-          })[id];
-          const cellStyle = {
-            display: 'flex',
-            flexFlow: 'row nowrap',
-            flexGrow: 0.15,
-            flexBasis: 'content',
-            alignItems: 'center',
-            height: 30,
-            width: width || 200
-          };
-          const columnKey = ['column', id].join('-');
-          column.selected = selected;
-          column.rowId = rowId;
-          column.id = id;
-          column.header = row.header;
-          column.width = cellStyle.width;
-          return (
-            <div key={columnKey} className='cell' style={cellStyle}>
-              <div>
-                {this.getCellValue(column)}
+          if (!column.hidden) {
+            const width = this.props.headerColumns.map((header) => {
+              return (header && header.width) || false
+            })[id];
+            const cellStyle = {
+              display: 'flex',
+              flexFlow: 'row nowrap',
+              flexGrow: 0.15,
+              flexBasis: 'content',
+              alignItems: 'center',
+              height: 30,
+              width: width || 200
+            };
+            const columnKey = ['column', id].join('-');
+            column.selected = selected;
+            column.rowId = rowId;
+            column.id = id;
+            column.header = row.header;
+            column.width = cellStyle.width;
+            return (
+              <div key={columnKey} className='cell' style={cellStyle}>
+                <div>
+                  {this.getCellValue(column)}
+                </div>
               </div>
-            </div>
-          )
+            )
+          }
         })}
         {deleteButton}
         {cancelButton}

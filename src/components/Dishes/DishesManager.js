@@ -57,17 +57,15 @@ class DishesManager extends React.Component {
 
   onChange(row) {
     console.log('DishesManager | onChange | row is:', row);
-    console.log('DishesManager | onChange | this.props:', this.props);
+    console.log('DishesManager | onChange | this.props.appData.data.dishes.length:', this.props.appData.data.dishes.length);
     // this.state = {
     //   dishName: this.props.dish['name'],
     //   dishId: this.props.dish['_id'],
     //   dishDescription: this.props.dish['description'],
     //   defaultPrice: this.props.dish['defaultPrice']
     // };
-    let dish = this.props.appData.data.dishes.findIndex(x => x.tableNum == this.props.params.tableNum);
-
     for (let i = 0; i < row.columns.length; i++) {
-      console.log('DishesManager | onChange | row is: ', row.columns[i]);
+      // console.log('DishesManager | onChange | row is: ', row.columns[i]);
       if (row.columns[i].id === 0) {
         // console.log('DishesManager | onChange | row is: name');
         if (row.columns[i].value === "" ) {
@@ -92,11 +90,37 @@ class DishesManager extends React.Component {
       }
     };
 
+    if (row.columns[3]){
+      // console.log('id exists | row[3]', row.columns[3]);
+      let dish = this.props.appData.data.dishes.findIndex(x => x._id === row.columns[3].value);
+      let data = {
+        dishName: row.columns[0].value,
+        dishDescription: row.columns[1].value,
+        defaultPrice: row.columns[2].value,
+        dishId: row.columns[3].value,
+      };
+      // console.log('data is:', data);
+      this.props.editDish(data);
+    } else {
+      // console.log('id not exists - New dish');
+      let data = {
+        dishName: row.columns[0].value,
+        dishDescription: row.columns[1].value,
+        defaultPrice: row.columns[2].value,
+      };
+      // console.log('data is:', data);
+      this.props.addDish(data);
+    }
     return true
   }
 
   onDelete(e) {
-    console.log('DishesManager | onDelete', e);
+    // console.log('DishesManager | onDelete', e);
+    // console.log('DishesManager | Dish', this.props.appData.data.dishes[e.rowId]);
+    let Dish = this.props.appData.data.dishes[e.rowId];
+    if (Dish) {
+      this.props.deleteDish(e.rowId);
+    }
   }
 
   exitPopup() {
@@ -204,6 +228,7 @@ class DishesManager extends React.Component {
               {value: row.name, field: 'name', width: 50},
               {value: row.description, field: 'description', width: 50},
               {value: row.defaultPrice, field: 'defaultPrice', width: 50},
+              {value: row._id, field: 'id', hidden: true}
             ]
           }
         )
