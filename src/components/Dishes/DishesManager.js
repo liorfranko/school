@@ -51,7 +51,7 @@ class DishesManager extends React.Component {
 
     if (row.columns[3]){
       // console.log('id exists | row[3]', row.columns[3]);
-      let dish = this.props.appData.data.dishes.findIndex(x => x._id === row.columns[3].value);
+      // let dish = this.props.appData.data.dishes.findIndex(x => x._id === row.columns[3].value);
       let data = {
         dishName: row.columns[0].value,
         dishDescription: row.columns[1].value,

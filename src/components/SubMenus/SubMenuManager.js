@@ -7,6 +7,8 @@ import {Button} from 'react-bootstrap';
 import AddRestSubMenu from './AddRestSubMenu'
 import DeleteRestSubMenu from './DeleteRestSubMenu'
 import './subMenu.styl';
+import EditTable from '../../components/EditTable';
+
 
 class subMenuManager extends React.Component {
   constructor(props) {
@@ -17,10 +19,53 @@ class subMenuManager extends React.Component {
     this.deleteRestSubMenu = this.deleteRestSubMenu.bind(this);
     this.handleAddClick = this.handleAddClick.bind(this);
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onDelete = this.onDelete.bind(this);
+
     this.state = {
       showAddModal: false,
       showDeleteModal: false,
       selectedSubMenu: 0
+    }
+  }
+  onChange(row) {
+    console.log('subMenuManager | onChange | row is:', row);
+    console.log('subMenuManager | onChange | this.props.menu is:', this.props);
+    for (let i = 0; i < row.columns.length; i++) {
+      // console.log('DishesManager | onChange | row is: ', row.columns[i]);
+      if (row.columns[i].id === 0) {
+        // console.log('DishesManager | onChange | row is: name');
+        if (row.columns[i].value === "") {
+          // console.log('DishesManager | onChange | row is empty');
+          alert('Name can\'t empty.');
+          return false
+        }
+      }
+    }
+
+    if (row.columns[1]) {
+      let data = {
+        menuId: this.props.menu._id,
+        subMenuName: row.columns[0].value,
+      };
+      // this.props.deleteRestMenu(data);
+      this.props.addSubMenu(this.props.menu._id, row.columns[0].value);
+    } else {
+      this.props.addSubMenu(this.props.menu._id, row.columns[0].value);
+    }
+    return true
+  }
+
+  onDelete(e) {
+    console.log('subMenuManager | onDelete', this.props);
+    let subMenu = this.props.menu.subMenus[e.rowId];
+    console.log('subMenuManager | onDelete | subMenu', subMenu);
+    let data = {
+      menuId: subMenu.menuId,
+      _id: subMenu._id,
+    };
+    if (subMenu) {
+      this.props.delSubMenu(data);
     }
   }
 
@@ -70,31 +115,53 @@ class subMenuManager extends React.Component {
     const styleDiv = {
       fontSize: 30
     };
+    const headers = [
+      {value: 'Name', type: 'TextField'},
+    ];
+    let rows = [];
+    this.props.subMenus.map((row, index) => {
+      rows.push(
+        {
+          columns: [
+            {value: row.name, field: 'name', required: true},
+            {value: row._id, field: 'id', hidden: true},
+            {value: 'Link', field: 'link', link: true, hidden: true}
+          ]
+        }
+      )
+    });
     return (
       <div id="subMenu" className="panel panel-default">
         <div className="panel-heading" style={styleDiv}>{this.props.menu['name']}</div>
         <div className="panel-body">
-          Sub Menus:
-          <ListOfSubMenus
-            subMenus={this.props.subMenus}
-            dishes={this.props.dishes}
-            delSubMenu={this.deleteRestSubMenu}
-            rest={this.props.rest}
-            menu={this.props.menu}
+          <EditTable
+            onChange={this.onChange}
+            onDelete={this.onDelete}
+            rows={rows}
+            headerColumns={headers}
+            enableDelete={true}
           />
-          <AddRestSubMenu
-            handleClick={this.handleAddClick.bind(this)}
-            exit={this.exitPopup.bind(this)}
-            show={this.state.showAddModal}
-            menu={this.props.menu}
-          />
-          <Button onClick={this.addRestSubMenu}>Add Sub Menu</Button>
-          <DeleteRestSubMenu
-            chosenSubMenu={this.props.subMenus[this.state.selectedSubMenu]}
-            handleClick={this.handleDeleteClick.bind(this)}
-            exit={this.exitPopup.bind(this)}
-            show={this.state.showDeleteModal}
-          />
+          {/*Sub Menus:*/}
+          {/*<ListOfSubMenus*/}
+            {/*subMenus={this.props.subMenus}*/}
+            {/*dishes={this.props.dishes}*/}
+            {/*delSubMenu={this.deleteRestSubMenu}*/}
+            {/*rest={this.props.rest}*/}
+            {/*menu={this.props.menu}*/}
+          {/*/>*/}
+          {/*<AddRestSubMenu*/}
+            {/*handleClick={this.handleAddClick.bind(this)}*/}
+            {/*exit={this.exitPopup.bind(this)}*/}
+            {/*show={this.state.showAddModal}*/}
+            {/*menu={this.props.menu}*/}
+          {/*/>*/}
+          {/*<Button onClick={this.addRestSubMenu}>Add Sub Menu</Button>*/}
+          {/*<DeleteRestSubMenu*/}
+            {/*chosenSubMenu={this.props.subMenus[this.state.selectedSubMenu]}*/}
+            {/*handleClick={this.handleDeleteClick.bind(this)}*/}
+            {/*exit={this.exitPopup.bind(this)}*/}
+            {/*show={this.state.showDeleteModal}*/}
+          {/*/>*/}
         </div>
       </div>
     )

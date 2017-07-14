@@ -430,7 +430,7 @@ class App extends React.Component {
   }
 
   getTables(restaurant_Id) {
-    // console.log("App | getTables, restaurant_Id", restaurant_Id);
+    console.log("App | getTables, restaurant_Id", restaurant_Id);
     let data = {
       restaurant_Id: restaurant_Id
     };
@@ -439,7 +439,7 @@ class App extends React.Component {
   }
 
   getTablesLocal(restaurant_Id) {
-    // console.log("App | getTablesLocal, restaurant_Id", restaurant_Id);
+    console.log("App | getTablesLocal, restaurant_Id", restaurant_Id);
     // console.log("App | getMenus, this.restaurantId", this.restaurantId);
     //1.
     //  const that = this;
@@ -531,7 +531,7 @@ class App extends React.Component {
   }
 
   addRestMenu(data, restId) {
-    // console.log('App | addRestMenu', data, restId);
+    console.log('App | addRestMenu', data, restId);
     let postData = '&name=' + data.resMenuName + '&restaurant_Id=' + restId;
     api.postRequest('addMenu', postData, this.getMenusLocal(restId));
   }
@@ -544,10 +544,10 @@ class App extends React.Component {
   }
 
   addTable(data) {
-    // console.log('App | data', data[0]);
+    console.log('App | data', data);
     // console.log('App | table_Num', data[1].tableNum);
-    let postData = '&restaurant_Id=' + data[0] + '&table_Num=' + data[1].tableNum;
-    api.postRequest('addTable', postData, this.getTablesLocal(data[0]));
+    let postData = '&restaurant_Id=' + data._id + '&table_Num=' + data.tableNum;
+    api.postRequest('addTable', postData, this.getTablesLocal(data._id));
   }
 
   addOrder(table_Id) {

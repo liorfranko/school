@@ -1,6 +1,7 @@
 /**
  * Created by Alex on 21/11/2016.
  */
+// FIXME - Fix when adding new row and then edit the row.
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -59,11 +60,33 @@ class RestaurantsManager extends React.Component {
         }
       }
     }
+    if (row.columns[2]){
+      // resName: '',
+      //   resAddress: '',
+      let data = {
+        resName: row.columns[0].value,
+        resAddress: row.columns[1].value,
+        resId: row.columns[2].value,
+      };
+      console.log('editRest data is:', data);
+      this.props.editRest(data);
+    } else {
+      let data = {
+        resName: row.columns[0].value,
+        resAddress: row.columns[1].value,
+      };
+      console.log('addRest data is:', data);
+      this.props.addRest(data);
+    }
+    return true
   }
 
   onDelete(e) {
-    console.log('RestaurantsManager | onDelete', e);
-
+    // console.log('RestaurantsManager | onDelete', this.props.appData);
+    let Rest = this.props.appData.data.rests[e.rowId];
+    if (Rest) {
+      this.props.deleteRest(e.rowId);
+    }
   }
   exitPopup() {
     this.setState({
@@ -127,12 +150,13 @@ class RestaurantsManager extends React.Component {
   }
 
   render() {
-    // console.log('Restaurants Manager | this.props', this.props);
+    console.log('Restaurants Manager | this.props', this.props);
     // console.log('Restaurants Manager | this.state', this.state);
     // const src = require("../../Images/5.gif");
     const styleDiv = {
       fontSize: 30
     };
+    let rows = [];
     if (!this.props.appData.data.rests) {
       // console.log('RestaurantsManager | loading');
       return (
@@ -148,7 +172,6 @@ class RestaurantsManager extends React.Component {
         {value: 'Name', type: 'TextField'},
         {value: 'Address', type: 'TextField'},
       ];
-      let rows = [];
       this.props.appData.data.rests.map((row, index) => {
         rows.push(
           {
@@ -161,6 +184,7 @@ class RestaurantsManager extends React.Component {
           }
         )
       });
+      console.log('Restaurants Manager | rows', rows);
       return (
         <div>
           {this.props.children ? React.cloneElement(this.props.children, this.props) : (
