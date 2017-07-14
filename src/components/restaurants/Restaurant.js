@@ -1,11 +1,8 @@
 /**
  * Created by liorf on 12/4/16.
  */
-// TODO Fix QR show
 
 import React from 'react';
-import RestMenuManager from '../restMenu/restMenuManager';
-import TableManager from '../Tables/tableManager';
 import PropTypes from 'prop-types';
 import EditTable from '../../components/EditTable';
 import CircularProgress from 'material-ui/CircularProgress';

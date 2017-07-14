@@ -180,7 +180,6 @@ class App extends React.Component {
   }
 
   updateSubMenus(data) {
-    //FIXME
     const items = data.items || [];
     // console.log('App | updateSubMenus items', items);
     // console.log('App | updateSubMenus items.length()', items.length);
@@ -201,11 +200,6 @@ class App extends React.Component {
               // console.log('App | updateSubMenus curMenusArray', curMenusArray);
               curMenusArray.subMenus = items;
               // console.log('App | updateSubMenus curMenusArray', curMenusArray);
-              // FIXME need to check why newMenusArray is not is use!!!!
-              // let newMenusArray = update(this.state.data.rests[restIndex], {
-              //   [menuIndex]: {$set: curMenusArray}
-              // });
-              // console.log('App | updateSubMenus newMenusArray', newMenusArray);
               let curRestArray = this.state.data.rests[restIndex];
               let newRestArray = update(this.state.data.rests, {
                 [restIndex]: {$set: curRestArray}
@@ -287,7 +281,6 @@ class App extends React.Component {
   }
 
   updateOrders(data) {
-    // FIXME ->
     // Problem:
     // When loading menus and menus list is empty, How can I get the restaurant ID.
     // console.log('App | updateOrders data', data);

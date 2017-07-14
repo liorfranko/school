@@ -8,7 +8,6 @@ import {Button} from 'react-bootstrap';
 import CircularProgress from 'material-ui/CircularProgress';
 
 // TODO set max dishes to 20 and enforce it with alert
-// TODO Rebuild this page, load all menus and submenus.
 class uRestMenu extends React.Component {
   constructor(props) {
     // console.log('uRestMenu | constructor | this.props', props);
@@ -70,7 +69,7 @@ class uRestMenu extends React.Component {
               // console.log('uRestMenu | componentInit | orders', this.props.appData.data.rests[rest].tables[table].orders);
               this.props.appData.data.rests[rest].tables[table].orders.map((order, i) => {
                 // console.log('uRestMenu | componentInit | order', order);
-                // FIXME update the why of getting the activeOrder, Change it to be when the order has been paid. - Done need to check it works
+                // FIXME update the way of getting the activeOrder, Change it to be when the order has been paid. - Done need to check it works
                 let OrderSum = 0;
                 // console.log('uRestMenu | componentInit | order.dishArray', order.dishArray);
                 if (order.dishArray) {
