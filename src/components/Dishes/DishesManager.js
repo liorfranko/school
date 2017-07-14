@@ -1,8 +1,7 @@
 import React from 'react';
 import './dishes.styl';
 import PropTypes from 'prop-types';
-import {FlatButton} from 'material-ui'
-import TextField from 'material-ui/TextField';
+import CircularProgress from 'material-ui/CircularProgress';
 import EditTable from '../../components/EditTable';
 
 class DishesManager extends React.Component {
@@ -86,26 +85,9 @@ class DishesManager extends React.Component {
   render() {
     // console.log('DishesManager | render', this.state);
     // console.log('DishesManager | this.props.appData.data.dishes', this.props.appData.data.dishes);
-    const src = require("../../Images/5.gif");
     const styleDiv = {
       fontSize: 30
     };
-    const style = {
-      marginLeft: 20,
-    };
-    const deleteActions = [
-      <FlatButton
-        label="Cancel"
-        primary={true}
-        onTouchTap={this.exitPopup}
-      />,
-      <FlatButton
-        label="Submit"
-        primary={true}
-        keyboardFocused={true}
-        onTouchTap={this.handleDeleteClick}
-      />,
-    ];
     const headers = [
       {value: 'Name', type: 'TextField'},
       {value: 'Description', type: 'TextField'},
@@ -118,7 +100,7 @@ class DishesManager extends React.Component {
         <div id="dishes" className="panel panel-default">
           <div className="panel-heading" style={styleDiv}>Dishes:</div>
           <div className="panel-body">
-            <img src={src}/>
+              <CircularProgress />
           </div>
         </div>
       );
