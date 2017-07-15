@@ -237,7 +237,6 @@ class RestSubMenu extends Component {
 
   render() {
     // console.log('RestSubMenu | render | this.props', this.props);
-    const src = require("../../Images/5.gif");
     let styleDiv = {
       fontSize: 30
     };

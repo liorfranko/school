@@ -151,7 +151,6 @@ class RestaurantsManager extends React.Component {
   render() {
     // console.log('Restaurants Manager | this.props', this.props);
     // console.log('Restaurants Manager | this.state', this.state);
-    // const src = require("../../Images/5.gif");
     const styleDiv = {
       fontSize: 30
     };

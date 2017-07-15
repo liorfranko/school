@@ -238,7 +238,6 @@ class uRestMenu extends React.Component {
   render() {
     // console.log('uRestMenu | render | this.props', this.props);
     console.log('uRestMenu | render | this.state', this.state);
-    const src = require("../../Images/5.gif");
     const styleDiv = {
       fontSize: 30
     };

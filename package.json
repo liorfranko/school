@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Starter kit for React and Redux Pluralsight course by Cory House",
   "scripts": {
-    "start": "npm-run-all --parallel open:src lint:watch",
+    "start": "npm-run-all open:src lint:watch",
     "open:src": "babel-node tools/srcServer.js",
     "lint": "node_modules/.bin/esw webpack.config.* src tools",
     "lint:watch": "npm run lint -- --watch"
@@ -27,7 +27,6 @@
     "react-dnd-html5-backend": "^2.2.4",
     "react-dom": "15.5.4",
     "react-facebook-login-hoc": "^1.1.1",
-    "react-native": "0.44.2",
     "react-redux": "4.4.5",
     "react-router": "^2.8.1",
     "react-router-breadcrumbs": "^2.1.0",
@@ -70,7 +69,6 @@
     "open": "0.0.5",
     "react": "15.5.4",
     "react-addons-test-utils": "15.0.2",
-    "react-native": "0.44.2",
     "style-loader": "0.13.1",
     "url-loader": "0.5.7",
     "webpack": "1.13.0",

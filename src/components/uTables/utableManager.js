@@ -8,33 +8,8 @@ import ListOfTables from './uListOfTables';
 
 class uTableManager extends React.Component {
   constructor(props) {
-    console.log('uTableManager | constructor', props);
+    // console.log('uTableManager | constructor', props);
     super(props);
-    this.componentInit = this.componentInit.bind(this);
-    this.componentDidMount = this.componentDidMount.bind(this);
-    this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
-  }
-  componentInit() {
-    // console.log('uTableManager | componentInit');
-
-    // this.props.tables.map((table, i ) => {
-    //   console.log('uTableManager | componentInit | table', table);
-    //   if (!table.orders) {
-    //     console.log('uTableManager | componentInit | table', table);
-    //     this.props.getOrdersByTableId(table._id);
-    //   } else {
-    //     console.log('uTableManager | componentInit | table.orders', table.orders);
-    //
-    //   }
-    // })
-  }
-  componentDidMount() {
-    // console.log('uTableManager | componentDidMount | this.props', this.props);
-    this.componentInit();
-  }
-  componentWillReceiveProps() {
-    // console.log('uTableManager | componentWillReceiveProps | this.props', this.props);
-    this.componentInit();
   }
   render() {
     // console.log('uTableManager | props', this.props);

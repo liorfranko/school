@@ -59,7 +59,6 @@ class uRestaurantsManager extends React.Component {
   render() {
     // console.log('uRestaurants Manager | this.props', this.props);
     // console.log('uRestaurants Manager | this.state', this.state);
-    const src = require("../../Images/5.gif");
     const styleDiv = {
       fontSize: 30
     };

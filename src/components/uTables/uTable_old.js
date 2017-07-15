@@ -163,7 +163,6 @@ class uTable extends React.Component {
   render() {
     // console.log('uTable | render | this.props', this.props);
     // console.log('uTable | render | this.state', this.state);
-    const src = require("../../Images/5.gif");
     const styleDiv = {
       fontSize: 30
     };

@@ -13,7 +13,7 @@ class Homepage extends Component {
 
   render() {
     // console.log('Homepage | render', this.props);
-    const imgUrl = require("../../Images/placeholder-restaurants.jpg");
+    let imgUrl = require("../../Images/placeholder-restaurants.jpg");
     let styles = {
       wrapper: {
         display: 'flex',
