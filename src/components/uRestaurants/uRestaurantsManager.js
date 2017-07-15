@@ -92,7 +92,7 @@ class uRestaurantsManager extends React.Component {
                   </TableHeader>
                   <TableBody displayRowCheckbox={false} showRowHover={true}>
                     {this.props.appData.data.rests.map( (row, index) => (
-                      <TableRow key={index}>
+                      <TableRow key={index}   style={{cursor: 'pointer'}}>
                         <TableRowColumn>{index}</TableRowColumn>
                         <TableRowColumn>{row.name}</TableRowColumn>
                         <TableRowColumn>{row.address}</TableRowColumn>
