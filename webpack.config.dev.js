@@ -2,7 +2,7 @@ import webpack from 'webpack';
 import path from 'path';
 
 export default {
-  debug: true,
+  // debug: true,
   devtool: 'source-map',
   noInfo: false,
   entry: [
@@ -20,8 +20,29 @@ export default {
     contentBase: './src'
   },
   plugins: [
+    new webpack.DefinePlugin({ // <-- key to reducing React's size
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      }
+    }),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
+    new webpack.optimize.DedupePlugin(), //dedupe similar code
+    new webpack.optimize.UglifyJsPlugin({
+      mangle: true,
+      compress: {
+        warnings: false, // Suppress uglification warnings
+        pure_getters: true,
+        unsafe: true,
+        unsafe_comps: true,
+        screw_ie8: true
+      },
+      output: {
+        comments: false,
+      },
+      exclude: [/\.min\.js$/gi] // skip pre-minified libs
+    }),
+    new webpack.optimize.AggressiveMergingPlugin(),//Merge chunks
   ],
   module: {
     loaders: [

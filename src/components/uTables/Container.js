@@ -10,7 +10,7 @@ import { DropTarget } from 'react-dnd';
 class Container extends Component {
 
   constructor(props) {
-    console.log('Container | constructor | props', props);
+    // console.log('Container | constructor | props', props);
     super(props);
     this.state = { cards: props.list };
   }

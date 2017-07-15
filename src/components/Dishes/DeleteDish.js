@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 class DeleteDish extends React.Component {
   constructor(props) {
-    console.log('DeleteDish | constructor | props', props);
+    // console.log('DeleteDish | constructor | props', props);
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
   }

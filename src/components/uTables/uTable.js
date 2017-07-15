@@ -7,6 +7,11 @@ import React from 'react';
 import {Button} from 'react-bootstrap';
 import update from 'react/lib/update';
 import CircularProgress from 'material-ui/CircularProgress';
+import {
+  IconButton, Toggle, TextField, RaisedButton, DatePicker,
+  Table, TableHeader, TableRow, TableHeaderColumn, TableBody, TableRowColumn
+} from 'material-ui';
+
 class uTable extends React.Component {
   constructor(props) {
     console.log('uRestaurant | constructor | this.props', props);
@@ -27,6 +32,7 @@ class uTable extends React.Component {
   }
 
   componentInit() {
+    // console.log('uTable | componentInit | this.props.appData.data', this.props.appData.data);
     if (!this.props.appData.data.rests) {
       if (!this.apiCalls.getMenus) {
         this.props.getAllRests();
@@ -60,9 +66,10 @@ class uTable extends React.Component {
           this.apiCalls.getTables = true;
         }
       } else {
-        // console.log('uTable | componentInit | this.props.appData.data.rests[rest].tables', this.props.appData.data.rests[rest].tables);
+        // console.log('uTable | componentInit | this.props.appData.data.rests[rest]', this.props.appData.data.rests[rest]);
         let table = this.props.appData.data.rests[rest].tables.findIndex(x => x.tableNum == this.props.params.tableName);
         // console.log('uTable | componentInit | table', table);
+        // console.log('uTable | componentInit | this.props.appData.data.rests[rest].tables[table]', this.props.appData.data.rests[rest].tables[table]);
         let tableId = this.props.appData.data.rests[rest].tables[table]._id;
         // console.log('uTable | componentInit | tableId', tableId);
         if (!this.props.appData.data.rests[rest].tables[table].orders) {
@@ -230,7 +237,7 @@ class uTable extends React.Component {
     this.props.editOrderDishes(this.state.order);
     this.props.editOrderSumPaid(this.state.order);
     // window.setTimeout()
-    setTimeout(function(){
+    setTimeout(function () {
       // console.log('uTable | updateOrder | Sleeping');
       window.location.reload();
     }, 2500);
@@ -307,85 +314,155 @@ class uTable extends React.Component {
                   }
                 });
                 return (
-                  <ul className="restList list-group" key={t}>
-                    <div style={styleDiv_2}>{menu.name}</div>
+                  <Table
+                    selectable={false}
+                  >
+                    <TableHeader
+                      displayRowCheckbox={false}
+                      displaySelectAll={false}
+                      adjustForCheckbox={false}
+                    >
+                      <TableRow>
+                        <TableHeaderColumn colSpan="5" style={styleDiv_2}>
+                          {menu.name}
+                        </TableHeaderColumn>
+                      </TableRow>
+                    </TableHeader>
                     {menu.subMenus ?
-                      <div>{menu.subMenus.map((submenu, i) => {
-                        return (
-                          <div key={i}>
-                            <div style={styleDiv_3}>{submenu.name}</div>
-                            <li className="restItem list-group-item">
-                              <div className="innerItem name">
-                                Dish Name
-                              </div>
-                              <div className="innerItem name">
-                                Dish Price
-                              </div>
-                              <div className="innerItem name">
-                                Orders
-                              </div>
-                              <div className="innerItem name">
-                              </div>
-                              <div className="innerItem name">
-                              </div>
-                            </li>
-                            {submenu.dishArray ?
-                              <div>{submenu.dishArray.map((dish_id, j) => {
-                                let dishIndex = this.props.appData.data.dishes.findIndex(x => x._id === dish_id);
-                                if (dishIndex > -1) {
-                                  let fullDish = this.props.appData.data.dishes[dishIndex];
-                                  return (
-                                    <li className="restItem list-group-item" key={j}>
-                                      <div className="innerItem name">
-                                        {fullDish.name}
-                                      </div>
-                                      <div className="innerItem price">
-                                        {fullDish.defaultPrice}
-                                      </div>
-                                      <div className="innerItem name">
-                                        {
-                                          counts[dish_id] ? (
-                                            <div>{counts[dish_id]}</div>
-                                          ) : (
-                                            <div>0</div>
-                                          )
-                                        }
-                                      </div>
-                                      <Button onClick={() => this.addDishToCart(dish_id)}>Add to order</Button>
-                                      {counts[dish_id] > 0 ?
-                                        (
-                                          <Button onClick={() => this.removeDishFromCart(dish_id)}>Remove from
-                                            order</Button>
-                                        ) : (
-                                          <Button onClick={() => this.removeDishFromCart(dish_id)} disabled>Remove from
-                                            order</Button>
-                                        )
-                                      }
-                                    </li>
-                                  )
-                                }
-                              })}</div> : null
-                            }
-                          </div>
-                        )
-                      })}</div> :
-                      null
-                    }
-                  </ul>
+                        <TableBody>{menu.subMenus.map((submenu, i) => {
+                          return (
+                              <Table
+                                key={i}
+                                selectable={false}
+                              >
+                                <TableHeader
+                                  displayRowCheckbox={false}
+                                  displaySelectAll={false}
+                                  adjustForCheckbox={false}
+                                >
+                                  <TableRow>
+                                    <TableHeaderColumn colSpan="5" style={styleDiv_3}>
+                                      {submenu.name}
+                                    </TableHeaderColumn>
+                                  </TableRow>
+                                  <TableRow>
+                                    <TableHeaderColumn>Dish Name</TableHeaderColumn>
+                                    <TableHeaderColumn>Dish Price</TableHeaderColumn>
+                                    <TableHeaderColumn>Orders</TableHeaderColumn>
+                                    <TableHeaderColumn> </TableHeaderColumn>
+                                    <TableHeaderColumn> </TableHeaderColumn>
+                                  </TableRow>
+                                </TableHeader>
 
+                                {submenu.dishArray ?
+                                  <TableBody
+                                    displayRowCheckbox={false}
+                                    selectable={false}
+                                  >{submenu.dishArray.map((dish_id, j) => {
+                                    let dishIndex = this.props.appData.data.dishes.findIndex(x => x._id === dish_id);
+                                    if (dishIndex > -1) {
+                                      let fullDish = this.props.appData.data.dishes[dishIndex];
+                                      return (
+                                        <TableRow
+                                          key={j}
+                                        >
+                                          <TableRowColumn>{fullDish.name}</TableRowColumn>
+                                          <TableRowColumn>{fullDish.defaultPrice}</TableRowColumn>
+                                          <TableRowColumn>
+                                            {
+                                              counts[dish_id] ? (
+                                                <div>{counts[dish_id]}</div>
+                                              ) : (
+                                                <div>0</div>
+                                              )
+                                            }
+                                          </TableRowColumn>
+                                          <TableRowColumn>
+                                            <Button onClick={() => this.addDishToCart(dish_id)}>Add to order</Button>
+                                          </TableRowColumn>
+                                          <TableRowColumn>
+                                            {counts[dish_id] > 0 ?
+                                              (
+                                                <Button onClick={() => this.removeDishFromCart(dish_id)}>Remove from
+                                                  order</Button>
+                                              ) : (
+                                                <Button onClick={() => this.removeDishFromCart(dish_id)} disabled>Remove
+                                                  from
+                                                  order</Button>
+                                              )
+                                            }
+                                          </TableRowColumn>
+                                        </TableRow>
+
+                                      )
+                                    }
+                                  })}</TableBody> : null
+                                }
+                              </Table>
+                          )
+                        })}
+                      </TableBody> : null
+                    }
+                  </Table>
                 )
               })}
               <div className="panel-body" style={styleDiv}>
-                Total price: {this.state.orderSum}
+                <Table
+                  selectable={false}
+                >
+                  <TableBody
+                    displayRowCheckbox={false}
+                  >
+                    <TableRow>
+                      <TableRowColumn>Total price:</TableRowColumn>
+                      <TableRowColumn>{`${this.state.orderSum}`}</TableRowColumn>
+                    </TableRow>
+                    <TableRow>
+                      <TableRowColumn>Paid:</TableRowColumn>
+                      <TableRowColumn>
+                        <TextField
+                          type="number"
+                          name="sumPaid"
+                          value={`${this.state.order.sumPaid}`}
+                          onChange={this.handleChange}
+                        />
+                      </TableRowColumn>
+                    </TableRow>
+                    <TableRow>
+                      <TableRowColumn>Left to pay:</TableRowColumn>
+                      <TableRowColumn>{`${this.state.orderSum - this.state.order.sumPaid}`}</TableRowColumn>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+                {/*<TextField*/}
+                {/*value={'Total price:'}*/}
+                {/*/>*/}
+                {/*<TextField*/}
+                {/*value={`${this.state.orderSum}`}*/}
+                {/*/>*/}
+                {/*<div>*/}
+                {/*<TextField*/}
+                {/*value={`Paid:`}*/}
+                {/*/>*/}
+                {/*<TextField*/}
+                {/*type="number"*/}
+                {/*name="sumPaid"*/}
+                {/*value={`${this.state.order.sumPaid}`}*/}
+                {/*onChange={this.handleChange}*/}
+                {/*/>*/}
+                {/*/!*<input type="number" name="sumPaid" value={this.state.order.sumPaid}*!/*/}
+                {/*/!*required/>*!/*/}
+                {/*</div>*/}
+                {/*<TextField*/}
+                {/*value={'Left to pay:'}*/}
+                {/*/>*/}
+                {/*<TextField*/}
+                {/*value={`${this.state.orderSum - this.state.order.sumPaid}`}*/}
+                {/*disabled='true'*/}
+                {/*/>*/}
                 <div>
-                  Paid:
-                  <input type="number" name="sumPaid" value={this.state.order.sumPaid} onChange={this.handleChange}
-                         required/>
+                  <Button onClick={this.updateOrder}>Submit</Button>
                 </div>
-                <div>
-                  Left to pay: {this.state.orderSum - this.state.order.sumPaid}
-                </div>
-                <Button onClick={this.updateOrder}>Submit</Button>
               </div>
             </div>
           </div>
