@@ -13,45 +13,32 @@ class Homepage extends Component {
 
   render() {
     // console.log('Homepage | render', this.props);
-    let styleDiv = {
-      fontSize: 30
+    const imgUrl = require("../../Images/placeholder-restaurants.jpg");
+    let styles = {
+      wrapper: {
+        display: 'flex',
+        position: 'relative',
+        flexDirection: 'column',
+        width: '100%',
+      },
+      text: {
+        position: 'absolute',
+        overflow: 'hidden',
+        fontSize: '40px',
+        fontSizeAdjust: 'true',
+        color: 'white',
+        fontWeight:'bold'
+      },
     };
     return (
-      <div className>
-        <div>
-          <h1>Welcome</h1>
-          <p>
-            This is where you can see the menus, if you'd like to edit the menus, just <a href="#">login</a> and edit
-            away :)
-          </p>
+      <div>
+        <div style={styles.wrapper}>
+          <div style={styles.text}>Welcome to Rest Manager</div>
+          <img src={imgUrl} />
         </div>
       </div>
     );
-    // const src = require("../../Images/5.gif");
-    // if (this.props.appData.priv === 'user') {
-    //   return (
-    //     <div className>
-    //       <div>
-    //         <h1>Welcome</h1>
-    //         <p>
-    //           This is where you can see the menus, if you'd like to edit the menus, just <a href="#">login</a> and edit
-    //           away :)
-    //         </p>
-    //       </div>
-    //     </div>
-    //   );
-    // } else {
-    //   return (
-    //     <div className="panel panel-default">
-    //       <div className="panel-heading" style={styleDiv}>Homepage</div>
-    //       <div className="panel-body">
-    //         <h1>
-    //           Manager - Homepage
-    //         </h1>
-    //       </div>
-    //     </div>
-    //   );
-    // }
+
   }
 }
 Homepage.propTypes = {

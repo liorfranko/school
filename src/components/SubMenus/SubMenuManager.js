@@ -43,9 +43,10 @@ class subMenuManager extends React.Component {
       let data = {
         menuId: this.props.menu._id,
         subMenuName: row.columns[0].value,
+        subMenuId: row.columns[1].value,
       };
-      // this.props.deleteRestMenu(data);
-      this.props.addSubMenu(this.props.menu._id, row.columns[0].value);
+      // this.props.editSubMenu(data);
+      this.props.editSubMenu(data);
     } else {
       this.props.addSubMenu(this.props.menu._id, row.columns[0].value);
     }

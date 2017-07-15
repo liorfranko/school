@@ -77,6 +77,7 @@ class RestMenu extends React.Component {
         childProps = {
           appData: this.props.appData,
           editSubMenu: this.props.editSubMenu,
+          updateSubMenuDishes: this.props.updateSubMenuDishes,
           getRests: this.props.getRests,
           getMenus: this.props.getMenus,
           getDishes: this.props.getDishes,
@@ -154,7 +155,7 @@ class RestMenu extends React.Component {
               rest={this.props.appData.data.rests[rest]}
               menu={this.props.appData.data.rests[rest].menus[menu]}
               delSubMenu={this.props.deleteSubMenu}
-              editSubMenu={this.props.editSubMenu}
+              updateSubMenuDishes={this.props.updateSubMenuDishes}
               addSubMenu={this.props.addSubMenu}
             />
           );
@@ -166,7 +167,7 @@ class RestMenu extends React.Component {
               rest={this.props.appData.data.rests[rest]}
               menu={this.props.appData.data.rests[rest].menus[menu]}
               delSubMenu={this.props.deleteSubMenu}
-              editSubMenu={this.props.editSubMenu}
+              updateSubMenuDishes={this.props.updateSubMenuDishes}
               addSubMenu={this.props.addSubMenu}
             />
           );
@@ -191,6 +192,7 @@ RestMenu.propTypes = {
   editDish: PropTypes.func,
   editRestMenu: PropTypes.func,
   editSubMenu: PropTypes.func,
+  updateSubMenuDishes: PropTypes.func,
   editTable: PropTypes.func,
   deleteRest: PropTypes.func,
   deleteDish: PropTypes.func,

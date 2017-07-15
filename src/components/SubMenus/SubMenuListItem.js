@@ -8,8 +8,8 @@ import {Link} from 'react-router';
 const SubMenuListItem = (props) => {
   // console.log("SubMenuListItem | props", props);
   function onEditClick() {
-    console.log('SubMenuListItem | onEditClick');
-    props.editSubMenu(props)
+    // console.log('SubMenuListItem | onEditClick');
+    props.updateSubMenuDishes(props)
   }
 
   function onDeleteClick() {

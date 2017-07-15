@@ -14,7 +14,7 @@ import CircularProgress from 'material-ui/CircularProgress';
 
 class RestSubMenu extends Component {
   constructor(props) {
-    console.log('RestSubMenu | constructor | props', props);
+    // console.log('RestSubMenu | constructor | props', props);
     super(props);
     this.submitRestSubMenu = this.submitRestSubMenu.bind(this);
     this.cancelRestSubMenu = this.cancelRestSubMenu.bind(this);
@@ -216,7 +216,7 @@ class RestSubMenu extends Component {
     });
     // console.log('postData', postData);
     postData['subMenu_Id'] = subMenu_Id;
-    this.props.editSubMenu(postData, menuId);
+    this.props.updateSubMenuDishes(postData, menuId);
     browserHistory.push(`/Admin/Restaurants/${this.props.appData.data.rests[rest].name}/Menus/${this.props.appData.data.rests[rest].menus[menu].name}`)
   };
 
@@ -236,7 +236,7 @@ class RestSubMenu extends Component {
   }
 
   render() {
-    console.log('RestSubMenu | render | this.props', this.props);
+    // console.log('RestSubMenu | render | this.props', this.props);
     const src = require("../../Images/5.gif");
     let styleDiv = {
       fontSize: 30

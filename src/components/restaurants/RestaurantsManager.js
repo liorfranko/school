@@ -1,7 +1,6 @@
 /**
  * Created by Alex on 21/11/2016.
  */
-// FIXME - Fix when adding new row and then edit the row.
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -242,6 +241,7 @@ RestaurantsManager.propTypes = {
   editDish: PropTypes.func,
   editRestMenu: PropTypes.func,
   editSubMenu: PropTypes.func,
+  updateSubMenuDishes: PropTypes.func,
   editTable: PropTypes.func,
   deleteRest: PropTypes.func,
   deleteDish: PropTypes.func,

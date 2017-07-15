@@ -67,6 +67,7 @@ class Restaurant extends React.Component {
           getDishes: this.props.getDishes,
           getSubMenus: this.props.getSubMenus,
           editSubMenu: this.props.editSubMenu,
+          updateSubMenuDishes: this.props.updateSubMenuDishes,
           addSubMenu: this.props.addSubMenu,
           deleteSubMenu: this.props.deleteSubMenu,
           getRests: this.props.getRests,
@@ -93,13 +94,14 @@ class Restaurant extends React.Component {
     }
     let rest = this.props.appData.data.rests.findIndex(x => x.name === this.props.params.restName);
     let rest_id = this.props.appData.data.rests[rest]._id;
+
     if (row.columns[1]) {
       let data = {
-        _id: row.columns[0].value,
-        restaurantId: rest_id,
+        restMenuName: row.columns[0].value,
+        restMenuId: row.columns[1].value,
+        restaurantId: rest_id
       };
-      this.props.deleteRestMenu(data);
-      this.props.addRestMenu({resMenuName: row.columns[0].value}, rest_id);
+      this.props.editRestMenu(data);
     } else {
       this.props.addRestMenu({resMenuName: row.columns[0].value}, rest_id);
     }
@@ -149,14 +151,14 @@ class Restaurant extends React.Component {
     }
     let rest = this.props.appData.data.rests.findIndex(x => x.name === this.props.params.restName);
     let rest_id = this.props.appData.data.rests[rest]._id;
-    //addTable
     if (row.columns[1]) {
       let data = {
-        restaurantId: rest_id,
-        _id: row.columns[0].value,
+        tableNum: row.columns[0].value,
+        tableId: row.columns[1].value,
+        tableAvailable: row.columns[2].value,
+        restaurantId: rest_id
       };
-      this.props.deleteTable(data);
-      this.props.addTable({tableNum: row.columns[0].value, _id: rest_id });
+      this.props.editTable(data);
     } else {
       this.props.addTable({tableNum: row.columns[0].value, _id: rest_id});
     }
@@ -202,6 +204,7 @@ class Restaurant extends React.Component {
           getDishes: this.props.getDishes,
           getSubMenus: this.props.getSubMenus,
           editSubMenu: this.props.editSubMenu,
+          updateSubMenuDishes: this.props.updateSubMenuDishes,
           addSubMenu: this.props.addSubMenu,
           deleteSubMenu: this.props.deleteSubMenu,
           getRests: this.props.getRests,
@@ -247,7 +250,8 @@ class Restaurant extends React.Component {
               columns: [
                 {value: row.tableNum, field: 'name', required: true},
                 {value: row._id, field: 'id', hidden: true},
-                {value: `/Admin/Restaurants/${rest_name}/Table/${row.tableNum}`, field: 'Link', link: true, hidden: true}
+                {value: row.available, field: 'available', hidden: true},
+                {value: `/Admin/Restaurants/${rest_name}/Table/${row.tableNum}`, field: 'Link', link: true, hidden: true},
               ]
             }
           )
@@ -300,6 +304,7 @@ Restaurant.propTypes = {
   editDish: PropTypes.func,
   editRestMenu: PropTypes.func,
   editSubMenu: PropTypes.func,
+  updateSubMenuDishes: PropTypes.func,
   editTable: PropTypes.func,
   deleteRest: PropTypes.func,
   deleteDish: PropTypes.func,

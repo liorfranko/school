@@ -77,7 +77,6 @@ class uTable extends React.Component {
           // console.log('uTable | componentInit | orders', this.props.appData.data.rests[rest].tables[table].orders);
           this.props.appData.data.rests[rest].tables[table].orders.map((order, i) => {
             // console.log('uTable | componentInit | order', order);
-            // FIXME update the way of getting the activeOrder, Change it to be when the order has been paid. - Done need to check it works
             let OrderSum = 0;
             // console.log('uTable | componentInit | order.dishArray', order.dishArray);
             if (order.dishArray) {

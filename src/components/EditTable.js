@@ -14,11 +14,23 @@ class EditTable extends React.Component {
   constructor(props) {
     // console.log('EditTable | constructor | props', props);
     super(props);
+    this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
+
     this.state = {
       rows: props.rows,
     }
   }
-
+  componentWillReceiveProps(nextProps) {
+    // console.log('EditTable | componentWillReceiveProps | this.props', this.props);
+    // console.log('EditTable | componentWillReceiveProps | nextProps', nextProps);
+    // console.log('EditTable | componentWillReceiveProps | this.state', this.state);
+    if (nextProps.rows && this.props ) {
+      if (nextProps.rows.length !== this.props.rows.length) {
+        this.props = nextProps;
+        this.setState({rows: nextProps.rows})
+      }
+    }
+  }
   update() {
     // console.log('update');
     let row = this.state.rows.filter((row) => {
@@ -88,6 +100,7 @@ class EditTable extends React.Component {
             onChange={onTextFieldChange}
             style={textFieldStyle}
             value={value}
+            multiLine={true}
           />
         }
         if (type === 'DatePicker') {
@@ -125,6 +138,7 @@ class EditTable extends React.Component {
       style={textFieldStyle}
       disabled
       value={value}
+      multiLine={true}
     />
   }
 

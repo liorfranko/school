@@ -22,7 +22,7 @@ class DishesManager extends React.Component {
   }
 
   onChange(row) {
-    console.log('DishesManager | onChange | row is:', row);
+    // console.log('DishesManager | onChange | row is:', row);
     // console.log('DishesManager | onChange | this.props.appData.data.dishes.length:', this.props.appData.data.dishes.length);
     for (let i = 0; i < row.columns.length; i++) {
       // console.log('DishesManager | onChange | row is: ', row.columns[i]);
@@ -91,9 +91,9 @@ class DishesManager extends React.Component {
       fontSize: 30
     };
     const headers = [
-      {value: 'Name', type: 'TextField'},
-      {value: 'Description', type: 'TextField'},
-      {value: 'Price', type: 'TextField'},
+      {value: 'Name', type: 'TextField', width: 150},
+      {value: 'Description', type: 'TextField', width: 150},
+      {value: 'Price', type: 'TextField', width: 50},
     ];
     let rows = [];
     if (!this.props.appData.data.dishes) {

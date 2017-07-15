@@ -7,7 +7,6 @@ import {DragDropContext} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import RestMenuManager from '../uRestMenus/uRestMenuManager'
 // import Container from './Container';
-//FIXME Need to add: check if there is open order if so go to this order, if not create new order for that table.
 
 class uTable extends React.Component {
   constructor(props) {

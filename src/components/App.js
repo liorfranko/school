@@ -3,9 +3,10 @@
  */
 
 import React from 'react';
+import Image from 'react'
+// import StyleSheet from 'react'
+
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-// import Menu from './menu/Menu';
-// import {Button} from 'react-bootstrap';
 import api from '../api/API';
 import 'react-super-select/lib/react-super-select.css';
 import update from 'immutability-helper';
@@ -14,6 +15,7 @@ import LoginHOC from 'react-facebook-login-hoc';
 import Breadcrumbs  from 'react-breadcrumbs';
 import PropTypes from 'prop-types';
 import { Drawer, AppBar, MenuItem, IconMenu, IconButton, FlatButton} from 'material-ui'
+import Header from './header'
 
 const configureLoginProps = {
   appId: '756445047848860',
@@ -88,6 +90,7 @@ class App extends React.Component {
     this.editRest = this.editRest.bind(this);
     this.editRestMenu = this.editRestMenu.bind(this);
     this.editSubMenu = this.editSubMenu.bind(this);
+    this.updateSubMenuDishes = this.updateSubMenuDishes.bind(this);
     this.editOrderDishes = this.editOrderDishes.bind(this);
     this.editOrderSumPaid = this.editOrderSumPaid.bind(this);
     this.editTable = this.editTable.bind(this);
@@ -524,7 +527,7 @@ class App extends React.Component {
   }
 
   addRestMenu(data, restId) {
-    console.log('App | addRestMenu', data, restId);
+    // console.log('App | addRestMenu', data, restId);
     let postData = '&name=' + data.resMenuName + '&restaurant_Id=' + restId;
     api.postRequest('addMenu', postData, this.getMenusLocal(restId));
   }
@@ -537,7 +540,7 @@ class App extends React.Component {
   }
 
   addTable(data) {
-    console.log('App | data', data);
+    // console.log('App | data', data);
     // console.log('App | table_Num', data[1].tableNum);
     let postData = '&restaurant_Id=' + data._id + '&table_Num=' + data.tableNum;
     api.postRequest('addTable', postData, this.getTablesLocal(data._id));
@@ -569,13 +572,20 @@ class App extends React.Component {
   editRestMenu(data) {
     // console.log('App | editRestMenu, data.restaurantId', data.restaurantId);
     let postData = '&menu_Id=' + data.restMenuId + '&name=' + data.restMenuName;
-    this.restaurantId = data.restaurantId;
-    api.postRequest('editMenu', postData, this.getMenus);
+    // this.restaurantId = data.restaurantId;
+    api.postRequest('editMenu', postData, this.getMenusLocal(data.restaurantId));
   }
 
-  editSubMenu(data, menuId) {
+  editSubMenu(data) {
     // console.log('App | editSubMenu, data', data);
     // console.log('App | editSubMenu, menuId', menuId);
+    let postData = '&subMenu_Id=' + data.subMenuId + '&name=' + data.subMenuName;
+    api.postRequest('editSubMenu', postData, this.getSubMenusLocal(data.menuId));
+  }
+
+  updateSubMenuDishes(data, menuId) {
+    // console.log('App | updateSubMenuDishes, data', data);
+    // console.log('App | updateSubMenuDishes, menuId', menuId);
     api.postRequest('updateSubMenuDishes', data, this.getSubMenusLocal(menuId));
   }
 
@@ -605,10 +615,10 @@ class App extends React.Component {
   }
 
   editTable(data) {
-    console.log('App | editTable, data', data);
-    // let postData = '&table_Id=' + data.restMenuId + '&table_Num=' + data.restMenuName + '&table_Available=' + data.restMenuName;
+    // console.log('App | editTable, data', data);
+    let postData = '&table_Id=' + data.tableId + '&table_Num=' + data.tableNum + '&table_Available=' + data.tableAvailable;
     // this.restaurantId = data.restaurantId;
-    // api.postRequest('editMenu', postData, this.getMenus);
+    api.postRequest('editTable', postData, this.getTablesLocal(data.restaurantId));
   }
 
   addUser() {
@@ -696,14 +706,38 @@ class App extends React.Component {
     //  //                 {name: 'Your Restaurants', path: 'Admin/Restaurants'},
     //                 {name: 'Your Dishes', path: 'Admin/Dishes'},
     //                 {name: 'Your Orders', path: 'Admin/Orders'}
+    const styles3 = {
+      container: {
+        flex: 1,
+        width: undefined,
+        height: undefined,
+        backgroundColor:'transparent',
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+    };
     const styles = {
       title: {
         cursor: 'pointer',
       },
     };
+    // let imgUrl = 'images/berlin.jpg';
+    const imgUrl = require("../Images/placeholder-restaurants.jpg");
+    let styles2 = {
+      root: {
+        backgroundImage: 'url(' + imgUrl + ')',
+        overflow: 'hidden',
+      }
+    };
     return (
       <MuiThemeProvider>
         <div>
+          <AppBar
+            title={<span>Rest Manager</span>}
+            // iconClassNameRight="muidocs-icon-navigation-expand-more"
+            onLeftIconButtonTouchTap={this.handleToggle}
+            iconElementRight={this.state.logged ? <FlatButton label="Logout" onTouchTap={this.logoutFacebook}/> : <FlatButton label="Login" onTouchTap={this.loginFacebook}/>}
+          />
           <Drawer
             docked={false}
             open={this.state.open}
@@ -716,13 +750,6 @@ class App extends React.Component {
               <MenuItem onTouchTap={() => this.handleClose('/uRestaurants')}>Restaurants</MenuItem>
             }
           </Drawer>
-          <AppBar
-            title={<span style={styles.title}>RestManager</span>}
-            onTitleTouchTap={() => browserHistory.push(`/`)}
-            iconClassNameRight="muidocs-icon-navigation-expand-more"
-            onLeftIconButtonTouchTap={this.handleToggle}
-            iconElementRight={this.state.logged ? <FlatButton label="Logout" onTouchTap={this.logoutFacebook}/> : <FlatButton label="Login" onTouchTap={this.loginFacebook}/>}
-          />
           {this.state.priv === 'user' ? null :
               this.state.uid === null ? this.checkFacebookID() : null
           }
@@ -730,12 +757,10 @@ class App extends React.Component {
             routes={this.props.routes}
             params={this.props.params}
           />
+          {/*<Header />*/}
           <div className="jumbotron">
             <div className="container">
-              <div className="heading">
-                <img src="http://lorempixel.com/60/60/food/"/>
-                <div className="h1">RestManager</div>
-              </div>
+
               {React.Children.map(this.props.children, (child) => React.cloneElement(child, {
                 appData: this.state,
                 getRests: this.getRests,
@@ -758,6 +783,7 @@ class App extends React.Component {
                 editDish: this.editDish,
                 editRestMenu: this.editRestMenu,
                 editSubMenu: this.editSubMenu,
+                updateSubMenuDishes: this.updateSubMenuDishes,
                 editTable: this.editTable,
                 deleteRest: this.deleteRest,
                 deleteDish: this.deleteDish,
