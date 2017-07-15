@@ -3,9 +3,6 @@
  */
 
 import React from 'react';
-import Image from 'react'
-// import StyleSheet from 'react'
-
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import api from '../api/API';
 import 'react-super-select/lib/react-super-select.css';
@@ -14,8 +11,8 @@ import {browserHistory} from 'react-router';
 import LoginHOC from 'react-facebook-login-hoc';
 import Breadcrumbs  from 'react-breadcrumbs';
 import PropTypes from 'prop-types';
-import { Drawer, AppBar, MenuItem, IconMenu, IconButton, FlatButton} from 'material-ui'
-import Header from './header'
+import { Drawer, AppBar, MenuItem, FlatButton} from 'material-ui'
+// import '../settings.styl';
 
 const configureLoginProps = {
   appId: '756445047848860',
@@ -41,7 +38,6 @@ class App extends React.Component {
       facebook_id: null,
       token: null,
       data: {},
-      topen: false,
       logged: false,
     };
 
@@ -699,42 +695,42 @@ class App extends React.Component {
 
   render() {
     // console.log('App | render | this.state', this.state);
-    // console.log('App | render | props', this.props);
+    // console.log('App | render | this.props.routes', this.props.routes);
+    // console.log('App | render | this.props.params', this.props.params);
     // console.log('App | render | route', this.props.route);
     // console.log('App | render | params', this.props.params);
     // console.log('App | render | routeParams', this.props.routeParams);
     //  //                 {name: 'Your Restaurants', path: 'Admin/Restaurants'},
     //                 {name: 'Your Dishes', path: 'Admin/Dishes'},
     //                 {name: 'Your Orders', path: 'Admin/Orders'}
-    const styles3 = {
-      container: {
-        flex: 1,
-        width: undefined,
-        height: undefined,
-        backgroundColor:'transparent',
-        justifyContent: 'center',
-        alignItems: 'center',
-      },
-    };
-    const styles = {
-      title: {
-        cursor: 'pointer',
-      },
-    };
+    // const styles3 = {
+    //   container: {
+    //     flex: 1,
+    //     width: undefined,
+    //     height: undefined,
+    //     backgroundColor:'transparent',
+    //     justifyContent: 'center',
+    //     alignItems: 'center',
+    //   },
+    // };
+    // const styles = {
+    //   title: {
+    //     cursor: 'pointer',
+    //   },
+    // };
     // let imgUrl = 'images/berlin.jpg';
-    const imgUrl = require("../Images/placeholder-restaurants.jpg");
-    let styles2 = {
-      root: {
-        backgroundImage: 'url(' + imgUrl + ')',
-        overflow: 'hidden',
-      }
-    };
+    // const imgUrl = require("../Images/placeholder-restaurants.jpg");
+    // let styles2 = {
+    //   root: {
+    //     backgroundImage: 'url(' + imgUrl + ')',
+    //     overflow: 'hidden',
+    //   }
+    // };
     return (
       <MuiThemeProvider>
         <div>
           <AppBar
             title={<span>Rest Manager</span>}
-            // iconClassNameRight="muidocs-icon-navigation-expand-more"
             onLeftIconButtonTouchTap={this.handleToggle}
             iconElementRight={this.state.logged ? <FlatButton label="Logout" onTouchTap={this.logoutFacebook}/> : <FlatButton label="Login" onTouchTap={this.loginFacebook}/>}
           />
@@ -757,10 +753,8 @@ class App extends React.Component {
             routes={this.props.routes}
             params={this.props.params}
           />
-          {/*<Header />*/}
           <div className="jumbotron">
             <div className="container">
-
               {React.Children.map(this.props.children, (child) => React.cloneElement(child, {
                 appData: this.state,
                 getRests: this.getRests,

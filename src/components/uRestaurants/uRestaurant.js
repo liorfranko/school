@@ -76,7 +76,6 @@ class uRestaurant extends React.Component {
 
   render() {
     // console.log('uRestaurant | render |this.props', this.props);
-    const src = require("../../Images/5.gif");
     const styleDiv = {
       fontSize: 30
     };

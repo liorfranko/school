@@ -20,7 +20,7 @@ import CircularProgress from 'material-ui/CircularProgress';
 
 class uRestaurantsManager extends React.Component {
   constructor(props) {
-    console.log('RestaurantsManager | constructor', props);
+    // console.log('RestaurantsManager | constructor', props);
     super(props);
     this.isSelected = this.isSelected.bind(this);
     this.handleRowSelection = this.handleRowSelection.bind(this);

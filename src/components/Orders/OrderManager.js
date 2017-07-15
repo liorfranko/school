@@ -72,8 +72,8 @@ class OrderManager extends React.Component {
                 {/*console.log('OrderManager | rest', rest);*/}
                 return (
                   <Accordion key={i}>
-                    <Panel header={rest.name} eventKey={i}>
-                      <ul className="OrdersList">
+                    <Panel header={rest.name} eventKey={i} >
+                      <ul className="OrdersList" >
                         <li className="OrdersItem list-group-item" style={{backgroundColor:"#f5f5f5"}}>
                           <div><strong>Tables:</strong></div>
                         </li>

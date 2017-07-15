@@ -27,13 +27,21 @@ export default class Routes extends Component {
           <Route name="Restaurants" path="/Admin/Restaurants" component={Restaurants}>
             <Route path=":restName" component={Restaurant}>
               <Route name="Menus/:menuName" path="Menus/:menuName" component={RestMenu}>
-                <Route name="Submenus/:subMenuName" path="Submenus/:subMenuName" component={RestSubMenu}/>
+                <Route name="Submenus/:subMenuName" path="Submenus/:subMenuName" component={RestSubMenu}>
+                  <Route name="" path="" component={RestSubMenu}/>
+                </Route>
               </Route>
-              <Route name="Table/:tableNum" path="Table/:tableNum" component={QrCode}/>
+              <Route name="Table/:tableNum" path="Table/:tableNum" component={QrCode}>
+                <Route name="" path="" component={QrCode}/>
+              </Route>
             </Route>
           </Route>
-          <Route name="Dishes" path="/Admin/Dishes" component={Dishes}/>
-          <Route name="Orders" path="/Admin/Orders" component={Orders}/>
+          <Route name="Dishes" path="/Admin/Dishes" component={Dishes}>
+            <Route name="" path="" component={Dishes}/>
+          </Route>
+          <Route name="Orders" path="/Admin/Orders" component={Orders}>
+            <Route name="" path="" component={Orders}/>
+          </Route>
           <Route name="Restaurants" path="/uRestaurants" component={uRestaurants}>
             <Route path=":restName" component={uRestaurant}>
               <Route path="/uRestaurants/:restName/uTables/:tableName" component={uTable}/>
