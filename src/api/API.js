@@ -2,7 +2,7 @@
  * Created by liorf on 11/26/16.
  */
 import * as $ from 'jquery';
-const host= '35.156.80.173';
+const host= '52.57.105.186';
 const servicName = 'WebService1.asmx';
 
 

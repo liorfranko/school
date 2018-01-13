@@ -23,7 +23,7 @@ const configureLoginProps = {
   language: 'en_US'
 };
 const userUid = '999999';
-const publicDns = 'ec2-35-156-35-110.eu-central-1.compute.amazonaws.com';
+const publicDns = 'ec2-18-196-88-68.eu-central-1.compute.amazonaws.com';
 
 class App extends React.Component {
   constructor(props) {
